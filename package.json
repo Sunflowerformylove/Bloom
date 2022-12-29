@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-and-expressjs-learning",
+  "name": "Bloom",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -10,12 +10,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "expressjs": "^1.0.1",
     "lodash": "^4.17.21",
     "mongodb": "^4.13.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.20"
-  }
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7"
+  },
+  "live": "nodemon app.js"
 }
