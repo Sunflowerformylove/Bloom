@@ -4,6 +4,10 @@
     box-sizing: border-box;
     scrollbar-width: none !important;
     user-select: none;
+    scroll-behavior: smooth;
+    text-rendering: geometricPrecision;
+    image-rendering: auto;
+    shape-rendering: geometricPrecision;
 }
 
 html{

@@ -1,13 +1,73 @@
 const playMusic = document.querySelector('.playMusic');
 const webSong = document.querySelector('.webSong');
+const backToTop = document.querySelector('.backToTop');
+const header = document.getElementById('header')
 const menu = document.querySelector('.menu');
 const menuIcon = document.querySelector('.menuIcon');
 const menuLine = document.querySelectorAll('.menuLine');
 const menuItem = document.querySelector('.menuItem');
+const headerAnglesDown = document.querySelector('.headerAnglesDown');
+const latest = document.getElementById('latest');
+const latestNews = document.querySelector('.latestNews');
+const newsImg = document.querySelector('.newsImg');
+const imgBg = document.querySelector('.imgBg');
+const newsText = document.querySelector('.newsText');
+const textBg = document.querySelector('.textBg');
+const aquaticShowcase = document.getElementById('aquaticShowcase');
+const aquaticBtn = document.querySelector('.aquaticBtn');
+const mountainShowcase = document.getElementById('mountainShowcase');
+const mountainBtn = document.querySelector('.mountainBtn');
 
 //user-defined variables
 let playTracker = 0;
 let menuTracker = 0;
+
+//functions
+function parallax(parent,child){
+    let windowHeight = window.innerHeight;
+    let topBoundary = parent.getBoundingClientRect().top;
+    let bottomBoundary = parent.getBoundingClientRect().bottom;
+    if(topBoundary <= windowHeight - 200 && bottomBoundary > 100){
+        child.classList.add('parallax');
+    }
+    else if(bottomBoundary <= 100 || topBoundary > windowHeight - 200){
+        child.classList.remove('parallax');
+    }
+}
+
+function checkInView(element){
+    let elementTop = element.getBoundingClientRect().top;
+    let elementBottom = element.getBoundingClientRect().bottom;
+    if(elementTop <= 0 && elementBottom >= 0){
+        return true;
+    }
+    return false;
+}
+
+//DOM event handler
+window.addEventListener('load', (event) => {
+    if(navigator.userAgent.indexOf("Firefox") === -1){
+        playMusic.innerHTML = "Play";
+    }
+    else{
+        playMusic.innerHTML = "Pause";
+    }
+});
+
+window.addEventListener('scroll', (event) => {
+    parallax(latestNews,newsText);
+    parallax(latestNews,textBg);
+    parallax(latestNews,newsImg);
+    parallax(latestNews,imgBg);
+    parallax(aquaticShowcase,aquaticBtn);
+    parallax(mountainShowcase,mountainBtn);
+});
+
+window.addEventListener('scroll',(event) => {
+    // if(checkInView(header)){
+    //     latest.scrollIntoView(true);
+    // }
+})
 
 playMusic.addEventListener('click', (event) => {
     if(navigator.userAgent.indexOf("Firefox") === -1){
@@ -53,4 +113,9 @@ menuIcon.addEventListener('click', (event) => {
         }
         menuTracker++;
     }
+});
+
+backToTop.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.scrollTo(0,0);
 })

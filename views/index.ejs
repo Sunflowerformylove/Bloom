@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="/Assets/Style/base.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
         integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -22,7 +24,8 @@
 </head>
 
 <body>
-    <audio src="/Assets/Audio/y2mate.com - øneheart x reidenshi  snowfall.mp3" class="webSong" autoplay loop preload="auto"></audio>
+    <audio src="/Assets/Audio/y2mate.com - øneheart x reidenshi  snowfall.mp3" class="webSong" autoplay loop
+        preload="auto"></audio>
     <div class="menu">
         <div class="menuIcon">
             <div class="menuLine"></div>
@@ -30,21 +33,51 @@
             <div class="menuLine"></div>
         </div>
         <ul class="menuItem">
-            <li><a href="http://localhost:3000">Home</a></li>
-            <li>Shop</li>
-            <li>About Us</li>
-            <li>Technology Stack</li>
-            <li>Register</li>
-            <li>Login</li>
+            <li><i class="fas fa-house" style = "margin-right: 1rem;"></i><a href="http://localhost:3000">Home</a></li>
+            <li><i class="fas fa-cart-shopping" style = "margin-right: 1rem;"></i>Shop</li>
+            <li><i class="fa-regular fa-address-card" style = "margin-right: 1rem;"></i>About Us</li>
+            <li><i class="fa-brands fa-stack-overflow" style="margin-right: 1rem;"></i>Technology Stack</li>
+            <li><i class="fa-regular fa-circle-check" style="margin-right: 1rem;"></i>Register</li>
+            <li><i class="fas fa-right-to-bracket" style="margin-right: 1rem;"></i>Sign In</li>
         </ul>
     </div>
+    <div class="backToTop">Back to top</div>
     <div id="header">
-        <div class="playMusic">Play</div>
-        <video src="/Assets/Video/Ink - 67358.mp4" class="mainBgVideo" autoplay loop preload="auto" muted disablePictureInPicture></video>
+        <div class="playMusic"></div>
+        <video src="/Assets/Video/Intro/Ink - 67358.mp4" class="mainBgVideo" autoplay loop preload="auto" muted
+            disablePictureInPicture></video>
         <div class="headerOverlay">
             <div class="webName">Bloom</div>
             <div class="headerSubText">Nature Within The Palm Of Hand</div>
         </div>
+        <a href="#latest"><i class="fa-solid fa-angles-down headerAnglesDown"></i></a>
+    </div>
+    <div id="latest">
+        <div class="latestNews">
+            <img src="/Assets/Images/Latest/middle-spotted-woodpecker-7631440_1280.jpg" alt="" class="newsImg">
+            <div class="imgBg"></div>
+            <div class="newsText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget placerat nisi, ut
+                aliquet lectus. Etiam sodales magna eget eros tristique semper. Pellentesque maximus mi non ex aliquam,
+                a pharetra massa blandit. Sed diam lacus, pharetra ut est sed, commodo pharetra velit. Praesent faucibus
+                velit velit, ut tincidunt urna ultricies nec. </div>
+            <div class="textBg"></div>
+        </div>
+    </div>
+    <div id="aquaticShowcase">
+        <video src="/Assets/Video/Aqua/Jellyfish - 26818.mp4" class="aquaticBg" autoplay muted loop preload="auto"></video>
+        <div class="aquaticOverlay">
+            <div class="aquaticTitle">Discover The Vast Ocean</div>
+            <div class="aquaticSubText">Dive Into The Oblivious And Hollow Sea</div>
+        </div>
+        <div class="discoverBtn aquaticBtn">Discover More</div>
+    </div>
+    <div id="mountainShowcase">
+        <video src="/Assets/Video/Mountain/Mountain - 34608.mp4" class="mountainBgVideo" autoplay muted preload="auto" loop></video>
+        <div class="mountainOverlay">
+            <div class="mountainTitle">Soar Above The Azure Sky</div>
+            <div class="mountainSubText">Gaze Into The Endless Scenery Of Nature</div>
+        </div>
+        <div class="discoverBtn mountainBtn">Discover More</div>
     </div>
 </body>
 <script src="/Source/playground.js"></script>
@@ -54,6 +87,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"
     integrity="sha512-Kef5sc7gfTacR7TZKelcrRs15ipf7+t+n7Zh6mKNJbmW+/RRdCW9nwfLn4YX0s2nO6Kv5Y2ChqgIakaC6PW09A=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 </html>
