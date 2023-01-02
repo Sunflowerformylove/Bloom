@@ -29,17 +29,17 @@
         <div class="webName" style = "font-size: 70px; position: absolute; top: 5%;">Bloom</div>
         <form action="http://localhost:3000/registerResult" method="POST" class = "registerForm">
             <div class="formText">Email</div>
-            <input type="email" name="registerEmail" id="registerEmail">
+            <input type="email" name="registerEmail" id="registerEmail" required>
             <div class="formText">Phone</div>
-            <input type="tel" name="registerPhone" id="registerPhone">
+            <input type="tel" name="registerPhone" id="registerPhone" required>
             <div class="formText">Day Of Birth</div>
-            <input type="date" name="registerDOB" id="registerDOB">
+            <input type="date" name="registerDOB" id="registerDOB" required>
             <div class="formText">Username</div>
-            <input type="text" name="registerUsername" id="registerUsername">
+            <input type="text" name="registerUsername" id="registerUsername" required>
             <div class="formText">Password</div>
-            <input type="password" name="registerPassword" id="registerPassword">
+            <input type="password" name="registerPassword" id="registerPassword" required>
             <div class="formText">Confirm Password</div>
-            <input type="password" name="registerPassConfirm" id="registerPassConfirm">
+            <input type="password" name="registerPassConfirm" id="registerPassConfirm" required>
             <div class="passwordStrengthContainer">
                 <div class="passwordStrengthShell"><div class="passwordStrengthText">Weak</div> </div>
                 <div class="passwordStrengthIndicator"></div>

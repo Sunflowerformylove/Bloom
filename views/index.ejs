@@ -33,12 +33,23 @@
             <div class="menuLine"></div>
         </div>
         <ul class="menuItem">
-            <li><i class="fas fa-house" style = "margin-right: 1rem;"></i><a href="http://localhost:3000">Home</a></li>
-            <li><i class="fas fa-cart-shopping" style = "margin-right: 1rem;"></i>Shop</li>
-            <li><i class="fa-regular fa-address-card" style = "margin-right: 1rem;"></i>About Us</li>
+            <li><i class="fas fa-house" style="margin-right: 1rem;"></i><a href="http://localhost:3000">Home</a></li>
+            <li><i class="fas fa-cart-shopping" style="margin-right: 1rem;"></i>Shop</li>
+            <li><i class="fa-regular fa-address-card" style="margin-right: 1rem;"></i>About Us</li>
             <li><i class="fa-brands fa-stack-overflow" style="margin-right: 1rem;"></i>Technology Stack</li>
-            <li><i class="fa-regular fa-circle-check" style="margin-right: 1rem;"></i><a href="/Public//Register/register.html">Register</a></li>
-            <li><i class="fas fa-right-to-bracket" style="margin-right: 1rem;"></i>Sign In</li>
+            <% if (!loginState) { %>
+                <li><a href="/Public//Register/register.html"><i class="fa-regular fa-circle-check"
+                            style="margin-right: 1rem;"></i>Register</a></li>
+                <li><a href="/Public/Login/login.html"><i class="fas fa-right-to-bracket"
+                            style="margin-right: 1rem;"></i>Sign In</a></li>
+                <% } else { %>
+                    <li class = "userProfile"><i class="fa-solid fa-user" style="margin-right: 1rem;"></i></i><%- user %>
+                    </li>
+                    <form action="http://localhost:3000/user" method="GET" style="display: none;" class="profileForm">
+                        <input type="text" name="ID" value="<%-ID%>">
+                    </form>
+                    <li><i class="fa-solid fa-right-from-bracket" style="margin-right: 1rem;"></i>Sign Out</li>
+                    <% } %>
         </ul>
     </div>
     <div class="backToTop">Back to top</div>
@@ -50,7 +61,6 @@
             <div class="webName">Bloom</div>
             <div class="headerSubText">Nature Within The Palm Of Hand</div>
         </div>
-        <a href="#latest"><i class="fa-solid fa-angles-down headerAnglesDown"></i></a>
     </div>
     <div id="latest">
         <div class="latestNews">
@@ -64,7 +74,8 @@
         </div>
     </div>
     <div id="aquaticShowcase">
-        <video src="/Assets/Video/Aqua/Jellyfish - 26818.mp4" class="aquaticBg" autoplay muted loop preload="auto"></video>
+        <video src="/Assets/Video/Aqua/Jellyfish - 26818.mp4" class="aquaticBg" autoplay muted loop
+            preload="auto"></video>
         <div class="aquaticOverlay">
             <div class="aquaticTitle">Discover The Vast Ocean</div>
             <div class="aquaticSubText">Dive Into The Oblivious And Hollow Sea</div>
@@ -72,7 +83,8 @@
         <div class="discoverBtn aquaticBtn">Discover More</div>
     </div>
     <div id="mountainShowcase">
-        <video src="/Assets/Video/Mountain/Mountain - 34608.mp4" class="mountainBgVideo" autoplay muted preload="auto" loop></video>
+        <video src="/Assets/Video/Mountain/Mountain - 34608.mp4" class="mountainBgVideo" autoplay muted preload="auto"
+            loop></video>
         <div class="mountainOverlay">
             <div class="mountainTitle">Soar Above The Azure Sky</div>
             <div class="mountainSubText">Gaze Into The Endless Scenery Of Nature</div>

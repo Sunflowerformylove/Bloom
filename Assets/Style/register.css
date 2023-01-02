@@ -46,13 +46,6 @@
     outline: none;
 }
 
-.formText{
-    font-size: 3rem;
-    font-family: 'Arima', serif;
-    font-weight: 600;
-    margin-left: 10%;
-}
-
 .submitBtn{
     width: 10rem;
     height: 10rem;

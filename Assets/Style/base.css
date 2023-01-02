@@ -31,3 +31,10 @@ a:visited{
 li{
     list-style: none;
 }
+
+.formText{
+    font-size: 3rem;
+    font-family: 'Arima', serif;
+    font-weight: 600;
+    margin-left: 10%;
+}

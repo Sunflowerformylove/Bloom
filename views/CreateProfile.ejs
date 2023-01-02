@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Assets/Style/style.css">
+    <link rel="stylesheet" href="/Assets/Style/base.css">
+    <link rel="stylesheet" href="/Assets/Style/CreateProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
+        rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="createProfileContainer">    
+        <form action="" method="post" class = "userAliasForm">
+            <div class="chooseNameTitle">What should we call you?</div>
+            <input type="text" name="alias" id="alias" maxlength="20">
+        </form>
+        <div class="chooseAvatarTitle">Present yourself with an avatar.</div>
+        <form action="" method="post" class = "avatarForm" enctype="multipart/form-data">
+            <img class="previewImg">
+            <label for="avatar" class = "avatarLabel"><i class="fa-solid fa-camera"></i></label>
+            <input type="file" name="avatar" id="avatar" accept="image/*">
+        </form>
+        <div class="keyboard">
+            <div class="row">
+                <span class="key">Esc</span>
+                <span class="key">1</span>
+                <span class="key">2</span>
+                <span class="key">3</span>
+                <span class="key">4</span>
+                <span class="key">5</span>
+                <span class="key">6</span>
+                <span class="key">7</span>
+                <span class="key">8</span>
+                <span class="key">9</span>
+                <span class="key">0</span>
+                <span class="key">Backspace</span>
+            </div>
+            <div class="row">
+                <span class="key">Tab</span>
+                <span class="key">Q</span>
+                <span class="key">W</span>
+                <span class="key">E</span>
+                <span class="key">R</span>
+                <span class="key">T</span>
+                <span class="key">Y</span>
+                <span class="key">U</span>
+                <span class="key">I</span>
+                <span class="key">O</span>
+                <span class="key">P</span>
+                <span class="key">{</span>
+                <span class="key">}</span>
+                <span class="key">\</span>
+            </div>
+            <div class="row">
+                <span class="key">CapsLock</span>
+                <span class="key">A</span>
+                <span class="key">S</span>
+                <span class="key">D</span>
+                <span class="key">F</span>
+                <span class="key">G</span>
+                <span class="key">H</span>
+                <span class="key">J</span>
+                <span class="key">K</span>
+                <span class="key">L</span>
+                <span class="key">Enter</span>
+            </div>
+            <div class="row">
+                <span class="key">Shift</span>
+                <span class="key">Z</span>
+                <span class="key">X</span>
+                <span class="key">C</span>
+                <span class="key">V</span>
+                <span class="key">B</span>
+                <span class="key">N</span>
+                <span class="key">M</span>
+                <span class="key">Shift</span>
+            </div>
+            <div class="row">
+                <span class="key space">Space</span>
+            </div>
+        </div>
+        <div class="nextBtn">Next</div>
+        <div class="chooseGenderTitle">What's your gender?</div>
+        <form action="" method="post" class="genderForm">
+            <div class="genderChoose">
+                <div class="genderOption male"><i class="fa-solid fa-mars"></i></div>
+                <div class="genderOption female"><i class="fa-solid fa-venus"></i></div>
+            </div>
+            <input type="hidden" name="gender" id = "gender">
+        </form>
+        <div class="realNameTitle">Do you want to tell us your real name?</div>
+        <div class="realNameOptions">
+            <div class="nameOption nameYes">Yes</div>
+            <div class="nameOption nameNo">No</div>
+        </div>
+        <form action="" method="post" class = "nameForm">
+            <div class="nameFormTitle">What is it?</div>
+            <input type="text" name="realName" id="realName">
+        </form>
+    </div>
+</body>
+<script src="/Source/CreateProfile.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</html>
