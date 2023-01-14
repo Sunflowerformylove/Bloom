@@ -12,10 +12,8 @@
         integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+        type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -25,17 +23,42 @@
 </head>
 
 <body>
-    <div class="createProfileContainer">    
-        <form action="" method="post" class = "userAliasForm">
-            <div class="chooseNameTitle">What should we call you?</div>
-            <input type="text" name="alias" id="alias" maxlength="20">
+    <div class="createProfileContainer">
+        <form action="http://localhost:3000/firstLogin" method="POST" class = "profileForm" enctype="multipart/form-data">
+            <div class="userAliasForm">
+                <div class="chooseNameTitle">What should we call you?</div>
+                <input type="text" name="alias" id="alias" maxlength="20">
+            </div>
+            <div class="avatarForm">
+                <img class="previewImg">
+                <label for="avatar" class="avatarLabel"><i class="fa-solid fa-camera"></i></label>
+                <input type="file" name="avatar" id="avatar" accept="image/*">
+            </div>
+            <div class="genderForm">
+                <div class="genderChoose">
+                    <div class="genderOption male"><i class="fa-solid fa-mars"></i></div>
+                    <div class="genderOption female"><i class="fa-solid fa-venus"></i></div>
+                </div>
+                <input type="hidden" name="gender" id="gender">
+            </div>
+            <div class="nameForm">
+                <div class="nameFormTitle">What is it?</div>
+                <input type="text" name="realName" id="realName">
+            </div>
+            <div class="workplaceForm">
+                <input type="text" name="workplace" id="workplace">
+            </div>
+            <div class="educationForm"> 
+                <input type="text" name="education" id="education">
+            </div>
+            <div class="interestForm">
+                <input type="hidden" name="interests" id="userInterests">
+            </div>
+            <div style="display: none;" class = "IDForm">
+                <input type="hidden" name="ID" value = '<%- ID %>'>
+            </div>
         </form>
         <div class="chooseAvatarTitle">Present yourself with an avatar.</div>
-        <form action="" method="post" class = "avatarForm" enctype="multipart/form-data">
-            <img class="previewImg">
-            <label for="avatar" class = "avatarLabel"><i class="fa-solid fa-camera"></i></label>
-            <input type="file" name="avatar" id="avatar" accept="image/*">
-        </form>
         <div class="keyboard">
             <div class="row">
                 <span class="key">Esc</span>
@@ -97,22 +120,83 @@
         </div>
         <div class="nextBtn">Next</div>
         <div class="chooseGenderTitle">What's your gender?</div>
-        <form action="" method="post" class="genderForm">
-            <div class="genderChoose">
-                <div class="genderOption male"><i class="fa-solid fa-mars"></i></div>
-                <div class="genderOption female"><i class="fa-solid fa-venus"></i></div>
-            </div>
-            <input type="hidden" name="gender" id = "gender">
-        </form>
-        <div class="realNameTitle">Do you want to tell us your real name?</div>
+        <div class="realNameTitle">Do you want to tell us your name?</div>
         <div class="realNameOptions">
             <div class="nameOption nameYes">Yes</div>
             <div class="nameOption nameNo">No</div>
         </div>
-        <form action="" method="post" class = "nameForm">
-            <div class="nameFormTitle">What is it?</div>
-            <input type="text" name="realName" id="realName">
-        </form>
+        <div class="workplaceTitle">Where do you work?(optional)</div>
+        <div class="educationTitle">What is your university/college/highschool?(optional)</div>
+        <div class="interestTitle">Choose 3 interests ¯\_(ツ)_/¯</div>
+        <div class="interestTable">
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="interestBox">
+                <div class="interests">
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-code"></i>Coding</div>
+                        <div class="interest"><i class="fa-solid fa-book-open"></i>Reading</div>
+                        <div class="interest"><i class="fa-solid fa-gamepad"></i>Gaming</div>
+                        <div class="interest"><i class="fa-solid fa-microphone"></i>Singing</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-graduation-cap"></i>Learning new things</div>
+                        <div class="interest"><i class="fa-solid fa-dice-d20"></i>Dungeons and Dragons</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-tv"></i>Netflix and Chill</div>
+                        <div class="interest"><i class="fa-regular fa-futbol"></i>Football</div>
+                        <div class="interest"><i class="fa-solid fa-user-chef"></i>Cooking</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-basketball"></i>Basketball</div>
+                        <div class="interest"><i class="fa-solid fa-person-swimming"></i>Swimming</div>
+                        <div class="interest"><i class="fa-solid fa-person-skating"></i>Skating</div>
+                        <div class="interest"><i class="fa-solid fa-golf-flag-hole"></i>Golf</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-regular fa-badminton"></i>Badminton</div>
+                        <div class="interest"><i class="fa-solid fa-baseball-bat-ball"></i>Baseball</div>
+                        <div class="interest"><i class="fa-solid fa-table-tennis-paddle-ball"></i>Ping Pong</div>
+                        <div class="interest"><i class="fa-duotone fa-tennis-ball"></i>Tennis</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-bullseye-arrow"></i>Archery</div>
+                        <div class="interest"><i class="fa-solid fa-space-station-moon"></i>Star War</div>
+                        <div class="interest"><i class="fa-solid fa-uniform-martial-arts"></i>Martial Art</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-palette"></i>Painting</div>
+                        <div class="interest"><i class="fa-solid fa-pen-nib"></i>Writing</div>
+                        <div class="interest"><i class="fa-solid fa-football"></i>American football</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-rugby-ball"></i>Rugby</div>
+                        <div class="interest"><i class="fa-solid fa-bag-shopping"></i>Shopping</div>
+                        <div class="interest"><i class="fa-solid fa-swords"></i>Adventuring</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-volleyball"></i>Volleyball</div>
+                        <div class="interest"><i class="fa-solid fa-person-walking"></i>Walking</div>
+                        <div class="interest"><i class="fa-solid fa-person-running"></i>Running</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-person-snowboarding"></i>Snowboarding</div>
+                        <div class="interest"><i class="fa-solid fa-person-biking"></i>Cycling</div>
+                        <div class="interest"><i class="fa-solid fa-person-biking-mountain"></i>Mountain Cycling</div>
+                    </div>
+                    <div class="interestRow">
+                        <div class="interest"><i class="fa-solid fa-pot-food"></i>Eating</div>
+                        <div class="interest"><i class="fa-sharp fa-solid fa-camera-retro"></i>Photography</div>
+                        <div class="interest"><i class="fa-regular fa-masks-theater"></i>Acting</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="preparingTitle">Preparing your profile!</div>
+        <div class="loading"></div>
     </div>
 </body>
 <script src="/Source/CreateProfile.js"></script>

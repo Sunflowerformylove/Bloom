@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Assets/Style/profile.css">
+    <link rel="stylesheet" href="/Assets/Style/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+        type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
+        rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" method="POST" enctype="multipart/form-data" id = "updateForm">
+        <div class="container">
+            <img alt="" class="profileBackground">
+            <label for="background" class="backgroundLabel">
+                <div class="labelMessage">Choose an image</div>
+                <i class="fa-solid fa-camera backgroundIcon"></i>
+            </label>
+            <input type="file" name="background" id="background" style="display: none;" accept="image">
+            <img alt="" class="avatar">
+            <label for="" class="avatarLabel">
+                <i class="fa-solid fa-camera"></i>
+            </label>
+            <input type="file" name="avatar" id="avatar" style="display: none;">
+            <div class="saveBtn">Save</div>
+            <div class="infoBoard">
+                <div class="name"><span class="data"><%-data[0].alias%></span><input type="text" name=""
+                        class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
+                <div class="info">Gender: <span class="data"><%-data[0].gender%></span>
+                    <select name="" class="fieldEditor">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <i class="fa-solid fa-pen-to-square editBtn"></i>
+                </div>
+                <div class="info realName">Real Name: <span class="realName data"><%-data[0].realName%></span><input
+                        type="text" name="" class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
+                <div class="info">Workplace: <span class="data"><%-data[0].workplace%></span><input type="text" name=""
+                        class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
+                <div class="info">Education: <span class="data"><%-data[0].education%></span><input type="text" name=""
+                        class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
+                <div class="info interestInfo">Interests:
+                </div>
+            </div>
+        </form>
+            <div class="feedBoard">
+                <div class="feedBtns">
+                    <div class="feedBtn">Wishlist</div>
+                    <div class="feedBtn">On the way</div>
+                    <div class="feedBtn">Delivered</div>
+                </div>
+                <div class="boardElement">
+                    <div class="boardItem">
+                        <img src="/Assets/Images/Gallery/bird-1045954_640.jpg" class="itemImg">
+                        <!-- <div class="itemText">
+                            <div class="itemName">Lorem ipsum dolor</div>
+                            <div class="itemDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at
+                                blandit lectus. Duis sollicitudin sapien vitae blandit porta. Maecenas ultricies
+                                molestie dolor nec rhoncus. Curabitur suscipit tellus mauris, dictum molestie nisl
+                                mollis sit amet. Sed et tincidunt eros. Cras maximus eleifend accumsan. Nam a placerat
+                                lectus. Curabitur porttitor a justo ut blandit. Fusce in quam purus. Quisque et lacus
+                                sit.</div>
+                            <div class="cancelBtn">Cancel<i class="fa-solid fa-xmark"></i></div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="boardElement"></div>
+                <div class="boardElement"></div>
+            </div>
+        </div>
+</body>
+<script>
+    window.addEventListener("load", (e) => {
+        avatar.src = `/Assets/Images/ProfilePic/<%-data[0].avatar%>`;
+    });
+    let rawInterest = `<%-data[0].interest %>`;
+</script>
+<script src="/Source/profile.js"></script>
+
+</html>

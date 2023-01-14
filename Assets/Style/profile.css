@@ -1,52 +1,295 @@
-.profileContainer {
-  width: 100vw;
-  height: 150vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: relative;
+.container {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    position: relative;
+    font-family: 'Arima', serif;
 }
 
-.profileLeftPanel {
-  width: 30%;
-  height: 90%;
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  background-color: white;
-  border: 10px solid navy;
-}
-
-input[type = "file"]{
+input{
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    text-indent: 1rem;
     display: none;
 }
 
-.profilePicture{
-    width: 60%;
-    height: 30%;
-    border-radius: 100%;
-    object-fit: cover;
-    object-position: center;
-    scale: 0.8;
-    position: absolute;
-    top: 0%;
-    left: 20%;
-    border: 1px solid black;
+select{
+    border-radius: 5px;
+    display: none;
 }
 
-.profileSubmission{
+.name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fieldEditor:nth-of-type(1){
+    width: 25rem;
+    align-self: center;
+    font-size: 3rem;
+}
+
+.profileBackground {
+    width: 100%;
+    height: 20rem;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.avatar{
+    width: 20rem;
+    height: 20rem;
+    background-color: rgba(255,0,0);
+    border-radius: 100%;
     position: absolute;
     top: 10%;
-    left: 38.6%;
-    font-size: 8rem;
+    left: 5%;
+    z-index: 1;
 }
 
-.username{
-  position: absolute;
-  width: 100%;
-  height: 3rem;
-  text-align: center;
-  left: 0%;
-  top: 30%;
-  font-size: 3rem;
-  font-family: 'Arima', serif;
-  font-weight: 600;
+.avatarLabel{
+    font-size: 3rem;
+    position: absolute;
+    top: 33%;
+    left: 14%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.avatarLabel:hover{
+    color: orangered;;
+}
+
+.backgroundLabel{
+    font-size: 3rem;
+    position: absolute;
+    top: 22%;
+    right: 5%;
+    cursor: pointer;
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.labelMessage{
+    font-size: 2rem;
+    width: 18rem;
+    opacity: 0;
+    height: 3rem;
+    text-align: center;
+    line-height: 3rem;
+    margin-right: .5rem;
+    border-radius: 30px;
+    background-color: white;
+    transition: width .3s linear, opacity 1s ease .3s;
+}
+
+.labelMessage.show{
+    width: 18rem;
+    opacity: 1;
+}
+
+.infoBoard{
+    width: 30%;
+    height: 100%;
+    background-color: rgba(205,205,205,0.5);
+    position: absolute;
+    top: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 3rem;
+    border-radius: 20px;
+}
+
+.name{
+    color: black;
+    font-size: 5rem;
+}
+
+.info{
+    width: 80%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.editBtn{
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.editBtn:hover{
+    color: rgba(100,100,100)
+}
+
+.editBtn:nth-of-type(1){
+    font-size: 2rem;
+}
+
+.interest{
+    width: auto;
+    height: 100%;
+    padding: 1rem;
+    font-size: 2rem;
+    line-height: 100%;
+    text-align: center;
+    background-color: orangered;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.saveBtn{
+    padding: .5rem 1rem;
+    font-size: 2rem;
+    background-color: black;
+    color: white;
+    position: absolute;
+    right: 6%;
+    top: 35%;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.saveBtn:hover{
+    filter: brightness(80%);
+}
+
+.interest:hover{
+    filter: brightness(80%);
+}
+
+.hideBtn{
+    margin-left: auto;
+}
+
+.hideBtn:hover{
+    border-bottom: 2px solid rgba(0,0,0,1);
+    cursor: pointer;
+}
+
+.feedBoard{
+    width: 60%;
+    height: 100%;
+    background-color: rgba(205,205,205,0.5);
+    position: absolute;
+    top: 40%;
+    right: 5%;
+    border-radius: 20px;
+}
+
+.boardElement{
+    width: 100%;
+    height: 90%;
+    background-color: rgba(205,205,205);
+    position: absolute;
+    top: 10%;
+    border-radius: 0 0 20px 20px;
+    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.feedBtns{
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.feedBtn{
+    width: 20%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    height: 100%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(205,205,205,0);
+    border-radius: 20px 20px 0 0;
+    cursor: pointer;
+}
+
+.feedBtn:hover{
+    background-color: black;
+    color: white;
+}
+
+.feedBtn:nth-of-type(1){
+    margin-left: 0;
+}
+
+.boardItem{
+    width: 90%;
+    height: 30%;
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.itemImg{
+    width: 30%;
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+}
+
+.itemText{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-left: 1rem;
+}
+
+.itemName{
+    font-size: 3rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+    text-align: left;
+}
+
+.itemDescription{
+    font-size: 1.6rem;
+    width: 100%;
+    text-align: left;
+}
+
+.cancelBtn{
+    width: 10rem;
+    height: 3rem;
+    border: 1px solid black;
+    border-radius: 20px;
+    color: orangered;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.cancelBtn:hover{
+    background-color: orangered;
+    color: white
 }

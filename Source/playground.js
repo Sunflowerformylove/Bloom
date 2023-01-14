@@ -69,6 +69,13 @@ window.addEventListener("load", (event) => {
   }
 });
 
+window.addEventListener("load", (event) => {
+  if(navigator.userAgent.indexOf("Firefox") === -1) {
+    webSong.removeAttribute("autoplay");
+    webSong.pause();
+  }
+});
+
 window.addEventListener("scroll", (event) => {
   parallax(latestNews, newsText);
   parallax(latestNews, textBg);

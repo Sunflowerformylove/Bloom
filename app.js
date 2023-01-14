@@ -10,7 +10,6 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs"); //file-stream
 const multer = require("multer");
-const { json } = require("body-parser");
 const port = process.env.port || 3000;
 
 const app = express();
@@ -27,24 +26,20 @@ app.use(morgan("combined"));
 app.use(cors());
 app.set("view engine", "ejs");
 
+let date = new Date();
+let dateOfMonth = date.getDate();
+let month = date.getMonth();
+let year = date.getFullYear();
 let storage = multer.diskStorage({
-  destination: (request, file, callback) => {
-    callback(null, "File uploaded");
+  destination: (request, avatar, callback) => {
+    callback(null, "/Assets/Images/ProfilePic");
   },
-  filename: (request, file, callback) => {
-    let date = new Date();
-    callback(
-      null,
-      date.getDate.toString() +
-        "-" +
-        date.getMonth.toString() +
-        "-" +
-        date.getFullYear.toString() +
-        "-" +
-        file.originalname
-    );
-  },
+  filename: (request, avatar, callback) =>{
+    callback(null, `${Date.now()}-${dateOfMonth}-${month}-${year}-${avatar.originalname}`);
+  }
 });
+
+let upload = multer({ storage: storage });
 
 function registerFormHandler(request, response) {
   let user = request.body.registerUsername;
@@ -90,23 +85,10 @@ function loginFormHandler(request, response) {
           (err, result) => {
             if (err) throw err;
             let checkLogin = JSON.parse(JSON.stringify(result));
-            if (checkLogin[0].firstLogin == 1) {
-              database.query(
-                `CREATE TABLE IF NOT EXISTS login_data.ID${userID}_profile (profileImage VARCHAR(255), alias VARCHAR(255), realName VARCHAR(255), DOB VARCHAR(255), address VARCHAR(255), phone VARCHAR(255), workplace VARCHAR(255), education VARCHAR(255), interest VARCHAR(255), message VARCHAR(1000))`,
-                (err) => {
-                  if (err) throw err;
-                  response.render("index.ejs", {
-                    ID: userID,
-                    user: loginUsername,
-                    loginState: true,
-                  });
-                }
-              );
+            if (checkLogin[0].firstLogin === 1) {
+              response.render("index.ejs", { ID: userID, loginState: true });
             } else {
-              // database.query(
-              //   `UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = '${userID}'`
-              // );
-              response.render('CreateProfile.ejs');
+              response.render("CreateProfile.ejs", { ID: userID });
             }
           }
         );
@@ -117,10 +99,11 @@ function loginFormHandler(request, response) {
 
 function profileHandler(request, response) {
   let ID = request.query.ID;
-  console.log(ID);
-  database.query(`SELECT * FROM login_data.id${ID}_profile`, (err, result) => {
-    if (err) throw err;
+  database.query(`SELECT * FROM login_data.user_profile WHERE ID = '${ID}'`,(err, result) => {
+    if(err) throw err;
     let data = JSON.parse(JSON.stringify(result));
+    console.log(data[0].avatar);
+    response.render("profile.ejs", {ID: ID, data: data});
   });
 }
 
@@ -137,12 +120,39 @@ app.post("/", (request, response) => {
   loginFormHandler(request, response);
 });
 
+app.post("/firstLogin",upload.single("avatar"),(request,response)=>{
+  let date = new Date();
+  let dateOfMonth = date.getDate();
+  let month = date.getMonth();
+  let year = date.getFullYear();
+  let alias = request.body.alias;
+  let gender = request.body.gender;
+  let avatar = request.file.filename;
+  let realName = request.body.realName;
+  let workplace = request.body.workplace;
+  let education = request.body.education;
+  let interest = request.body.interests;
+  let ID = request.body.ID;
+  database.query(
+    `INSERT INTO login_data.user_profile(ID,alias,gender,realName,workplace,education,interest,avatar) VALUES('${ID}','${alias}', '${gender}', '${realName}', '${workplace}', '${education}','${interest}','${avatar}')`,
+    (err) => {
+      if (err) throw err;
+      database.query(
+        `UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = ${ID}`,
+        (err) => {
+          if (err) throw err;
+          response.render("index.ejs", { ID: ID, loginState: true});
+        }
+      );
+    }
+  );
+});
+
 app.post("/registerResult", (request, response) => {
   registerFormHandler(request, response);
 });
 
 app.get("/user", (request, response) => {
-  // response.render("Profile/profile.ejs", {user: user, });
   profileHandler(request, response);
 });
 
