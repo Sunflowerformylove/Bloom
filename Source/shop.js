@@ -70,7 +70,7 @@ window.addEventListener("load", async (event) => {
           <div class="orderBtn">Order</div>
           <input type="hidden" name="productId" value = "${data[i].ID}">
           <input type="hidden" name="collection" value = "${data[i].collection}">
-          <input type="hidden" name="type" value = "${data[i].type}"`;
+          <input type="hidden" name="type" value = "${data[i].type}">`;
       productBoard.appendChild(elem);
   }
   pages.forEach((page, index) => {
@@ -90,7 +90,7 @@ window.addEventListener("load", async (event) => {
             <div class="orderBtn">Order</div>
             <input type="hidden" name="productId" value = "${data[i].ID}">
             <input type="hidden" name="collection" value = "${data[i].collection}">
-            <input type="hidden" name="type" value = "${data[i].type}"`;
+            <input type="hidden" name="type" value = "${data[i].type}">`;
         productBoard.appendChild(elem);
     }
     });
