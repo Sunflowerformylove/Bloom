@@ -21,35 +21,35 @@
 </head>
 
 <body>
-    <form action="" method="POST" enctype="multipart/form-data" id = "updateForm">
+    <form method="POST" enctype="multipart/form-data" id = "updateForm">
         <div class="container">
-            <img alt="" class="profileBackground">
+            <img class="profileBackground">
             <label for="background" class="backgroundLabel">
                 <div class="labelMessage">Choose an image</div>
                 <i class="fa-solid fa-camera backgroundIcon"></i>
             </label>
             <input type="file" name="background" id="background" style="display: none;" accept="image">
-            <img alt="" class="avatar">
-            <label for="" class="avatarLabel">
+            <img class="avatar">
+            <label for="avatarInput" class="avatarLabel">
                 <i class="fa-solid fa-camera"></i>
             </label>
-            <input type="file" name="avatar" id="avatar" style="display: none;">
+            <input type="file" name="avatar" id="avatarInput" style="display: none;" accept="image">
             <div class="saveBtn">Save</div>
             <div class="infoBoard">
-                <div class="name"><span class="data"><%-data[0].alias%></span><input type="text" name=""
+                <div class="name"><span class="data"><%-data[0].alias%></span><input type="text" name="alias"
                         class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
                 <div class="info">Gender: <span class="data"><%-data[0].gender%></span>
-                    <select name="" class="fieldEditor">
+                    <select name="gender" class="fieldEditor">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
                     <i class="fa-solid fa-pen-to-square editBtn"></i>
                 </div>
                 <div class="info realName">Real Name: <span class="realName data"><%-data[0].realName%></span><input
-                        type="text" name="" class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
-                <div class="info">Workplace: <span class="data"><%-data[0].workplace%></span><input type="text" name=""
+                        type="text" name="realName" class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
+                <div class="info">Workplace: <span class="data"><%-data[0].workplace%></span><input type="text" name="workplace"
                         class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
-                <div class="info">Education: <span class="data"><%-data[0].education%></span><input type="text" name=""
+                <div class="info">Education: <span class="data"><%-data[0].education%></span><input type="text" name="education"
                         class="fieldEditor"><i class="fa-solid fa-pen-to-square editBtn"></i></div>
                 <div class="info interestInfo">Interests:
                 </div>
@@ -57,7 +57,6 @@
         </form>
             <div class="feedBoard">
                 <div class="feedBtns">
-                    <div class="feedBtn">Wishlist</div>
                     <div class="feedBtn">On the way</div>
                     <div class="feedBtn">Delivered</div>
                 </div>
@@ -77,13 +76,13 @@
                     </div>
                 </div>
                 <div class="boardElement"></div>
-                <div class="boardElement"></div>
             </div>
         </div>
 </body>
 <script>
     window.addEventListener("load", (e) => {
         avatar.src = `/Assets/Images/ProfilePic/<%-data[0].avatar%>`;
+        profileBackground.src = `/Assets/Images/ProfilePic/<%-data[0].background%>`;
     });
     let rawInterest = `<%-data[0].interest %>`;
 </script>

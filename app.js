@@ -10,9 +10,11 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs"); //file-stream
 const multer = require("multer");
+const cookieParser = require("cookie-parser");
 const port = process.env.port || 3000;
 
 const app = express();
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
@@ -32,11 +34,14 @@ let month = date.getMonth();
 let year = date.getFullYear();
 let storage = multer.diskStorage({
   destination: (request, avatar, callback) => {
-    callback(null, "/Assets/Images/ProfilePic");
+    callback(null, path.join(__dirname + "/Assets/Images/ProfilePic"));
   },
-  filename: (request, avatar, callback) =>{
-    callback(null, `${Date.now()}-${dateOfMonth}-${month}-${year}-${avatar.originalname}`);
-  }
+  filename: (request, avatar, callback) => {
+    callback(
+      null,
+      `${Date.now()}${dateOfMonth}${month + 1}${year}${avatar.originalname}`
+    );
+  },
 });
 
 let upload = multer({ storage: storage });
@@ -99,12 +104,14 @@ function loginFormHandler(request, response) {
 
 function profileHandler(request, response) {
   let ID = request.query.ID;
-  database.query(`SELECT * FROM login_data.user_profile WHERE ID = '${ID}'`,(err, result) => {
-    if(err) throw err;
-    let data = JSON.parse(JSON.stringify(result));
-    console.log(data[0].avatar);
-    response.render("profile.ejs", {ID: ID, data: data});
-  });
+  database.query(
+    `SELECT * FROM login_data.user_profile WHERE ID = '${ID}'`,
+    (err, result) => {
+      if (err) throw err;
+      let data = JSON.parse(JSON.stringify(result));
+      response.render("profile.ejs", { ID: ID, data: data });
+    }
+  );
 }
 
 app.listen(port, (err) => {
@@ -120,7 +127,7 @@ app.post("/", (request, response) => {
   loginFormHandler(request, response);
 });
 
-app.post("/firstLogin",upload.single("avatar"),(request,response)=>{
+app.post("/firstLogin", upload.single("avatar"), (request, response) => {
   let date = new Date();
   let dateOfMonth = date.getDate();
   let month = date.getMonth();
@@ -141,7 +148,7 @@ app.post("/firstLogin",upload.single("avatar"),(request,response)=>{
         `UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = ${ID}`,
         (err) => {
           if (err) throw err;
-          response.render("index.ejs", { ID: ID, loginState: true});
+          response.render("index.ejs", { ID: ID, loginState: true });
         }
       );
     }
@@ -154,6 +161,64 @@ app.post("/registerResult", (request, response) => {
 
 app.get("/user", (request, response) => {
   profileHandler(request, response);
+});
+
+app.post(
+  "/user",
+  upload.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "background", maxCount: 1 },
+  ]),
+  (request, response) => {
+    let data = request.body;
+    let avatar = request.files.avatar;
+    let background = request.files.background;
+    database.query(
+      `UPDATE login_data.user_profile SET alias = '${data.alias}', gender = '${data.gender}', realName = '${data.realName}',workplace = '${data.workplace}',education = '${data.education}'`
+    );
+    if (avatar !== undefined) {
+      database.query(
+        `UPDATE login_data.user_profile SET avatar = '${avatar[0].filename}'`
+      );
+    }
+    if (background !== undefined) {
+      database.query(
+        `UPDATE login_data.user_profile SET background = '${background[0].filename}'`
+      );
+    }
+    profileHandler(request, response);
+  }
+);
+
+app.get("/shop", (request, response) => {
+  database.query("SELECT * FROM shop.products", (err, result) => {
+    let product = result;
+    response.render("shop.ejs", { loginState: false, product: product });
+  });
+});
+
+app.post("/shop", (request, response) => {
+  let ID = request.body.ID;
+  let data;
+  database.query(
+    `SELECT alias, avatar FROM login_data.user_profile WHERE id = '${ID}'`,
+    (err, result) => {
+      data = result;
+      response.render("shop.ejs", {
+        ID: ID,
+        loginState: true,
+        data: data,
+      });
+    }
+  );
+});
+
+app.get('/api/products',(request, response) => {
+  database.query('SELECT * FROM shop.products', (err, result) => {
+    if(err) throw err;
+    let data = JSON.stringify(result);
+    response.json(result);
+  })
 });
 
 const database = mysql.createConnection({

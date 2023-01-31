@@ -19,6 +19,8 @@ const mountainShowcase = document.getElementById("mountainShowcase");
 const mountainBtn = document.querySelector(".mountainBtn");
 const userProfile = document.querySelector('.userProfile');
 const profileForm = document.querySelector('.profileForm');
+const shopForm = document.querySelector('.shopForm');
+const shop = document.querySelector('.shop');
 
 //user-defined variables
 let playTracker = 0;
@@ -134,4 +136,8 @@ backToTop.addEventListener("click", (event) => {
 
 userProfile.addEventListener('click', (event) => {
   profileForm.submit();
-})
+});
+
+shop.addEventListener('click', (event) => {
+  shopForm.submit();
+});

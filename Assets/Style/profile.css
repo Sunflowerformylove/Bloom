@@ -38,6 +38,8 @@ select{
     position: absolute;
     top: 0;
     left: 0;
+    object-fit: cover;
+    object-position: center;
 }
 
 .avatar{
@@ -49,6 +51,8 @@ select{
     top: 10%;
     left: 5%;
     z-index: 1;
+    object-fit: cover;
+    object-position: center;
 }
 
 .avatarLabel{

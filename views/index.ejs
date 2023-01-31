@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
         integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+        type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -30,22 +31,33 @@
         </div>
         <ul class="menuItem">
             <li><i class="fas fa-house" style="margin-right: 1rem;"></i><a href="http://localhost:3000">Home</a></li>
-            <li><i class="fas fa-cart-shopping" style="margin-right: 1rem;"></i>Shop</li>
-            <li><i class="fa-regular fa-address-card" style="margin-right: 1rem;"></i>About Us</li>
-            <li><i class="fa-brands fa-stack-overflow" style="margin-right: 1rem;"></i>Technology Stack</li>
             <% if (!loginState) { %>
-                <li><a href="/Public//Register/register.html"><i class="fa-regular fa-circle-check"
-                            style="margin-right: 1rem;"></i>Register</a></li>
-                <li><a href="/Public/Login/login.html"><i class="fas fa-right-to-bracket"
-                            style="margin-right: 1rem;"></i>Sign In</a></li>
+                <li><a href="http://localhost:3000/shop"><i class="fas fa-cart-shopping"
+                            style="margin-right: 1rem;"></i>Shop</a></li>
                 <% } else { %>
-                    <li class = "userProfile"><i class="fa-solid fa-user" style="margin-right: 1rem;"></i></i>Profile
-                    </li>
-                    <form action="http://localhost:3000/user" method="GET" style="display: none;" class="profileForm">
-                        <input type="text" name="ID" value="<%-ID%>">
+                    <form action="http://localhost:3000/shop" method="POST" class="shopForm" style="display: none;">
+                        <input type="hidden" name="ID" value=<%=ID%>>
                     </form>
-                    <li><i class="fa-solid fa-right-from-bracket" style="margin-right: 1rem;"></i>Sign Out</li>
+                    <li class="shop"><i class="fas fa-cart-shopping" style="margin-right: 1rem;"></i>Shop</li>
                     <% } %>
+                        <li><i class="fa-regular fa-address-card" style="margin-right: 1rem;"></i>About Us</li>
+                        <li><i class="fa-brands fa-stack-overflow" style="margin-right: 1rem;"></i>Technology Stack</li>
+                        <% if (!loginState) { %>
+                            <li><a href="/Public//Register/register.html"><i class="fa-regular fa-circle-check"
+                                        style="margin-right: 1rem;"></i>Register</a></li>
+                            <li><a href="/Public/Login/login.html"><i class="fas fa-right-to-bracket"
+                                        style="margin-right: 1rem;"></i>Sign In</a></li>
+                            <% } else { %>
+                                <li class="userProfile"><i class="fa-solid fa-user"
+                                        style="margin-right: 1rem;"></i></i>Profile
+                                </li>
+                                <form action="http://localhost:3000/user" method="GET" style="display: none;"
+                                    class="profileForm">
+                                    <input type="text" name="ID" value="<%-ID%>">
+                                </form>
+                                <li><i class="fa-solid fa-right-from-bracket" style="margin-right: 1rem;"></i>Sign Out
+                                </li>
+                                <% } %>
         </ul>
     </div>
     <div class="backToTop">Back to top</div>

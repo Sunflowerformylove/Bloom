@@ -1,0 +1,375 @@
+.container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(242,245,247);
+}
+
+.navBar{
+    width: 100%;
+    height: 12rem;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+}
+
+.webName{
+    font-size: 7rem;
+    font-family: 'Dancing Script', serif;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.searchForm{
+    width: 80rem;
+    height: 5rem;
+}
+
+.navBarItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.searchEngine{
+    width: 50%;
+    height: 40%;
+}
+
+.user{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#search{
+    width: 100%;
+    height: 100%;
+    font-size: 3rem;
+    text-indent: 1rem;
+    border: none;
+    border-radius: 5px;
+}
+
+#search:focus{
+    border: none;
+    outline: none;
+}
+
+.username{
+    font-size: 3rem;
+    font-family: 'Arima', serif;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.triangleDown{
+    font-size: 2rem;
+}
+
+.avatar{
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+.userDropDown{
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    background-color: white;
+    right: 5.5%;
+    top: 65%;
+    display: none;
+    z-index: 9999;
+}
+
+.userDropDown.open{
+    display: block;
+}
+
+.dropDownItem{
+    width: 100%;
+    height: 33.33%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    cursor: pointer;
+    background-color: white;
+}
+
+.dropDownItem:hover{
+    background-color: rgba(105,105,105,0.5);
+}
+
+.wishlistIcon{
+    font-size: 2.5rem;
+    font-family: 'Arima',serif;
+    cursor: pointer;
+}
+
+.wishlist::before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -2.5%;
+    right: 0%;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
+    border-bottom: 1rem solid white;
+}
+
+.wishlist{
+    position: absolute;
+    width: 50rem;
+    height: 40rem;
+    background-color: white;
+    border: 1px solid black;
+    right: 5%;
+    top: 75%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+}
+
+.placeholder{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.placeholder > i{
+    font-size: 8rem;
+}
+
+.emptyText{
+    font-size: 3rem;
+    font-family: 'Arima';
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.searchIcon{
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.8rem;
+    background-color: orangered;
+    padding: 1rem 1.5rem;
+    position: absolute;
+    left: 68%;
+    top: 35%;
+}
+
+.searchIcon:hover{
+    filter: brightness(90%);
+    color: white;
+}
+
+.shoppingBoard{
+    width: 100%;
+    height: 250rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.filter{
+    width: 100%;
+    height: 20rem;
+    position: absolute;
+    top: 12em;
+    background-color: rgb(242,245,247);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.filterText{
+    font-size: 3rem;
+    font-family: 'Arima', serif;
+    font-weight: 500;
+    position: absolute;
+    top: 5%;
+}
+
+.filterSection{
+    width: 60%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.line{
+    width: 3px;
+    height: 80%;
+    margin: 0 2rem;
+    background-color: black;
+}
+
+.optionTitle{
+    font-size: 3rem;
+}
+
+.filterOptions{
+    width: 80%;
+    height: 45%;
+    margin-left: 0rem;
+    font-family: 'Arima', serif;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto;
+    font-size: 2rem;
+}
+
+.option{
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    border-radius: 10% !important;
+}
+
+label{
+    cursor: pointer;
+    font-size: 1.5rem !important;
+}
+
+.productBoard{
+    width: 95%;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
+    position: absolute;
+    top: 35rem;
+}
+
+.item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.itemImage{
+    object-fit: cover;
+    object-position: center;
+    width: 90%;
+    height: 60%;
+    border-radius: 10px;
+}
+
+.itemName{
+    font-size: 2rem;
+    font-family: 'Arima', serif;
+}
+
+.description{
+    font-size: 2rem;
+    font-family: 'Arima', serif;
+    align-self: flex-start;
+    margin-left: 2.5rem;
+    text-align: justify;
+    font-size: 1.6rem;
+    line-height: 2rem;
+}
+
+.price{
+    font-size: 2rem;
+    font-family: 'Arima', serif;
+    font-style: oblique;
+    align-self: flex-start;
+    margin-left: 2.5rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.price::after{
+    content: "";
+    width: 0%;
+    position: absolute;
+    height: 2px;
+    background-color: black;
+    bottom: -.5rem;
+    left: 0;
+    transition: width 1s ease;
+}
+
+.price:hover::after{
+    width: 100%;
+}
+
+.orderBtn{
+    padding: 1.5rem 3rem;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.8rem;
+    font-family: 'Arima', serif;
+    cursor: pointer;
+}
+
+.orderBtn:hover{
+    background-color: white;
+    color: black;
+}
+
+.pageBar{
+    position: absolute;
+    bottom: 1rem;
+    width: 60%;
+    height: 6rem;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    max-width: 7rem;
+    min-width: 4rem;
+    font-size: 3rem;
+    font-family: 'Arima', serif;
+    font-weight: 600;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.page:hover{
+    filter: brightness(80%);
+}
+
+.page.chosen{
+    background-color: orangered;
+}

@@ -4,6 +4,7 @@ const background = document.getElementById('background');
 const labelMessage = document.querySelector('.labelMessage');
 const feedBtn = document.querySelectorAll('.feedBtn');
 const boardElement = document.querySelectorAll('.boardElement');
+const avatarInput = document.getElementById('avatarInput');
 const avatar = document.querySelector('.avatar');
 const hideBtn = document.querySelector('.hideBtn');
 const realName = document.querySelector('.realName');
@@ -13,6 +14,8 @@ const fieldEditor = document.querySelectorAll('.fieldEditor');
 const data = document.querySelectorAll('.data');
 const boardItem = document.querySelectorAll('.boardItem');
 const cancelBtn = document.querySelectorAll('.cancelBtn');
+const updateForm = document.getElementById('updateForm');
+const saveBtn = document.querySelector('.saveBtn');
 
 function interestSplice(interest){
     let index = 0;
@@ -39,7 +42,10 @@ window.addEventListener('load', (e) => {
         elem.textContent = interestArr[i];
         interestInfo.appendChild(elem);
     }
-})
+    fieldEditor.forEach((field,index) => {
+        field.value = data[index].innerHTML;
+    })
+});
 
 backgroundIcon.addEventListener('mouseover', (event) =>{
     backgroundIcon.style.color = "white";
@@ -75,6 +81,13 @@ background.addEventListener('change', (event) => {
     if(event.target.files.length !== 0){
         let src = URL.createObjectURL(event.target.files[0]);
         profileBackground.src = src;
+    }
+});
+
+avatarInput.addEventListener('change', (event) => {
+    if(event.target.files.length !== 0){
+        let src = URL.createObjectURL(event.target.files[0]);
+        avatar.src = src;
     }
 });
 
@@ -125,6 +138,6 @@ cancelBtn.forEach((button, index) => {
     })
 });
 
-$(document).ready(() => {
-    
-})
+saveBtn.addEventListener('click', () => {
+    updateForm.submit();
+});
