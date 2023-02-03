@@ -7,8 +7,35 @@ const option = document.querySelectorAll(".option");
 const productBoard = document.querySelector(".productBoard");
 const pageBar = document.querySelector(".pageBar");
 
+let wishlistTracker = 0;
+let wliTracker = 0;
+
+function priceToInt(price) {
+  return parseInt(price.split(",").join(""), 10);
+}
+
+function formatPrice(price) {
+  let charArr = price.split("");
+  let count = 0;
+  let index = charArr.length - 1;
+  while (index >= 0) {
+    count++;
+    if (count === 3 && index !== 0) {
+      charArr.length++;
+      for (let i = charArr.length - 1; i >= index; i--) {
+        charArr[i] = charArr[i - 1];
+      }
+      charArr[index] = ",";
+      count = 0;
+    }
+    index--;
+  }
+  let newPrice = charArr.join("");
+  return newPrice;
+}
+
 window.addEventListener("load", (event) => {
-  if(loginState === "true"){
+  if (loginState === "true") {
     const username = document.querySelector(".username");
     const userDropDown = document.querySelector(".userDropDown");
     username.addEventListener("mouseover", (event) => {
@@ -29,12 +56,14 @@ window.addEventListener("load", (event) => {
   }
 });
 
-wishlistIcon.addEventListener("mouseover", (event) => {
-  wishlist.style.display = "flex";
-});
-
-wishlistIcon.addEventListener("mouseout", (event) => {
-  wishlist.style.display = "none";
+wishlistIcon.addEventListener("click", (event) => {
+  if (wishlistTracker % 2 === 0) {
+    wishlist.style.display = "flex";
+    wishlistTracker++;
+  } else {
+    wishlist.style.display = "none";
+    wishlistTracker++;
+  }
 });
 
 checkboxLabel.forEach((item, index) => {
@@ -52,47 +81,11 @@ window.addEventListener("load", async (event) => {
   let data = await stream.json();
   let length = Object.keys(data).length;
   let pageNum = Math.ceil(length / 12);
-  for(let i = 1; i <= pageNum; i++) {
+  for(let i)
+  for (let i = 1; i <= pageNum; i++) {
     let page = document.createElement("span");
     page.innerHTML = i;
     page.className = "page";
     pageBar.appendChild(page);
   }
-  const pages = document.querySelectorAll('.page');
-  pages[0].classList.add("chosen");
-  for (let i = 0; i < 12; i++) {
-      let elem = document.createElement("div");
-      elem.className = "item";
-      elem.innerHTML = `<img src= ${data[i].bigImg} alt="" class="itemImage">
-          <div class="itemName"> ${data[i].name} </div>
-          <div class="description"> ${data[i].description} '</div>
-          <div class="price"> ${data[i].price} </div>
-          <div class="orderBtn">Order</div>
-          <input type="hidden" name="productId" value = "${data[i].ID}">
-          <input type="hidden" name="collection" value = "${data[i].collection}">
-          <input type="hidden" name="type" value = "${data[i].type}">`;
-      productBoard.appendChild(elem);
-  }
-  pages.forEach((page, index) => {
-    page.addEventListener('click',(event) => {
-      for(let i of pages){
-        i.classList.remove('chosen');
-      }
-      page.classList.add('chosen');
-      productBoard.innerHTML = '';
-      for (let i = 12 * (parseInt(page.innerHTML) - 1); i < 12 * parseInt(page.innerHTML); i++) {
-        let elem = document.createElement("div");
-        elem.className = "item";
-        elem.innerHTML = `<img src= ${data[i].bigImg} alt="" class="itemImage">
-            <div class="itemName"> ${data[i].name} </div>
-            <div class="description"> ${data[i].description} '</div>
-            <div class="price"> ${data[i].price} </div>
-            <div class="orderBtn">Order</div>
-            <input type="hidden" name="productId" value = "${data[i].ID}">
-            <input type="hidden" name="collection" value = "${data[i].collection}">
-            <input type="hidden" name="type" value = "${data[i].type}">`;
-        productBoard.appendChild(elem);
-    }
-    });
-  });
 });
