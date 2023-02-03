@@ -1,166 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Assets/Style/shop.css">
-    <link rel="stylesheet" href="/Assets/Style/base.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
-        type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/Assets/Style/shop.css" />
+    <link rel="stylesheet" href="/Assets/Style/base.css" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
-        rel="stylesheet">
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <ul class="navBar">
-            <li class="navBarItem webName"><a href="http://localhost:3000">Bloom</a></li>
-            <li class="navBarItem searchEngine">
-                <form method="GET" class="searchForm">
-                    <input type="text" name="search" id="search">
-                    <i class="fa-solid fa-magnifying-glass searchIcon"></i>
-                </form>
-            </li>
-            <%if (loginState) { %>
-                <li class="navBarItem user">
-                    <img class="avatar" src='/Assets/Images/ProfilePic/<%-data[0].avatar%>'>
-                    <div class="username">
-                        <%=data[0].alias%>
-                    </div>
-                </li>
-                <ul class="userDropDown">
-                    <a href="http://localhost:3000/user?ID=<%-ID%>">
-                        <li class="dropDownItem">Profile</li>
-                    </a>
-                    <li class="dropDownItem">Coupon</li>
-                    <li class="dropDownItem">Message</li>
-                </ul>
-                <% } else { %>
-                    <div class="navBarItem login" style="font-size: 2.4rem; cursor: pointer;"><a
-                            href="/Public/Login/login.html">Login/Register</a></div>
-                    <% } %>
-                        <li class="navBarItem wishlistIcon"><i class="fa-solid fa-cart-shopping"></i></li>
-                        <div class="wishlist">
-                            <div class="placeholder">
-                                <i class="fa-solid fa-empty-set"></i>
-                                <div class="emptyText">No item in cart!</div>
-                            </div>
-                        </div>
+      <ul class="navBar">
+        <li class="navBarItem webName">
+          <a href="http://localhost:3000">Bloom</a>
+        </li>
+        <li class="navBarItem searchEngine">
+          <form method="GET" class="searchForm">
+            <input type="text" name="search" id="search" />
+            <i class="fa-solid fa-magnifying-glass searchIcon"></i>
+          </form>
+        </li>
+        <%if (loginState) { %>
+        <li class="navBarItem user">
+          <img
+            class="avatar"
+            src="/Assets/Images/ProfilePic/<%-data[0].avatar%>"
+          />
+          <div class="username"><%=data[0].alias%></div>
+        </li>
+        <ul class="userDropDown">
+          <a href="http://localhost:3000/user?ID=<%-ID%>">
+            <li class="dropDownItem">Profile</li>
+          </a>
+          <li class="dropDownItem">Coupon</li>
+          <li class="dropDownItem">Message</li>
         </ul>
-        <div class="shoppingBoard">
-            <div class="filter">
-                <div class="filterText">Filter<i class="fa-solid fa-filter"></i></div>
-                <div class="filterSection">
-                    <div class="optionTitle">Categories</div>
-                    <div class="line"></div>
-                    <div class="filterOptions">
-                        <div class="filterOption">
-                            <input type="checkbox" name="chair" class="option">
-                            <label class="checkboxLabel" for="chair">Chair</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="pottery" class="option">
-                            <label class="checkboxLabel" for="pottery">Pottery</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="wardrobe" class="option">
-                            <label class="checkboxLabel" for="wardrobe">Wardrobe</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="table" class="option">
-                            <label class="checkboxLabel" for="table">Table</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="cabinet" class="option">
-                            <label class="checkboxLabel" for="cabinet">Cabinet</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="bench" class="option">
-                            <label class="checkboxLabel" for="bench">Bench</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="bed" class="option">
-                            <label class="checkboxLabel" for="bed">Bed</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="nightstand" class="option">
-                            <label class="checkboxLabel" for="nightstand">Nightstand</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="nightlight" class="option">
-                            <label class="checkboxLabel" for="nightlight">Night Light</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="gaming" class="option">
-                            <label class="checkboxLabel" for="gaming">Gaming Accessories</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="shelf" class="option">
-                            <label class="checkboxLabel" for="shelf">Shelf</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="curtain" class="option">
-                            <label class="checkboxLabel" for="curtain">Curtain</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="filterSection">
-                    <div class="optionTitle">Collections</div>
-                    <div class="line"></div>
-                    <div class="filterOptions">
-                        <div class="filterOption">
-                            <input type="checkbox" name="summer" class="option">
-                            <label class="checkboxLabel" for="summer">Summer's Blaze</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="winter" class="option">
-                            <label class="checkboxLabel" for="winter">Winter' Breeze</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="nature" class="option">
-                            <label class="checkboxLabel" for="nature">Nature's Touch</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="table" class="option">
-                            <label class="checkboxLabel" for="table">Vintage & Retro</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="cabinet" class="option">
-                            <label class="checkboxLabel" for="cabinet">Modernity & Longevity</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="bench" class="option">
-                            <label class="checkboxLabel" for="bench">Chilling Vibe</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="bed" class="option">
-                            <label class="checkboxLabel" for="bed">Bed</label>
-                        </div>
-                        <div class="filterOption">
-                            <input type="checkbox" name="nightstand" class="option">
-                            <label class="checkboxLabel" for="nightstand">Nightstand</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="productBoard">
-            </div>
-            <div class="pageBar">
-            </div>
+        <% } else { %>
+        <div
+          class="navBarItem login"
+          style="font-size: 2.4rem; cursor: pointer"
+        >
+          <a href="/Public/Login/login.html">Login/Register</a>
         </div>
+        <% } %>
+        <li class="navBarItem wishlistIcon">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </li>
+        <div class="wishlist">
+          <!-- <div class="placeholder">
+            <i class="fa-solid fa-empty-set"></i>
+            <div class="emptyText">No item in cart!</div>
+          </div> -->
+          <!-- <form method = "POST" action = "http://locahost:3000/payment" class="wishlistContainer">
+            <div class="wli">
+              <img src = "/Assets/Images/Gallery/bird-1045954_640.jpg" class="wliImage" />
+              <div class="wliText">
+                <div class="wliName">TEST</div>
+                <div class="wliTotalPrice">Price: <span class="priceText">10000</span></div>
+                <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "wliQuantity" style = "margin-left: 1rem;"></div>
+                <input type="hidden" name="ID" value="">
+              </div>
+            </div>
+          </div>
+          <div class="proceedBtn">Proceed</div> -->
+        </div>
+      </ul>
+      <div class="filter">
+        <div class="filterText">Filter<i class="fa-solid fa-filter"></i></div>
+        <div class="filterSection">
+          <div class="optionTitle">Categories</div>
+          <div class="line"></div>
+          <div class="filterOptions">
+            <div class="filterOption">
+              <input type="checkbox" name="chair" class="option" />
+              <label class="checkboxLabel" for="chair">Chair</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="pottery" class="option" />
+              <label class="checkboxLabel" for="pottery">Pottery</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="wardrobe" class="option" />
+              <label class="checkboxLabel" for="wardrobe">Wardrobe</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="table" class="option" />
+              <label class="checkboxLabel" for="table">Table</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="cabinet" class="option" />
+              <label class="checkboxLabel" for="cabinet">Cabinet</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="bench" class="option" />
+              <label class="checkboxLabel" for="bench">Bench</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="bed" class="option" />
+              <label class="checkboxLabel" for="bed">Bed</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="nightstand" class="option" />
+              <label class="checkboxLabel" for="nightstand">Nightstand</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="nightlight" class="option" />
+              <label class="checkboxLabel" for="nightlight">Night Light</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="gaming" class="option" />
+              <label class="checkboxLabel" for="gaming"
+                >Gaming Accessories</label
+              >
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="shelf" class="option" />
+              <label class="checkboxLabel" for="shelf">Shelf</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="curtain" class="option" />
+              <label class="checkboxLabel" for="curtain">Curtain</label>
+            </div>
+          </div>
+        </div>
+        <div class="filterSection">
+          <div class="optionTitle">Collections</div>
+          <div class="line"></div>
+          <div class="filterOptions">
+            <div class="filterOption">
+              <input type="checkbox" name="summer" class="option" />
+              <label class="checkboxLabel" for="summer">Summer's Blaze</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="winter" class="option" />
+              <label class="checkboxLabel" for="winter">Winter' Breeze</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="nature" class="option" />
+              <label class="checkboxLabel" for="nature">Nature's Touch</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="table" class="option" />
+              <label class="checkboxLabel" for="table">Vintage & Retro</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="cabinet" class="option" />
+              <label class="checkboxLabel" for="cabinet"
+                >Modernity & Longevity</label
+              >
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="bench" class="option" />
+              <label class="checkboxLabel" for="bench">Chilling Vibe</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="bed" class="option" />
+              <label class="checkboxLabel" for="bed">Bed</label>
+            </div>
+            <div class="filterOption">
+              <input type="checkbox" name="nightstand" class="option" />
+              <label class="checkboxLabel" for="nightstand">Nightstand</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="productBoard"></div>
+      <div class="pageBar"></div>
     </div>
-</body>
-<script>
-    let loginState = "<%= loginState %>"
-</script>
-<script src="/Source/shop.js"></script>
+  </body>
+  <script>
+    let loginState = "<%= loginState %>";
+  </script>
+  <script src="/Source/shop.js"></script>
 </html>

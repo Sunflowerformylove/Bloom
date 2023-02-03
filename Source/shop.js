@@ -81,7 +81,6 @@ window.addEventListener("load", async (event) => {
   let data = await stream.json();
   let length = Object.keys(data).length;
   let pageNum = Math.ceil(length / 12);
-  for(let i)
   for (let i = 1; i <= pageNum; i++) {
     let page = document.createElement("span");
     page.innerHTML = i;
