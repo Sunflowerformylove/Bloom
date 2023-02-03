@@ -6,9 +6,11 @@ const checkboxLabel = document.querySelectorAll(".checkboxLabel");
 const option = document.querySelectorAll(".option");
 const productBoard = document.querySelector(".productBoard");
 const pageBar = document.querySelector(".pageBar");
+const checkbox = document.querySelectorAll(".option");
 
 let wishlistTracker = 0;
-let wliTracker = 0;
+let wliTracker = false;
+let cblTracker = 0;
 
 function priceToInt(price) {
   return parseInt(price.split(",").join(""), 10);
@@ -81,10 +83,160 @@ window.addEventListener("load", async (event) => {
   let data = await stream.json();
   let length = Object.keys(data).length;
   let pageNum = Math.ceil(length / 12);
+
   for (let i = 1; i <= pageNum; i++) {
     let page = document.createElement("span");
     page.innerHTML = i;
     page.className = "page";
     pageBar.appendChild(page);
   }
+
+  for (let i = 0; i < length; i++) {
+    let elem = document.createElement("div");
+    elem.className = "item";
+    elem.innerHTML = `<img src="${data[i].bigImg}" class = "itemImage">
+    <div class="itemName">${data[i].name}</div>
+    <div class = "description">${data[i].description}</div>
+    <div class = "price">${formatPrice(data[i].price.toString())}</div>
+    <div class = "orderBtn">Order</div>
+    <input type="hidden" name="ID" value="${data[i].ID}" class = "itemID">
+    <input type="hidden" name="name" value="${data[i].collection}" class = "collection">
+    <input type="hidden" name="type" value="${data[i].type}" class = "type">`;
+    productBoard.appendChild(elem);
+  }
+
+  const items = document.querySelectorAll(".item");
+  const itemImage = document.querySelectorAll(".itemImage");
+  const pages = document.querySelectorAll(".page");
+  const itemID = document.querySelectorAll(".itemID");
+  const orderBtn = document.querySelectorAll(".orderBtn");
+  const itemName = document.querySelectorAll(".itemName");
+  const price = document.querySelectorAll(".price");
+  const collection = document.querySelectorAll(".collection");
+  const type = document.querySelectorAll(".type");
+
+  for (let j = 0; j < 12; j++) {
+    items[j].style.display = "flex";
+  }
+
+  pages.forEach((page, index) => {
+    page.addEventListener("click", (event) => {
+      for (let item of items) {
+        item.style.display = "none";
+      }
+      for (let i = index * 12; i < index * 12 + 12; i++) {
+        items[i].style.display = "flex";
+      }
+    });
+  });
+
+  orderBtn.forEach((button, index) => {
+    let unique = false;
+    button.addEventListener("click", (event) => {
+      if (!wliTracker) {
+        let wishlistContainer = document.createElement("form");
+        wishlistContainer.className = "wishlistContainer";
+        wishlistContainer.setAttribute("method", "POST");
+        wishlistContainer.setAttribute(
+          "action",
+          "http://localhost:3000/payment"
+        );
+        wishlistContainer.setAttribute(
+          "enctype",
+          "application/x-www-form-urlencoded"
+        );
+        wishlistContainer.innerHTML = `<div class="wli">
+        <img src = "${itemImage[index].src}" class="wliImage" />
+        <div class="wliText">
+          <div class="wliName">${itemName[index].innerHTML}</div>
+          <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
+            data[index].price.toString()
+          )}</span></div>
+          <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
+          <input type="hidden" name="ID" value="${
+            data[index].ID
+          }" class = "wliID">
+        </div>
+      </div>`;
+        let proceedBtn = document.createElement("div");
+        proceedBtn.className = "proceedBtn";
+        proceedBtn.innerHTML = "Proceed";
+        wishlist.innerHTML = "";
+        wishlist.appendChild(wishlistContainer);
+        wishlist.appendChild(proceedBtn);
+        wliTracker = true;
+        unique = true;
+      } else {
+        const wishlistContainer = document.querySelector(".wishlistContainer");
+        if (!unique) {
+          let elem = document.createElement("div");
+          elem.className = `wli`;
+          elem.innerHTML = `<img src = "${
+            itemImage[index].src
+          }" class="wliImage" />
+          <div class="wliText">
+            <div class="wliName">${itemName[index].innerHTML}</div>
+            <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
+              data[index].price.toString()
+            )}</span></div>
+            <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
+            <input type="hidden" name="ID" value="${
+              data[index].ID
+            }" class = "wliID">
+          </div>`;
+          wishlistContainer.appendChild(elem);
+          unique = true;
+        } else {
+          const wliID = document.querySelectorAll(".wliID");
+          const priceText = document.querySelectorAll(".priceText");
+          const quantityText = document.querySelectorAll(".quantityText");
+          wliID.forEach((ID, ind) => {
+            if (ID.value === itemID[index].value) {
+              if (quantityText[ind].value < 50) {
+                quantityText[ind].value =
+                  parseInt(quantityText[ind].value, 10) + 1;
+                priceText[ind].innerHTML = formatPrice(
+                  (
+                    data[parseInt(itemID[index].value, 10)].price *
+                    parseInt(quantityText[ind].value, 10)
+                  ).toString()
+                );
+              }
+            }
+          });
+        }
+      }
+    });
+  });
+
+  setInterval(() => {
+    const priceText = document.querySelectorAll(".priceText");
+    const quantityText = document.querySelectorAll(".quantityText");
+    quantityText.forEach((text, idx) => {
+      text.addEventListener("change", (event) => {
+        priceText[idx].innerHTML = formatPrice(
+          (
+            data[parseInt(itemID[idx].value, 10)].price *
+            parseInt(quantityText[idx].value, 10)
+          ).toString()
+        );
+      });
+    });
+  }, 1);
+
+  checkbox.forEach((option, index) => {
+    option.addEventListener("change", (event) => {
+      if(option.checked){
+        for(let item of items){
+          item.style.display = "none";
+        }
+        pageBar.style.display = "none";
+        for(let i = 0; i < length; i++){
+          if(collection[i].value === option.value || type[i].value === option.value){
+            items[i].style.display = "flex";
+          }
+        }
+      }
+    });
+  });
 });
