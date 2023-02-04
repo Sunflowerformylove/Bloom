@@ -7,9 +7,12 @@ const option = document.querySelectorAll(".option");
 const productBoard = document.querySelector(".productBoard");
 const pageBar = document.querySelector(".pageBar");
 const checkbox = document.querySelectorAll(".option");
+const typeFilter = document.querySelectorAll(".type");
+const collectionFilter = document.querySelectorAll(".collection");
 
 let wishlistTracker = 0;
 let wliTracker = false;
+let cbTracker = 0;
 
 function checkboxChecked(checkbox) {
   for (let i = 0; i < checkbox.length; i++) {
@@ -146,7 +149,6 @@ window.addEventListener("load", async (event) => {
 
   pages.forEach((page, index) => {
     page.addEventListener("click", (event) => {
-      console.log(page.innerHTML);
       for (let p of pages) {
         p.classList.remove("chosen");
       }
@@ -255,5 +257,49 @@ window.addEventListener("load", async (event) => {
   }, 1);
 
   checkbox.forEach((option, index) => {
+    option.addEventListener("click", (event) => {
+      if (!noCheckboxState(checkbox)) {
+        pageBar.style.display = "none";
+        if (!cbTracker) {
+          for (let i = 0; i < items.length; i++) {
+            items[i].style.display = "none";
+          }
+          cbTracker = true;
+        }
+        if (option.checked === true) {
+          for (let i = 0; i < items.length; i++) {
+            if (
+              collection[i].value === option.name ||
+              type[i].value === option.name
+            ) {
+              items[i].style.display = "flex";
+            }
+          }
+        } else {
+          for (let i = 0; i < items.length; i++) {
+            if (
+              collection[i].value === option.name &&
+              option.classList.contains("collectionFilter")
+            ) {
+              items[i].style.display = "none";
+            }
+            if (
+              type[i].value === option.name &&
+              option.classList.contains("typeFilter")
+            ) {
+              items[i].style.display = "none";
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < items.length; i++) {
+          items[i].style.display = "none";
+        }
+        for (let i = 0; i < 12; i++) {
+          items[i].style.display = "flex";
+        }
+        pageBar.style.display = "flex";
+      }
+    });
   });
 });
