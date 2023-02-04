@@ -10,7 +10,15 @@ const checkbox = document.querySelectorAll(".option");
 
 let wishlistTracker = 0;
 let wliTracker = false;
-let cblTracker = 0;
+
+function checkboxChecked(checkbox) {
+  for (let i = 0; i < checkbox.length; i++) {
+    if (checkbox[i].checked === true) {
+      cbTracker = true;
+    }
+  }
+  return cbTracker;
+}
 
 function priceToInt(price) {
   return parseInt(price.split(",").join(""), 10);
@@ -34,6 +42,19 @@ function formatPrice(price) {
   }
   let newPrice = charArr.join("");
   return newPrice;
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function noCheckboxState(checkbox) {
+  for (let i = 0; i < checkbox.length; i++) {
+    if (checkbox[i].checked === true) {
+      return false;
+    }
+  }
+  return true;
 }
 
 window.addEventListener("load", (event) => {
@@ -100,7 +121,9 @@ window.addEventListener("load", async (event) => {
     <div class = "price">${formatPrice(data[i].price.toString())}</div>
     <div class = "orderBtn">Order</div>
     <input type="hidden" name="ID" value="${data[i].ID}" class = "itemID">
-    <input type="hidden" name="name" value="${data[i].collection}" class = "collection">
+    <input type="hidden" name="name" value="${
+      data[i].collection
+    }" class = "collection">
     <input type="hidden" name="type" value="${data[i].type}" class = "type">`;
     productBoard.appendChild(elem);
   }
@@ -119,8 +142,15 @@ window.addEventListener("load", async (event) => {
     items[j].style.display = "flex";
   }
 
+  pages[0].classList.add("chosen");
+
   pages.forEach((page, index) => {
     page.addEventListener("click", (event) => {
+      console.log(page.innerHTML);
+      for (let p of pages) {
+        p.classList.remove("chosen");
+      }
+      page.classList.add("chosen");
       for (let item of items) {
         item.style.display = "none";
       }
@@ -225,18 +255,5 @@ window.addEventListener("load", async (event) => {
   }, 1);
 
   checkbox.forEach((option, index) => {
-    option.addEventListener("change", (event) => {
-      if(option.checked){
-        for(let item of items){
-          item.style.display = "none";
-        }
-        pageBar.style.display = "none";
-        for(let i = 0; i < length; i++){
-          if(collection[i].value === option.value || type[i].value === option.value){
-            items[i].style.display = "flex";
-          }
-        }
-      }
-    });
   });
 });

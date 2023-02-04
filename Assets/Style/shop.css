@@ -266,7 +266,6 @@ label {
 }
 
 .item {
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
@@ -444,6 +443,11 @@ input:not(:focus){
 }
 
 .proceedBtn:hover{
+  background-color: orangered;
+  color: black;
+}
+
+.page.chosen{
   background-color: orangered;
   color: black;
 }
