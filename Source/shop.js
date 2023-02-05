@@ -119,7 +119,7 @@ window.addEventListener("load", async (event) => {
     let elem = document.createElement("div");
     elem.className = "item";
     elem.innerHTML = `<img src="${data[i].bigImg}" class = "itemImage">
-    <div class="itemName">${data[i].name}</div>
+    <div class="itemName"><a href = "localhost:3000/products?ID=${data[i].ID}">${data[i].name}</a></div>
     <div class = "description">${data[i].description}</div>
     <div class = "price">${formatPrice(data[i].price.toString())}</div>
     <div class = "orderBtn">Order</div>
@@ -277,21 +277,19 @@ window.addEventListener("load", async (event) => {
           }
         } else {
           for (let i = 0; i < items.length; i++) {
-            if (
-              collection[i].value === option.name &&
-              option.classList.contains("collectionFilter")
-            ) {
-              items[i].style.display = "none";
-            }
-            if (
-              type[i].value === option.name &&
-              option.classList.contains("typeFilter")
-            ) {
-              items[i].style.display = "none";
+            for(let j = 0; j < typeFilter.length; j++) {
+              for(let k = 0; k < collectionFilter.length; k++){
+                if(typeFilter[j].checked === false && collectionFilter[k].checked === false){
+                  if(type[i].value === typeFilter[j].name && collection[i].value === collection[k].name){
+                    items[i].style.display = "none";
+                  }
+                }
+              }
             }
           }
         }
       } else {
+        cbTracker = false;
         for (let i = 0; i < items.length; i++) {
           items[i].style.display = "none";
         }
@@ -300,6 +298,60 @@ window.addEventListener("load", async (event) => {
         }
         pageBar.style.display = "flex";
       }
+    });
+  });
+
+  checkboxLabel.forEach((label,index) => {
+    label.addEventListener("click", (event) => {
+      if (!noCheckboxState(checkbox)) {
+        pageBar.style.display = "none";
+        if (!cbTracker) {
+          for (let i = 0; i < items.length; i++) {
+            items[i].style.display = "none";
+          }
+          cbTracker = true;
+        }
+        if (checkbox[index].checked === true) {
+          for (let i = 0; i < items.length; i++) {
+            if (
+              collection[i].value === checkbox[index].name ||
+              type[i].value === checkbox[index].name
+            ) {
+              items[i].style.display = "flex";
+            }
+          }
+        } else {
+          for (let i = 0; i < items.length; i++) {
+            if (
+              collection[i].value === checkbox[index].name &&
+              checkbox[index].classList.contains("collectionFilter")
+            ) {
+              items[i].style.display = "none";
+            }
+            if (
+              type[i].value === checkbox[index].name &&
+              checkbox[index].classList.contains("typeFilter")
+            ) {
+              items[i].style.display = "none";
+            }
+          }
+        }
+      } else {
+        cbTracker = false;
+        for (let i = 0; i < items.length; i++) {
+          items[i].style.display = "none";
+        }
+        for (let i = 0; i < 12; i++) {
+          items[i].style.display = "flex";
+        }
+        pageBar.style.display = "flex";
+      }
+    });
+  })
+
+  items.forEach((item, index) => {
+    item.addEventListener("click", (event) => {
+      window.open(`localhost:3000/products?ID=${data[index].ID}`,'_blank');
     });
   });
 });
