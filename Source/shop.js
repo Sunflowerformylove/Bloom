@@ -9,6 +9,9 @@ const pageBar = document.querySelector(".pageBar");
 const checkbox = document.querySelectorAll(".option");
 const typeFilter = document.querySelectorAll(".type");
 const collectionFilter = document.querySelectorAll(".collection");
+const search = document.getElementById("search");
+const searchRec = document.querySelector(".searchRec");
+const searchItem = document.querySelector(".searchItem");
 
 let wishlistTracker = 0;
 let wliTracker = false;
@@ -60,6 +63,23 @@ function noCheckboxState(checkbox) {
   return true;
 }
 
+function deleteCharAtPos(str,pos){
+  for(let i = pos; i < str.length; i++) {
+    str[i] = str[i + 1];
+  }
+  str.length--;
+}
+
+function standardize(str) {
+  let newStr = str.toLowerCase().trim().split("");
+  for(let i = 0; i < newStr.length - 1; i++) {
+    if(newStr[i] === ' ' && newStr[i + 1] === ' '){
+      deleteCharAtPos(newStr,i);
+    }
+  }
+  return newStr.join("");
+}
+
 window.addEventListener("load", (event) => {
   if (loginState === "true") {
     const username = document.querySelector(".username");
@@ -104,7 +124,7 @@ checkboxLabel.forEach((item, index) => {
 
 window.addEventListener("load", async (event) => {
   let stream = await fetch("http://localhost:3000/api/products");
-  let data = await stream.json();
+  const data = await stream.json();
   let length = Object.keys(data).length;
   let pageNum = Math.ceil(length / 12);
 
@@ -119,7 +139,9 @@ window.addEventListener("load", async (event) => {
     let elem = document.createElement("div");
     elem.className = "item";
     elem.innerHTML = `<img src="${data[i].bigImg}" class = "itemImage">
-    <div class="itemName"><a href = "localhost:3000/products?ID=${data[i].ID}">${data[i].name}</a></div>
+    <div class="itemName"><a href = "localhost:3000/products?ID=${
+      data[i].ID
+    }">${data[i].name}</a></div>
     <div class = "description">${data[i].description}</div>
     <div class = "price">${formatPrice(data[i].price.toString())}</div>
     <div class = "orderBtn">Order</div>
@@ -277,10 +299,16 @@ window.addEventListener("load", async (event) => {
           }
         } else {
           for (let i = 0; i < items.length; i++) {
-            for(let j = 0; j < typeFilter.length; j++) {
-              for(let k = 0; k < collectionFilter.length; k++){
-                if(typeFilter[j].checked === false && collectionFilter[k].checked === false){
-                  if(type[i].value === typeFilter[j].name && collection[i].value === collection[k].name){
+            for (let j = 0; j < typeFilter.length; j++) {
+              for (let k = 0; k < collectionFilter.length; k++) {
+                if (
+                  typeFilter[j].checked === false &&
+                  collectionFilter[k].checked === false
+                ) {
+                  if (
+                    type[i].value === typeFilter[j].name &&
+                    collection[i].value === collection[k].name
+                  ) {
                     items[i].style.display = "none";
                   }
                 }
@@ -301,7 +329,7 @@ window.addEventListener("load", async (event) => {
     });
   });
 
-  checkboxLabel.forEach((label,index) => {
+  checkboxLabel.forEach((label, index) => {
     label.addEventListener("click", (event) => {
       if (!noCheckboxState(checkbox)) {
         pageBar.style.display = "none";
@@ -347,11 +375,78 @@ window.addEventListener("load", async (event) => {
         pageBar.style.display = "flex";
       }
     });
-  })
+  });
 
   items.forEach((item, index) => {
     item.addEventListener("click", (event) => {
-      window.open(`localhost:3000/products?ID=${data[index].ID}`,'_blank');
+      window.open(`localhost:3000/products?ID=${data[index].ID}`, "_blank");
     });
   });
+
+  search.addEventListener("keydown", (event) => {
+    searchRec.innerHTML = "";
+    let searchItemCount = 0;
+    for (let i = 0; i < length; i++) {
+      if (
+        (standardize(data[i].name).includes(standardize(search.value)) ||
+        standardize(data[i].collection).includes(standardize(search.value)) ||
+        standardize(data[i].type).includes(standardize(search.value))) && search.value.trim() !== ""
+      ) {
+        if (searchItemCount < 5) {
+          searchItemCount++;
+          let elem = document.createElement("div");
+          elem.className = "searchItem";
+          elem.innerHTML = `<div class="searchItem">
+        <img
+          src="${data[i].bigImg}"
+          class="siImage"
+        />
+        <div class="siText">
+          <div class="siName">${data[i].name}</div>
+          <div class="siDescription">${data[i].description}</div>
+          <div class="availStock">Available: ${data[i].stock}</div>
+        </div>
+      </div>`;
+          searchRec.appendChild(elem);
+        }
+      }
+    }
+  });
+  search.addEventListener("keyup", (event) => {
+    searchRec.innerHTML = "";
+    let searchItemCount = 0;
+    for (let i = 0; i < length; i++) {
+      if (
+        (standardize(data[i].name).includes(standardize(search.value)) ||
+        standardize(data[i].collection).includes(standardize(search.value)) ||
+        standardize(data[i].type).includes(standardize(search.value))) && search.value.trim() !== ""
+      ) {
+        if (searchItemCount < 5) {
+          searchItemCount++;
+          let elem = document.createElement("div");
+          elem.className = "searchItem";
+          elem.innerHTML = `<div class="searchItem">
+        <img
+          src="${data[i].bigImg}"
+          class="siImage"
+        />
+        <div class="siText">
+          <div class="siName">${data[i].name}</div>
+          <div class="siDescription">${data[i].description}</div>
+          <div class="availStock">Available: ${data[i].stock}</div>
+        </div>
+      </div>`;
+          searchRec.appendChild(elem);
+        }
+      }
+    }
+  })
+});
+
+search.addEventListener("focusin", (event) => {
+  searchRec.classList.add("active");
+});
+
+search.addEventListener("focusout", (event) => {
+  searchRec.classList.remove("active");
 });
