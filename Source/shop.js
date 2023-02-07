@@ -12,6 +12,8 @@ const collectionFilter = document.querySelectorAll(".collectionFilter");
 const search = document.getElementById("search");
 const searchRec = document.querySelector(".searchRec");
 const searchItem = document.querySelector(".searchItem");
+const searchForm = document.querySelector(".searchForm");
+const searchIcon = document.querySelector(".searchIcon");
 
 let wishlistTracker = 0;
 let wliTracker = false;
@@ -392,12 +394,33 @@ window.addEventListener("load", async (event) => {
       }
     });
   });
+
+  search.addEventListener("input", (event) => {
+    let searchTracker = 0;
+    searchRec.innerHTML = "";
+    if(search.value.length >= 2){
+      for(let i = 0; i < data.length; i++) {
+        if(standardize(data[i].name).includes(standardize(search.value)) || standardize(data[i].collection).includes(standardize(search.value)) || 
+          standardize(data[i].type).includes(standardize(search.value) && standardize(search.value) !== "")
+        ) {
+          if(searchTracker < 5){
+            let elem = document.createElement("div");
+            elem.className = "searchItem";
+            elem.innerHTML = `<img src="${data[i].bigImg}" class="siImage">
+            <div class="siText">
+                <div class="siName">${data[i].name}</div>
+                <div class="siDescription">${data[i].description}</div>
+                <div class="availStock">${data[i].stock}</div>
+            </div>`;
+            searchRec.appendChild(elem);
+            searchTracker++;
+          }
+        }
+      }
+    }
+  });
 });
 
-search.addEventListener("focusin", (event) => {
-  searchRec.classList.add("active");
-});
-
-search.addEventListener("focusout", (event) => {
-  searchRec.classList.remove("active");
+searchIcon.addEventListener('click', (event) => {
+  searchForm.submit();
 });

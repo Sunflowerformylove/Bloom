@@ -191,10 +191,11 @@ app.post(
 );
 
 app.get("/shop", (request, response) => {
-  database.query("SELECT * FROM shop.products", (err, result) => {
-    let product = result;
-    response.render("shop.ejs", { loginState: false, product: product });
-  });
+  response.render("shop.ejs", { loginState: false});
+});
+
+app.get("/shop/search", (request, response) => {
+  let searchParam = request.params.search;
 });
 
 app.post("/shop", (request, response) => {

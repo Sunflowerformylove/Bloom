@@ -34,12 +34,12 @@
           <a href="http://localhost:3000">Bloom</a>
         </li>
         <li class="navBarItem searchEngine">
-          <form method="GET" class="searchForm">
+          <form action = "http://localhost:3000/shop/search" method="GET" class="searchForm">
             <input type="text" name="search" id="search" />
             <i class="fa-solid fa-magnifying-glass searchIcon"></i>
+            <div class="searchRec">
+            </div>
           </form>
-          <div class="searchRec">
-          </div>
         </li>
         <%if (loginState) { %>
         <li class="navBarItem user">
