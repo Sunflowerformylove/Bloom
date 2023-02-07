@@ -7,8 +7,8 @@ const option = document.querySelectorAll(".option");
 const productBoard = document.querySelector(".productBoard");
 const pageBar = document.querySelector(".pageBar");
 const checkbox = document.querySelectorAll(".option");
-const typeFilter = document.querySelectorAll(".type");
-const collectionFilter = document.querySelectorAll(".collection");
+const typeFilter = document.querySelectorAll(".typeFilter");
+const collectionFilter = document.querySelectorAll(".collectionFilter");
 const search = document.getElementById("search");
 const searchRec = document.querySelector(".searchRec");
 const searchItem = document.querySelector(".searchItem");
@@ -63,8 +63,8 @@ function noCheckboxState(checkbox) {
   return true;
 }
 
-function deleteCharAtPos(str,pos){
-  for(let i = pos; i < str.length; i++) {
+function deleteCharAtPos(str, pos) {
+  for (let i = pos; i < str.length; i++) {
     str[i] = str[i + 1];
   }
   str.length--;
@@ -72,9 +72,9 @@ function deleteCharAtPos(str,pos){
 
 function standardize(str) {
   let newStr = str.toLowerCase().trim().split("");
-  for(let i = 0; i < newStr.length - 1; i++) {
-    if(newStr[i] === ' ' && newStr[i + 1] === ' '){
-      deleteCharAtPos(newStr,i);
+  for (let i = 0; i < newStr.length - 1; i++) {
+    if (newStr[i] === " " && newStr[i + 1] === " ") {
+      deleteCharAtPos(newStr, i);
     }
   }
   return newStr.join("");
@@ -146,7 +146,7 @@ window.addEventListener("load", async (event) => {
     <div class = "price">${formatPrice(data[i].price.toString())}</div>
     <div class = "orderBtn">Order</div>
     <input type="hidden" name="ID" value="${data[i].ID}" class = "itemID">
-    <input type="hidden" name="name" value="${
+    <input type="hidden" name="collection" value="${
       data[i].collection
     }" class = "collection">
     <input type="hidden" name="type" value="${data[i].type}" class = "type">`;
@@ -185,6 +185,11 @@ window.addEventListener("load", async (event) => {
   });
 
   orderBtn.forEach((button, index) => {
+    // if (loginState === "false") {
+    //   button.addEventListener("click", (event) => {
+    //     location.href = "/Public/Login/login.html";
+    //   });
+    // } else if (loginState === "true") {
     let unique = false;
     button.addEventListener("click", (event) => {
       if (!wliTracker) {
@@ -200,18 +205,18 @@ window.addEventListener("load", async (event) => {
           "application/x-www-form-urlencoded"
         );
         wishlistContainer.innerHTML = `<div class="wli">
-        <img src = "${itemImage[index].src}" class="wliImage" />
-        <div class="wliText">
-          <div class="wliName">${itemName[index].innerHTML}</div>
-          <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
-            data[index].price.toString()
-          )}</span></div>
-          <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
-          <input type="hidden" name="ID" value="${
-            data[index].ID
-          }" class = "wliID">
-        </div>
-      </div>`;
+          <img src = "${itemImage[index].src}" class="wliImage" />
+          <div class="wliText">
+            <div class="wliName">${itemName[index].innerHTML}</div>
+            <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
+              data[index].price.toString()
+            )}</span></div>
+            <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
+            <input type="hidden" name="ID" value="${
+              data[index].ID
+            }" class = "wliID">
+          </div>
+        </div>`;
         let proceedBtn = document.createElement("div");
         proceedBtn.className = "proceedBtn";
         proceedBtn.innerHTML = "Proceed";
@@ -228,22 +233,22 @@ window.addEventListener("load", async (event) => {
           elem.innerHTML = `<img src = "${
             itemImage[index].src
           }" class="wliImage" />
-          <div class="wliText">
-            <div class="wliName">${itemName[index].innerHTML}</div>
-            <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
-              data[index].price.toString()
-            )}</span></div>
-            <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
-            <input type="hidden" name="ID" value="${
-              data[index].ID
-            }" class = "wliID">
-          </div>`;
+            <div class="wliText">
+              <div class="wliName">${itemName[index].innerHTML}</div>
+              <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
+                data[index].price.toString()
+              )}</span></div>
+              <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
+              <input type="hidden" name="ID" value="${
+                data[index].ID
+              }" class = "wliID">
+            </div>`;
           wishlistContainer.appendChild(elem);
           unique = true;
         } else {
-          const wliID = document.querySelectorAll(".wliID");
           const priceText = document.querySelectorAll(".priceText");
           const quantityText = document.querySelectorAll(".quantityText");
+          const wliID = document.querySelectorAll(".wliID");
           wliID.forEach((ID, ind) => {
             if (ID.value === itemID[index].value) {
               if (quantityText[ind].value < 50) {
@@ -261,13 +266,27 @@ window.addEventListener("load", async (event) => {
         }
       }
     });
+    // }
   });
 
   setInterval(() => {
     const priceText = document.querySelectorAll(".priceText");
     const quantityText = document.querySelectorAll(".quantityText");
-    quantityText.forEach((text, idx) => {
+    quantityText.forEach(async (text, idx) => {
       text.addEventListener("change", (event) => {
+        priceText[idx].innerHTML = formatPrice(
+          (
+            data[parseInt(itemID[idx].value, 10)].price *
+            parseInt(quantityText[idx].value, 10)
+          ).toString()
+        );
+      });
+      text.addEventListener("focusout", (event) => {
+        if (parseInt(text.value, 10) > parseInt(text.max)) {
+          text.value = text.max;
+        } else if (text.value === "") {
+          text.value = 1;
+        }
         priceText[idx].innerHTML = formatPrice(
           (
             data[parseInt(itemID[idx].value, 10)].price *
@@ -298,18 +317,16 @@ window.addEventListener("load", async (event) => {
             }
           }
         } else {
-          for (let i = 0; i < items.length; i++) {
-            for (let j = 0; j < typeFilter.length; j++) {
-              for (let k = 0; k < collectionFilter.length; k++) {
-                if (
-                  typeFilter[j].checked === false &&
-                  collectionFilter[k].checked === false
-                ) {
-                  if (
-                    type[i].value === typeFilter[j].name &&
-                    collection[i].value === collection[k].name
-                  ) {
+          for(let i = 0; i < items.length; i++){
+            for(let j = 0; j < collectionFilter.length; j++){
+              for(let k = 0; k < typeFilter.length; k++){
+                if(collectionFilter[j].checked === false && typeFilter[k].checked === false){
+                  if(collection[i].value === collectionFilter[j].name && type[i].value === typeFilter[k].name){
+                    console.log(collection[i].value + " " + type[i].value);
                     items[i].style.display = "none";
+                  }
+                  else{
+                    items[i].style.display = "flex";
                   }
                 }
               }
@@ -349,18 +366,13 @@ window.addEventListener("load", async (event) => {
             }
           }
         } else {
-          for (let i = 0; i < items.length; i++) {
-            if (
-              collection[i].value === checkbox[index].name &&
-              checkbox[index].classList.contains("collectionFilter")
-            ) {
-              items[i].style.display = "none";
-            }
-            if (
-              type[i].value === checkbox[index].name &&
-              checkbox[index].classList.contains("typeFilter")
-            ) {
-              items[i].style.display = "none";
+          for(let i = 0; i < length; i++){
+            for(let j = 0; j < collectionFilter.length; j++){
+              for(let k = 0; k < typeFilter.length; k++){
+                if(collectionFilter[j].checked === false && typeFilter[k].checked === false && collection[i].value === collectionFilter[j].name && type[i].value === typeFilter[k].name){
+                  items[i].style.display = "none";
+                }
+              }
             }
           }
         }
@@ -376,71 +388,6 @@ window.addEventListener("load", async (event) => {
       }
     });
   });
-
-  items.forEach((item, index) => {
-    item.addEventListener("click", (event) => {
-      window.open(`localhost:3000/products?ID=${data[index].ID}`, "_blank");
-    });
-  });
-
-  search.addEventListener("keydown", (event) => {
-    searchRec.innerHTML = "";
-    let searchItemCount = 0;
-    for (let i = 0; i < length; i++) {
-      if (
-        (standardize(data[i].name).includes(standardize(search.value)) ||
-        standardize(data[i].collection).includes(standardize(search.value)) ||
-        standardize(data[i].type).includes(standardize(search.value))) && search.value.trim() !== ""
-      ) {
-        if (searchItemCount < 5) {
-          searchItemCount++;
-          let elem = document.createElement("div");
-          elem.className = "searchItem";
-          elem.innerHTML = `<div class="searchItem">
-        <img
-          src="${data[i].bigImg}"
-          class="siImage"
-        />
-        <div class="siText">
-          <div class="siName">${data[i].name}</div>
-          <div class="siDescription">${data[i].description}</div>
-          <div class="availStock">Available: ${data[i].stock}</div>
-        </div>
-      </div>`;
-          searchRec.appendChild(elem);
-        }
-      }
-    }
-  });
-  search.addEventListener("keyup", (event) => {
-    searchRec.innerHTML = "";
-    let searchItemCount = 0;
-    for (let i = 0; i < length; i++) {
-      if (
-        (standardize(data[i].name).includes(standardize(search.value)) ||
-        standardize(data[i].collection).includes(standardize(search.value)) ||
-        standardize(data[i].type).includes(standardize(search.value))) && search.value.trim() !== ""
-      ) {
-        if (searchItemCount < 5) {
-          searchItemCount++;
-          let elem = document.createElement("div");
-          elem.className = "searchItem";
-          elem.innerHTML = `<div class="searchItem">
-        <img
-          src="${data[i].bigImg}"
-          class="siImage"
-        />
-        <div class="siText">
-          <div class="siName">${data[i].name}</div>
-          <div class="siDescription">${data[i].description}</div>
-          <div class="availStock">Available: ${data[i].stock}</div>
-        </div>
-      </div>`;
-          searchRec.appendChild(elem);
-        }
-      }
-    }
-  })
 });
 
 search.addEventListener("focusin", (event) => {
