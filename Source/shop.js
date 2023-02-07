@@ -307,27 +307,26 @@ window.addEventListener("load", async (event) => {
           }
           cbTracker = true;
         }
-        if (option.checked === true) {
+        if (checkbox[index].checked === true) {
           for (let i = 0; i < items.length; i++) {
             if (
-              collection[i].value === option.name ||
-              type[i].value === option.name
+              collection[i].value === checkbox[index].name ||
+              type[i].value === checkbox[index].name
             ) {
               items[i].style.display = "flex";
             }
           }
         } else {
-          for(let i = 0; i < items.length; i++){
-            for(let j = 0; j < collectionFilter.length; j++){
-              for(let k = 0; k < typeFilter.length; k++){
-                if(collectionFilter[j].checked === false && typeFilter[k].checked === false){
-                  if(collection[i].value === collectionFilter[j].name && type[i].value === typeFilter[k].name){
-                    console.log(collection[i].value + " " + type[i].value);
-                    items[i].style.display = "none";
-                  }
-                  else{
-                    items[i].style.display = "flex";
-                  }
+          for (let i = 0; i < length; i++) {
+            for (let j = 0; j < collectionFilter.length; j++) {
+              for (let k = 0; k < typeFilter.length; k++) {
+                if (
+                  collectionFilter[j].checked === false &&
+                  typeFilter[k].checked === false &&
+                  collection[i].value === collectionFilter[j].name &&
+                  type[i].value === typeFilter[k].name
+                ) {
+                  items[i].style.display = "none";
                 }
               }
             }
@@ -366,10 +365,15 @@ window.addEventListener("load", async (event) => {
             }
           }
         } else {
-          for(let i = 0; i < length; i++){
-            for(let j = 0; j < collectionFilter.length; j++){
-              for(let k = 0; k < typeFilter.length; k++){
-                if(collectionFilter[j].checked === false && typeFilter[k].checked === false && collection[i].value === collectionFilter[j].name && type[i].value === typeFilter[k].name){
+          for (let i = 0; i < length; i++) {
+            for (let j = 0; j < collectionFilter.length; j++) {
+              for (let k = 0; k < typeFilter.length; k++) {
+                if (
+                  collectionFilter[j].checked === false &&
+                  typeFilter[k].checked === false &&
+                  collection[i].value === collectionFilter[j].name &&
+                  type[i].value === typeFilter[k].name
+                ) {
                   items[i].style.display = "none";
                 }
               }
