@@ -90,6 +90,7 @@ function loginFormHandler(request, response) {
           (err, result) => {
             if (err) throw err;
             let checkLogin = JSON.parse(JSON.stringify(result));
+            response.cookie('loginState', 'true');
             if (checkLogin[0].firstLogin === 1) {
               response.render("index.ejs", { ID: userID, loginState: true });
             } else {
@@ -195,7 +196,11 @@ app.get("/shop", (request, response) => {
 });
 
 app.get("/shop/search", (request, response) => {
-  let searchParam = request.params.search;
+  let searchParam = request.query.search;
+  database.query(`SELECT * FROM shop.products WHERE 'name' LIKE '%${searchParam}%' OR 'description' LIKE '%${searchParam}%' OR 'collection' LIKE '%${searchParam}%' OR 'type' LIKE '%${searchParam}%'`,(err, result) => {
+    if (err) throw err;
+    response.render('shop.ejs');
+  });
 });
 
 app.post("/shop", (request, response) => {
