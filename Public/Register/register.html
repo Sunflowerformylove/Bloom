@@ -1,59 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Assets/Style/base.css">
-    <link rel="stylesheet" href="/Assets/Style/style.css">
-    <link rel="stylesheet" href="/Assets/Style/register.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/Assets/Style/base.css" />
+    <link rel="stylesheet" href="/Assets/Style/style.css" />
+    <link rel="stylesheet" href="/Assets/Style/register.css" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
-        rel="stylesheet">
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="registerContainer">
-        <div class="webName" style = "font-size: 70px; position: absolute; top: 5%;">Bloom</div>
-        <form action="http://localhost:3000/registerResult" method="POST" class = "registerForm">
-            <div class="formText">Email</div>
-            <input type="email" name="registerEmail" id="registerEmail" required>
-            <div class="formText">Phone</div>
-            <input type="tel" name="registerPhone" id="registerPhone" required>
-            <div class="formText">Day Of Birth</div>
-            <input type="date" name="registerDOB" id="registerDOB" required>
-            <div class="formText">Username</div>
-            <input type="text" name="registerUsername" id="registerUsername" required>
-            <div class="formText">Password</div>
-            <input type="password" name="registerPassword" id="registerPassword" required>
-            <div class="formText">Confirm Password</div>
-            <input type="password" name="registerPassConfirm" id="registerPassConfirm" required>
-            <div class="passwordStrengthContainer">
-                <div class="passwordStrengthShell"><div class="passwordStrengthText">Weak</div> </div>
-                <div class="passwordStrengthIndicator"></div>
-            </div>
-        </form>
-        <div class="submitBtn"><i class="fa-solid fa-arrow-right" style = "font-size: 5rem;"></i></div>
+      <div class="webName" style="font-size: 70px; position: absolute; top: 5%">
+        Bloom
+      </div>
+      <form
+        action="http://localhost:3000/registerResult"
+        method="POST"
+        class="registerForm"
+      >
+        <div class="formText">Email</div>
+        <input type="email" name="registerEmail" id="registerEmail" required />
+        <div class="formText">Phone</div>
+        <input type="tel" name="registerPhone" id="registerPhone" required />
+        <div class="formText">Day Of Birth</div>
+        <input type="date" name="registerDOB" id="registerDOB" required />
+        <div class="formText">Username</div>
+        <input
+          type="text"
+          name="registerUsername"
+          id="registerUsername"
+          required
+        />
+        <div class="formText">Password</div>
+        <input
+          type="password"
+          name="registerPassword"
+          id="registerPassword"
+          required
+        />
+        <div class="formText">Confirm Password</div>
+        <input
+          type="password"
+          name="registerPassConfirm"
+          id="registerPassConfirm"
+          required
+        />
+        <div class="passwordStrengthContainer">
+          <div class="passwordStrengthShell">
+            <div class="passwordStrengthText">Weak</div>
+          </div>
+          <div class="passwordStrengthIndicator"></div>
+        </div>
+      </form>
+      <div class="submitBtn">
+        <i class="fa-solid fa-arrow-right" style="font-size: 5rem"></i>
+      </div>
     </div>
-</body>
-<script src="/Source/register.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+  </body>
+  <script src="/Source/register.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
     integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"
     integrity="sha512-Kef5sc7gfTacR7TZKelcrRs15ipf7+t+n7Zh6mKNJbmW+/RRdCW9nwfLn4YX0s2nO6Kv5Y2ChqgIakaC6PW09A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
 </html>

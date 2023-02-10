@@ -11,7 +11,29 @@ const cors = require("cors");
 const fs = require("fs"); //file-stream
 const multer = require("multer");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const mysqlSession = require("express-mysql-session")(session);
 const port = process.env.port || 3000;
+
+const storeOption = {
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "Haido29904@",
+  database: "login_data",
+  clearExpired: true,
+  checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
+  expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+  createDatabaseTable: true,
+  schema : {
+    tableName: "session",
+    columnNames: {
+      session_id: "sessionID",
+      expires: "expires",
+      data: "data",
+    }
+  }
+}
 
 const app = express();
 app.use(cookieParser());
@@ -26,6 +48,18 @@ app.use(express.static(path.join(__dirname + "/Public")));
 app.use(express.static(path.join(__dirname + "/views/partials")));
 app.use(morgan("combined"));
 app.use(cors());
+app.use(session
+  ({
+  name: "userSession",
+  store: new mysqlSession(storeOption),
+  secret: "my precious",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+  }
+})
+);
 app.set("view engine", "ejs");
 
 let date = new Date();
@@ -62,7 +96,7 @@ function registerFormHandler(request, response) {
       } else {
         console.log("Success");
         database.query(
-          `INSERT INTO login_data.register_info(username,pass,email,phone,DOB) VALUES('${user}','${password}','${email}','${phone}','${DOB}', 0);`,
+          `INSERT INTO login_data.register_info(username,pass,email,phone,DOB,firstLogin) VALUES('${user}','${password}','${email}','${phone}','${DOB}', 0);`,
           (err) => {
             if (err) throw err;
             response.render("registerSuccess.ejs", { username: user });
@@ -90,9 +124,11 @@ function loginFormHandler(request, response) {
           (err, result) => {
             if (err) throw err;
             let checkLogin = JSON.parse(JSON.stringify(result));
-            response.cookie('loginState', 'true');
             if (checkLogin[0].firstLogin === 1) {
-              response.render("index.ejs", { ID: userID, loginState: true });
+              if(!request.cookie){
+                request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
+                response.render("index.ejs", { ID: userID, loginState: true });
+              }
             } else {
               response.render("CreateProfile.ejs", { ID: userID });
             }
@@ -115,13 +151,25 @@ function profileHandler(request, response) {
   );
 }
 
+
 app.listen(port, (err) => {
   if (err) throw err;
   console.log("Connection established at port: " + port);
 });
 
 app.get("/", (request, response) => {
-  response.render("index.ejs", { loginState: false });
+  if(!request.cookies){
+    console.log("No user session");
+    response.render("index.ejs", { loginState: false });
+  }
+  else{
+    database.query(`SELECT data FROM login_data.session WHERE sessionID = '${request.sessionID}'`, (err, result) => {
+      if (err) throw err;
+      let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data);
+      console.log(data.user);
+      response.render("index.ejs", { loginState: true, ID: data.user.userID});
+    });
+  }
 });
 
 app.post("/", (request, response) => {
