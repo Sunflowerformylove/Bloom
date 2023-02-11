@@ -21,6 +21,8 @@ const userProfile = document.querySelector('.userProfile');
 const profileForm = document.querySelector('.profileForm');
 const shopForm = document.querySelector('.shopForm');
 const shop = document.querySelector('.shop');
+const signOutForm = document.querySelector('.signOutForm');
+const signOut = document.querySelector('.signOut');
 
 //user-defined variables
 let playTracker = 0;
@@ -140,4 +142,8 @@ userProfile.addEventListener('click', (event) => {
 
 shop.addEventListener('click', (event) => {
   shopForm.submit();
+});
+
+signOut.addEventListener('click', (event) => {
+  signOutForm.submit();
 });

@@ -16,10 +16,10 @@ const mysqlSession = require("express-mysql-session")(session);
 const port = process.env.port || 3000;
 
 const storeOption = {
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "Haido29904@",
+  host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+  port: '3306',
+  user: "admin",
+  password: "Haido29904",
   database: "login_data",
   clearExpired: true,
   checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
@@ -163,12 +163,21 @@ app.get("/", (request, response) => {
     response.render("index.ejs", { loginState: false });
   }
   else{
-    database.query(`SELECT data FROM login_data.session WHERE sessionID = '${request.sessionID}'`, (err, result) => {
-      if (err) throw err;
-      let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data);
-      console.log(data.user);
-      response.render("index.ejs", { loginState: true, ID: data.user.userID});
-    });
+    let signOut = request.query.signOut;
+    if(signOut === undefined){
+      database.query(`SELECT data FROM login_data.session WHERE sessionID = '${request.sessionID}'`, (err, result) => {
+        if (err) throw err;
+        let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data);
+        console.log(data.user);
+        response.render("index.ejs", { loginState: true, ID: data.user.userID});
+      });
+    }
+    else if(signOut === "true"){
+      Session.destroy(() => {
+        response.clearCookie("userSession");
+        response.render("index.ejs", { loginState: false });
+      })
+    }
   }
 });
 
@@ -276,9 +285,10 @@ app.get('/api/products',(request, response) => {
 });
 
 const database = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Haido29904@",
+  host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+  user: "admin",
+  password: "Haido29904",
+  port: '3306',
 });
 
 database.connect((err) => {

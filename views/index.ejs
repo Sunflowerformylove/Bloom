@@ -55,8 +55,11 @@
                                     class="profileForm">
                                     <input type="text" name="ID" value="<%-ID%>">
                                 </form>
-                                <li><i class="fa-solid fa-right-from-bracket" style="margin-right: 1rem;"></i>Sign Out
+                                <li class = "signOut"><i class="fa-solid fa-right-from-bracket" style="margin-right: 1rem;"></i>Sign Out
                                 </li>
+                                <form action="/" method="GET" style = "display: none" class = "signOutForm">
+                                    <input type="hidden" name="signOut" value= true>
+                                </form>
                                 <% } %>
         </ul>
     </div>
