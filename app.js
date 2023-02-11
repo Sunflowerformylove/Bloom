@@ -162,23 +162,6 @@ app.get("/", (request, response) => {
     console.log("No user session");
     response.render("index.ejs", { loginState: false });
   }
-  else{
-    let signOut = request.query.signOut;
-    if(signOut === undefined){
-      database.query(`SELECT data FROM login_data.session WHERE sessionID = '${request.sessionID}'`, (err, result) => {
-        if (err) throw err;
-        let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data);
-        console.log(data.user);
-        response.render("index.ejs", { loginState: true, ID: data.user.userID});
-      });
-    }
-    else if(signOut === "true"){
-      Session.destroy(() => {
-        response.clearCookie("userSession");
-        response.render("index.ejs", { loginState: false });
-      })
-    }
-  }
 });
 
 app.post("/", (request, response) => {
