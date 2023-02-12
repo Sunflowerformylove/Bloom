@@ -150,6 +150,9 @@ select{
     cursor: pointer;
     margin-left: 1rem;
     margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 .saveBtn{
