@@ -30,12 +30,12 @@
             <div class="menuLine"></div>
         </div>
         <ul class="menuItem">
-            <li><i class="fas fa-house" style="margin-right: 1rem;"></i><a href="/">Home</a></li>
+            <li><i class="fas fa-house" style="margin-right: 1rem;"></i><a href="http://13.212.254.213:3000">Home</a></li>
             <% if (!loginState) { %>
-                <li><a href="http://localhost:3000/shop"><i class="fas fa-cart-shopping"
+                <li><a href="http://13.212.254.213:3000/shop"><i class="fas fa-cart-shopping"
                             style="margin-right: 1rem;"></i>Shop</a></li>
                 <% } else { %>
-                    <form action="http://localhost:3000/shop" method="POST" class="shopForm" style="display: none;">
+                    <form action="http://13.212.254.213:3000/shop" method="POST" class="shopForm" style="display: none;">
                         <input type="hidden" name="ID" value=<%=ID%>>
                     </form>
                     <li class="shop"><i class="fas fa-cart-shopping" style="margin-right: 1rem;"></i>Shop</li>
@@ -51,7 +51,7 @@
                                 <li class="userProfile"><i class="fa-solid fa-user"
                                         style="margin-right: 1rem;"></i></i>Profile
                                 </li>
-                                <form action="http://localhost:3000/user" method="GET" style="display: none;"
+                                <form action="http://13.212.254.213:3000/user" method="GET" style="display: none;"
                                     class="profileForm">
                                     <input type="text" name="ID" value="<%-ID%>">
                                 </form>
