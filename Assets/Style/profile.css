@@ -139,8 +139,7 @@ select{
 
 .interest{
     width: auto;
-    height: 100%;
-    padding: 1rem;
+    padding: .5rem 1rem;
     font-size: 2rem;
     line-height: 100%;
     text-align: center;
