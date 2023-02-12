@@ -35,6 +35,26 @@ const storeOption = {
   }
 }
 
+// const storeOption = {
+//     host: "localhost",
+//     port: '3306',
+//     user: "root",
+//     password: "Haido29904@",
+//     database: "login_data",
+//     clearExpired: true,
+//     checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
+//     expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+//     createDatabaseTable: true,
+//     schema : {
+//       tableName: "session",
+//       columnNames: {
+//         session_id: "sessionID",
+//         expires: "expires",
+//         data: "data",
+//       }
+//     }
+//   }
+
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -125,11 +145,12 @@ function loginFormHandler(request, response) {
             if (err) throw err;
             let checkLogin = JSON.parse(JSON.stringify(result));
             if (checkLogin[0].firstLogin === 1) {
-              if(!request.cookie){
+              if(Object.keys(request.cookies).length === 0){
                 request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
                 response.render("index.ejs", { ID: userID, loginState: true });
               }
             } else {
+              request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
               response.render("CreateProfile.ejs", { ID: userID });
             }
           }
@@ -158,9 +179,17 @@ app.listen(port, (err) => {
 });
 
 app.get("/", (request, response) => {
-  if(!request.cookies){
+  if(Object.keys(request.cookies).length === 0){
     console.log("No user session");
     response.render("index.ejs", { loginState: false });
+  }
+  else{
+    let session = request.sessionID;
+    database.query(`SELECT data FROM login_data.session WHERE sessionID = '${session}'`, (err, result) => {
+      if (err) throw err;
+      let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data).user;
+      response.render("index.ejs", { ID: data.userID, loginState: true, ID: data.userID});
+    });
   }
 });
 
@@ -273,6 +302,14 @@ const database = mysql.createConnection({
   password: "Haido29904",
   port: '3306',
 });
+
+// const database = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "Haido29904@",
+//   port: '3306',
+// });
+
 
 database.connect((err) => {
   if (err) throw err;
