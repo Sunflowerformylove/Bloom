@@ -23,11 +23,13 @@ const shopForm = document.querySelector('.shopForm');
 const shop = document.querySelector('.shop');
 const signOutForm = document.querySelector('.signOutForm');
 const signOut = document.querySelector('.signOut');
+const section = document.querySelectorAll('.section');
 
 //user-defined variables
 let playTracker = 0;
 let menuTracker = 0;
-let scrollPosition = 0;
+let previousScrollPosition = window.scrollY;
+let index = 0;
 
 //functions
 function parallax(parent, child) {
@@ -48,20 +50,6 @@ function checkInView(element) {
     return true;
   }
   return false;
-}
-
-function checkScroll() {
-  let goingDown = false;
-
-  let scrollPosition = window.pageYOffset;
-
-  if (scrollPosition > previousScrollPosition) {
-    goingDown = true;
-  }
-
-  previousScrollPosition = scrollPosition;
-
-  return goingDown;
 }
 
 //DOM event handler
