@@ -79,10 +79,11 @@ img{
 }
 
 .avatar {
-  width: 4rem;
-  height: 4rem;
+  width: 7rem;
+  height: 7rem;
   object-fit: cover;
   object-position: center;
+  border-radius: 10px;
 }
 
 .userDropDown {
@@ -90,8 +91,8 @@ img{
   width: 20rem;
   height: 20rem;
   background-color: white;
-  right: 5.5%;
-  top: 65%;
+  right: 5%;
+  top: 12%;
   display: none;
   z-index: 9999;
 }

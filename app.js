@@ -1,5 +1,6 @@
 "use strict";
 const express = require("express");
+const AWS = require('aws-sdk');
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const lodash = require("lodash");
