@@ -124,14 +124,18 @@ backToTop.addEventListener("click", (event) => {
   window.scrollTo(0, 0);
 });
 
-userProfile.addEventListener('click', (event) => {
-  profileForm.submit();
-});
-
 shop.addEventListener('click', (event) => {
   shopForm.submit();
 });
 
 signOut.addEventListener('click', (event) => {
   signOutForm.submit();
+});
+
+window.addEventListener('load', (event) => {
+  if(loginState === 'true'){
+    userProfile.addEventListener('click', (event) => {
+      profileForm.submit();
+    });
+  }
 });
