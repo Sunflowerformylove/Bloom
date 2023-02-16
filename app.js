@@ -16,16 +16,17 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session")(session);
 const port = process.env.port || 3000;
-const awsConfig = require("./JSON/config.json");
-const BUCKET = awsConfig.BUCKET;
-const REGION = awsConfig.REGION;
-const ACCESS_KEY = awsConfig.ACCESS_KEY;
-const SECRET_KEY = awsConfig.SECRET_KEY;
+const awsConfig = {
+  BUCKET: "bloomproj",
+  REGION: "ap-southeast-1",
+  ACCESS_KEY: "AKIA2V2KZNBWFIQ4IB6I",
+  SECRET_KEY: "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"
+}
 
 aws.config.update({
-  accessKeyId: ACCESS_KEY,
-  secretAccessKey: SECRET_KEY,
-  region: REGION,
+  accessKeyId: awsConfig.ACCESS_KEY,
+  secretAccessKey: awsConfig.SECRET_KEY,
+  region: awsConfig.REGION,
 });
 
 const S3 = new aws.S3();
