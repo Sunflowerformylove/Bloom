@@ -125,7 +125,7 @@ checkboxLabel.forEach((item, index) => {
 });
 
 window.addEventListener("load", async (event) => {
-  let stream = await fetch("http://localhost:3000/api/products");
+  let stream = await fetch("http://3.0.56.15:3000/api/products");
   const data = await stream.json();
   let length = Object.keys(data).length;
   let pageNum = Math.ceil(length / 12);
@@ -141,7 +141,7 @@ window.addEventListener("load", async (event) => {
     let elem = document.createElement("div");
     elem.className = "item";
     elem.innerHTML = `<img src="${data[i].bigImg}" class = "itemImage">
-    <div class="itemName"><a href = "localhost:3000/products?ID=${
+    <div class="itemName"><a href = "3.0.56.15:3000/products?ID=${
       data[i].ID
     }">${data[i].name}</a></div>
     <div class = "description">${data[i].description}</div>
@@ -200,7 +200,7 @@ window.addEventListener("load", async (event) => {
         wishlistContainer.setAttribute("method", "POST");
         wishlistContainer.setAttribute(
           "action",
-          "http://localhost:3000/payment"
+          "http://3.0.56.15:3000/payment"
         );
         wishlistContainer.setAttribute(
           "enctype",
