@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: none !important;
+    -webkit-user-select: none;
+    user-select: none;
+    scroll-behavior: smooth;
+    text-rendering: geometricPrecision;
+    image-rendering: auto;
+    shape-rendering: geometricPrecision;
+}
+
+html{
+    font-size: 10px;
+}
+
+*::-webkit-scrollbar{
+    display: none !important;
+}
+
+a{
+    text-decoration: none;
+    color: currentColor;
+}
+
+a:visited{
+    text-decoration: none;
+    color: currentColor;
+}
+
+li{
+    list-style: none;
+}
+
+.formText{
+    font-size: 3rem;
+    font-family: 'Arima', serif;
+    font-weight: 600;
+    margin-left: 10%;
+}

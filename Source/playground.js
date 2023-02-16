@@ -17,12 +17,8 @@ const aquaticShowcase = document.getElementById("aquaticShowcase");
 const aquaticBtn = document.querySelector(".aquaticBtn");
 const mountainShowcase = document.getElementById("mountainShowcase");
 const mountainBtn = document.querySelector(".mountainBtn");
-const userProfile = document.querySelector('.userProfile');
-const profileForm = document.querySelector('.profileForm');
 const shopForm = document.querySelector('.shopForm');
 const shop = document.querySelector('.shop');
-const signOutForm = document.querySelector('.signOutForm');
-const signOut = document.querySelector('.signOut');
 const section = document.querySelectorAll('.section');
 
 //user-defined variables
@@ -128,14 +124,24 @@ shop.addEventListener('click', (event) => {
   shopForm.submit();
 });
 
-signOut.addEventListener('click', (event) => {
-  signOutForm.submit();
-});
-
 window.addEventListener('load', (event) => {
+  const signOutForm = document.querySelector('.signOutForm');
+  const signOut = document.querySelector('.signOut');
+  const userProfile = document.querySelector('.userProfile');
+  const profileForm = document.querySelector('.profileForm');
   if(loginState === 'true'){
     userProfile.addEventListener('click', (event) => {
       profileForm.submit();
     });
+    signOut.addEventListener('click', (event) => {
+      signOutForm.submit();
+    });
   }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  let lazyLoadInstance = new LazyLoad({
+
+  });
+  lazyLoadInstance.update();
 });

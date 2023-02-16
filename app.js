@@ -10,11 +10,25 @@ const mongo = require("mongodb");
 const path = require("path");
 const cors = require("cors");
 const fs = require("fs"); //file-stream
-const multer = require("multer");
+const multer = require("multer"); //file upload to local filesystem
+const multerS3 = require('multer-s3'); //file upload to Amazon S3
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session")(session);
 const port = process.env.port || 3000;
+const awsConfig = require("./JSON/config.json");
+const BUCKET = awsConfig.BUCKET;
+const REGION = awsConfig.REGION;
+const ACCESS_KEY = awsConfig.ACCESS_KEY;
+const SECRET_KEY = awsConfig.SECRET_KEY;
+
+aws.config.update({
+  accessKeyId: ACCESS_KEY,
+  secretAccessKey: SECRET_KEY,
+  region: REGION,
+});
+
+const S3 = new aws.S3();
 
 // const storeOption = {
 //   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
@@ -87,7 +101,7 @@ let date = new Date();
 let dateOfMonth = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
-let storage = multer.diskStorage({
+let storageLocal = multer.diskStorage({
   destination: (request, avatar, callback) => {
     callback(null, path.join(__dirname + "/Assets/Images/ProfilePic"));
   },
@@ -99,7 +113,18 @@ let storage = multer.diskStorage({
   },
 });
 
-let upload = multer({ storage: storage });
+let storageS3 = multerS3({
+  s3: S3,
+  bucket: 'bloomproj',
+  metadata: function (req, file, cb) {
+    cb(null, {fieldName: file.fieldname});
+  },
+  key: function (req, file, cb) {
+    cb(null, `/Assets/Images/ProfilePic/${Date.now().toString()}${file.originalname}`);
+  }
+})
+
+let upload = multer({ storage: storageS3 });
 
 function registerFormHandler(request, response) {
   let user = request.body.registerUsername;
@@ -180,18 +205,26 @@ app.listen(port, (err) => {
 });
 
 app.get("/", (request, response) => {
-  if(Object.keys(request.cookies).length === 0){
-    console.log("No user session");
-    response.render("index.ejs", { loginState: false });
+  let signOut = request.query.signOut;
+  if (signOut === undefined) {
+    if(Object.keys(request.cookies).length === 0){
+      console.log("No user session");
+      response.render("index.ejs", { loginState: false });
+    }
+    else{
+      let session = request.sessionID;
+      database.query(`SELECT data FROM login_data.session WHERE sessionID = '${session}'`, (err, result) => {
+        if (err) throw err;
+        let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data).user;
+        response.render("index.ejs", { ID: data.userID, loginState: true});
+      });
+    }
   }
-  else{
-    let session = request.sessionID;
-    database.query(`SELECT data FROM login_data.session WHERE sessionID = '${session}'`, (err, result) => {
-      if (err) throw err;
-      let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data).user;
-      response.render("index.ejs", { ID: data.userID, loginState: true, ID: data.userID});
-    });
-  }
+  else if(signOut === "true") {
+    request.session.destroy();
+    response.clearCookie("userSession");
+    response.render("index.ejs", {loginState: false});
+  };
 });
 
 app.post("/", (request, response) => {
