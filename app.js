@@ -30,45 +30,45 @@ aws.config.update({
 
 const S3 = new aws.S3();
 
-// const storeOption = {
-//   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
-//   port: '3306',
-//   user: "admin",
-//   password: "Haido29904",
-//   database: "login_data",
-//   clearExpired: true,
-//   checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
-//   expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
-//   createDatabaseTable: true,
-//   schema : {
-//     tableName: "session",
-//     columnNames: {
-//       session_id: "sessionID",
-//       expires: "expires",
-//       data: "data",
-//     }
-//   }
-// }
-
 const storeOption = {
-    host: "localhost",
-    port: '3306',
-    user: "root",
-    password: "Haido29904@",
-    database: "login_data",
-    clearExpired: true,
-    checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
-    expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
-    createDatabaseTable: true,
-    schema : {
-      tableName: "session",
-      columnNames: {
-        session_id: "sessionID",
-        expires: "expires",
-        data: "data",
-      }
+  host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+  port: '3306',
+  user: "admin",
+  password: "Haido29904",
+  database: "login_data",
+  clearExpired: true,
+  checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
+  expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+  createDatabaseTable: true,
+  schema : {
+    tableName: "session",
+    columnNames: {
+      session_id: "sessionID",
+      expires: "expires",
+      data: "data",
     }
   }
+}
+
+// const storeOption = {
+//     host: "3.0.56.15",
+//     port: '3306',
+//     user: "root",
+//     password: "Haido29904@",
+//     database: "login_data",
+//     clearExpired: true,
+//     checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
+//     expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+//     createDatabaseTable: true,
+//     schema : {
+//       tableName: "session",
+//       columnNames: {
+//         session_id: "sessionID",
+//         expires: "expires",
+//         data: "data",
+//       }
+//     }
+//   }
 
 const app = express();
 app.use(cookieParser());
@@ -330,19 +330,19 @@ app.get('/api/products',(request, response) => {
   })
 });
 
-// const database = mysql.createConnection({
-//   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
-//   user: "admin",
-//   password: "Haido29904",
-//   port: '3306',
-// });
-
 const database = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Haido29904@",
+  host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+  user: "admin",
+  password: "Haido29904",
   port: '3306',
 });
+
+// const database = mysql.createConnection({
+//   host: "3.0.56.15",
+//   user: "root",
+//   password: "Haido29904@",
+//   port: '3306',
+// });
 
 
 database.connect((err) => {
