@@ -52,10 +52,10 @@ const S3 = new aws.S3();
 // }
 
 const storeOption = {
-    host: "localhost",
+    host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
     port: '3306',
-    user: "root",
-    password: "Haido29904@",
+    user: "admin",
+    password: "Haido29904",
     database: "login_data",
     clearExpired: true,
     checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
