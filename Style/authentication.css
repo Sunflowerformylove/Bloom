@@ -1,0 +1,76 @@
+.authenContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.message{
+    font-size: 1.4rem;
+    text-align: center;
+    font-family: 'Arima', serif;
+}
+
+.lock{
+    width: 5rem;
+    height: 5rem;
+    border: 5px solid #4392d2;
+    border-radius: 100%;
+    position: relative;
+    background-color: white;
+    z-index: 1;
+    margin-top: 1rem;
+}
+
+.lock::before{
+    content: "";
+    z-index: -1;
+    position: absolute;
+    left: .9rem;
+    top: -2.5rem;
+    width: 2.5rem;
+    height: 2.2rem;
+    border: 5px solid #4392d2;
+    border-top-right-radius: 100%;
+    border-top-left-radius: 100%;
+    border-bottom: 0;
+    border-bottom-left-radius: 10%;
+    border-bottom-right-radius: 10%;
+}
+
+.lock::after{
+    content: "";
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    width: 5px;
+    height: 1rem;
+    background-color: #4392d2;
+}
+
+.codeInputContainer{
+    width: 40%;
+    height: 20%;
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    background-color: white;
+}
+
+input{
+    width: 13%;
+    height: 100%;
+    border-radius: 20px;
+    border: 1px solid #398cd0;
+    outline: none;
+}
+
+.codeInput{
+    font-family: 'Arima', serif;
+    font-size: 4rem;
+    text-align: center;
+    caret-color: #398cd0;
+    position: relative;
+}

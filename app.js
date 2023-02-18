@@ -15,6 +15,10 @@ const multerS3 = require('multer-s3'); //file upload to Amazon S3
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session")(session);
+const crypto = require("crypto-js");
+const speakeasy = require("speakeasy");
+const nodemailer = require("nodemailer");
+const qrCode = require("qrcode");
 const port = process.env.port || 3000;
 const awsConfig = {
   BUCKET: "bloomproj",
@@ -31,32 +35,11 @@ aws.config.update({
 
 const S3 = new aws.S3();
 
-// const storeOption = {
-//     host: "3.0.56.15",
-//     port: '3306',
-//     user: "root",
-//     password: "Haido29904@",
-//     database: "login_data",
-//     clearExpired: true,
-//     checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
-//     expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
-//     createDatabaseTable: true,
-//     schema : {
-//       tableName: "session",
-//       columnNames: {
-//         session_id: "sessionID",
-//         expires: "expires",
-//         data: "data",
-//       }
-//     }
-//   }
-// }
-
 const storeOption = {
-    host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+    host: "localhost",
     port: '3306',
-    user: "admin",
-    password: "Haido29904",
+    user: "root",
+    password: "Haido29904@",
     database: "login_data",
     clearExpired: true,
     checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
@@ -71,6 +54,26 @@ const storeOption = {
       }
     }
   }
+
+// const storeOption = {
+//     host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+//     port: '3306',
+//     user: "admin",
+//     password: "Haido29904",
+//     database: "login_data",
+//     clearExpired: true,
+//     checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
+//     expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+//     createDatabaseTable: true,
+//     schema : {
+//       tableName: "session",
+//       columnNames: {
+//         session_id: "sessionID",
+//         expires: "expires",
+//         data: "data",
+//       }
+//     }
+//   }
 
 const app = express();
 app.use(cookieParser());
@@ -139,10 +142,8 @@ function registerFormHandler(request, response) {
     (err, result) => {
       if (err) throw err;
       if (Object.keys(result).length !== 0) {
-        console.log("Failed");
         response.render("registerFailed.ejs");
       } else {
-        console.log("Success");
         database.query(
           `INSERT INTO login_data.register_info(username,pass,email,phone,DOB,firstLogin) VALUES('${user}','${password}','${email}','${phone}','${DOB}', 0);`,
           (err) => {
@@ -300,6 +301,10 @@ app.get("/shop", (request, response) => {
   response.render("shop.ejs", { loginState: false});
 });
 
+app.get("/authentication",(request, response) => {
+  response.render("authentication.ejs");
+});
+
 app.get("/shop/search", (request, response) => {
   let searchParam = request.query.search;
   database.query(`SELECT * FROM shop.products WHERE 'name' LIKE '%${searchParam}%' OR 'description' LIKE '%${searchParam}%' OR 'collection' LIKE '%${searchParam}%' OR 'type' LIKE '%${searchParam}%'`,(err, result) => {
@@ -332,19 +337,19 @@ app.get('/api/products',(request, response) => {
   })
 });
 
-const database = mysql.createConnection({
-  host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
-  user: "admin",
-  password: "Haido29904",
-  port: '3306',
-});
-
 // const database = mysql.createConnection({
-//   host: "3.0.56.15",
-//   user: "root",
-//   password: "Haido29904@",
+//   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
+//   user: "admin",
+//   password: "Haido29904",
 //   port: '3306',
 // });
+
+const database = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Haido29904@",
+  port: '3306',
+});
 
 
 database.connect((err) => {
