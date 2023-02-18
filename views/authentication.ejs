@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/Style/authentication.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Serif:ital,opsz,wght@0,8..144,100;0,8..144,200;0,8..144,300;0,8..144,400;0,8..144,500;0,8..144,600;0,8..144,700;0,8..144,800;0,8..144,900;1,8..144,100;1,8..144,200;1,8..144,300;1,8..144,400;1,8..144,500;1,8..144,600;1,8..144,700;1,8..144,800;1,8..144,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="authenContainer">
+      <strong style = "font-size: 2.6rem; font-family: 'Arima', serif; font-weight: 800;">Please check your email</strong>
+      <div class="message">We've send you a 6-digit secret code to !</div>
+      <div class="lock"></div>
+      <div class="codeInputContainer">
+        <input type="text" class="codeInput" maxlength="1">
+        <input type="text" class="codeInput" maxlength="1">
+        <input type="text" class="codeInput" maxlength="1">
+        <input type="text" class="codeInput" maxlength="1">
+        <input type="text" class="codeInput" maxlength="1">
+        <input type="text" class="codeInput" maxlength="1">
+      </div>
+      <form method="POST" class="codeChecking">
+        <input type="hidden" name="codeResult" class="result">
+      </form>
+    </div>
+  </body>
+  <script src="/Source/authentication.js"></script>
+</html>
