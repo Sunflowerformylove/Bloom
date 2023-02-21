@@ -1,3 +1,12 @@
+@keyframes slideButton{
+    to{
+        background-position: 0%;
+    }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+
 .authenContainer{
     width: 100vw;
     height: 100vh;
@@ -73,4 +82,19 @@ input{
     text-align: center;
     caret-color: #398cd0;
     position: relative;
+}
+
+.slidingBtn{
+    background-image: linear-gradient(to right, #050607 0%, #4BC973 33%, #050607 66%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-size: 5rem;
+    font-family: "Poppins", sans-serif;
+    border: none;
+    cursor: pointer;
+    color: transparent;
+    animation: slideButton 1s ease-out infinite alternate;
 }

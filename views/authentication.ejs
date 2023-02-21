@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/Style/authentication.css">
+    <link rel="stylesheet" href="/Style/authentication.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
@@ -27,21 +27,34 @@
   </head>
   <body>
     <div class="authenContainer">
-      <strong style = "font-size: 2.6rem; font-family: 'Arima', serif; font-weight: 800;">Please check your email</strong>
-      <div class="message">We've send you a 6-digit secret code to !</div>
-      <div class="lock"></div>
-      <div class="codeInputContainer">
-        <input type="text" class="codeInput" maxlength="1">
-        <input type="text" class="codeInput" maxlength="1">
-        <input type="text" class="codeInput" maxlength="1">
-        <input type="text" class="codeInput" maxlength="1">
-        <input type="text" class="codeInput" maxlength="1">
-        <input type="text" class="codeInput" maxlength="1">
+      <strong
+        style="font-size: 2.6rem; font-family: 'Arima', serif; font-weight: 800"
+        >Please check your email</strong
+      >
+      <div class="message">
+        We've sent you a 6-digit secret code to <%= email %>!
       </div>
-      <form method="POST" class="codeChecking">
-        <input type="hidden" name="codeResult" class="result">
+      <div class="lock"></div>
+      <div method = "POST" class="codeInputContainer">
+        <input type="text" class="codeInput" maxlength="1" />
+        <input type="text" class="codeInput" maxlength="1" />
+        <input type="text" class="codeInput" maxlength="1" />
+        <input type="text" class="codeInput" maxlength="1" />
+        <input type="text" class="codeInput" maxlength="1" />
+        <input type="text" class="codeInput" maxlength="1" />
+      </div>
+      <div class="slidingBtn">Let's go!</div>
+      <form action = "http://localhost:3000/authentication" method="POST" class="codeCheck" style = "display: none;">
+        <input type="hidden" name="OTP" class="OTP" />
+        <input type="hidden" name="ID" value = "<%=ID%>" class = "userID" />
       </form>
     </div>
   </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
   <script src="/Source/authentication.js"></script>
 </html>

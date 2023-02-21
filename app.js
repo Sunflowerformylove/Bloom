@@ -27,6 +27,21 @@ const awsConfig = {
   SECRET_KEY: "VHYyqxY00zVaOQ62iOWZvxkiSdAQwE1lJubiAFIm"
 }
 
+let emailConfig = {
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  service: 'gmail',
+  auth: {
+    user: "noreplybloomsite@gmail.com",
+    pass: "kskutofsjuwrriqv",
+  },
+  tls: {
+    rejectUnauthorized: false,
+    minVersion: "TLSv1.2"
+}
+}
+
 aws.config.update({
   accessKeyId: awsConfig.ACCESS_KEY,
   secretAccessKey: awsConfig.SECRET_KEY,
@@ -54,6 +69,8 @@ const storeOption = {
       }
     }
   }
+
+let secret = speakeasy.generateSecretASCII();
 
 // const storeOption = {
 //     host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
@@ -234,7 +251,7 @@ app.post("/", (request, response) => {
   loginFormHandler(request, response);
 });
 
-app.post("/firstLogin", upload.single("avatar"), (request, response) => {
+app.post("/firstLogin", upload.single("avatar"),(request, response) => {
   let date = new Date();
   let dateOfMonth = date.getDate();
   let month = date.getMonth();
@@ -247,17 +264,50 @@ app.post("/firstLogin", upload.single("avatar"), (request, response) => {
   let education = request.body.education;
   let interest = request.body.interests;
   let ID = request.body.ID;
+  console.log(avatar);
   database.query(
     `INSERT INTO login_data.user_profile(ID,alias,gender,realName,workplace,education,interest,avatar) VALUES('${ID}','${alias}', '${gender}', '${realName}', '${workplace}', '${education}','${interest}','${avatar}')`,
     (err) => {
       if (err) throw err;
-      database.query(
-        `UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = ${ID}`,
-        (err) => {
-          if (err) throw err;
-          response.render("index.ejs", { ID: ID, loginState: true });
+       database.query(`UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = ${ID};`);
+       database.query(`SELECT email FROM login_data.register_info WHERE ID = ${ID}`,(err, result) => {
+        if (err) throw err;
+        let email = result[0].email;
+        let hotp = speakeasy.hotp({
+          secret: secret,
+          counter: Math.floor((Date.now()/ 1000) / 1800),
+          digits: 6,
+          encoding: "ascii",
+          algorithm: "sha256",
+        });
+        let otpMessage = {
+          from : 'noreplybloomsite@gmail.com',
+          to: email,
+          subject: 'Welcome to Bloom',
+          text: `Welcome to our site. This is your ONE-TIME PASSWORD: ${hotp}. Please note that this OTP will expire in the next 24 hour. Best regards, Hai Do.`,
+          html: `<p style = "font-size: 16px; font-family: 'Arima',serif;">Welcome to our site. 
+          <br>
+          <br>
+          This is your ONE-TIME PASSWORD: <strong>${hotp}</strong>. 
+          <br>          
+          Please note that this OTP will expire in the next 30 minutes. 
+          <br>
+          <br>
+          Best regards,
+          <br> 
+          Hai Do.</p>`,
+          header: {
+            'X-Priority' : '1 (Highest)',
+            'X-MSMail-Priority' : 'High',
+            'Priority' : 'High',
+          }
         }
-      );
+        let transporter = nodemailer.createTransport(emailConfig);
+        transporter.sendMail(otpMessage, (err, info) => {
+          if (err) throw err;
+          response.render("authentication.ejs", {email: email, ID: ID});
+        });
+       })
     }
   );
 });
@@ -268,6 +318,31 @@ app.post("/registerResult", (request, response) => {
 
 app.get("/user", (request, response) => {
   profileHandler(request, response);
+});
+
+app.post("/authentication", (request, response) => {
+  let data = request.body;
+  let userOTP = data.OTP;
+  let ID = data.ID;
+  let verify = speakeasy.hotp.verify({
+    secret: secret,
+    token: userOTP,
+    counter: Math.floor((Date.now()/ 1000) / 1800),
+    digits: 6,
+    encoding: "ascii",
+    algorithm: "sha256",
+    window: 60,
+  });
+  console.log(userOTP);
+  if(verify){
+    database.query(`UPDATE login_data.register_info SET authenticated = 1 WHERE ID = ${ID};`, (err) => {
+      if(err) throw err;
+      response.render('index.ejs', {ID: ID, loginState: true});
+    });
+  }
+  else{
+    response.send({verified: false});
+  }
 });
 
 app.post(
