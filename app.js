@@ -70,6 +70,36 @@ const storeOption = {
     }
   }
 
+  
+let date = new Date();
+let dateOfMonth = date.getDate();
+let month = date.getMonth();
+let year = date.getFullYear();
+
+// let storageLocal = multer.diskStorage({
+//   destination: (request, avatar, callback) => {
+//     callback(null, path.join(__dirname + "/Assets/Images/ProfilePic"));
+//   },
+//   filename: (request, avatar, callback) => {
+//     callback(
+//       null,
+//       `${Date.now()}${dateOfMonth}${month + 1}${year}${avatar.originalname}`
+//     );
+//   },
+// });
+
+let storageS3 = multerS3({
+  s3: S3,
+  bucket: 'bloomproj',
+  acl: 'public-read',
+  metadata: function (req, file, cb) {
+    cb(null, {fieldName: file.fieldname});
+  },
+  key: function (req, file, cb) {
+    cb(null, `Assets/Images/ProfilePic/${Date.now().toString()}${file.originalname}`);
+  },
+})
+
 let secret = speakeasy.generateSecretASCII();
 
 // const storeOption = {
@@ -118,33 +148,6 @@ app.use(session
 })
 );
 app.set("view engine", "ejs");
-
-let date = new Date();
-let dateOfMonth = date.getDate();
-let month = date.getMonth();
-let year = date.getFullYear();
-let storageLocal = multer.diskStorage({
-  destination: (request, avatar, callback) => {
-    callback(null, path.join(__dirname + "/Assets/Images/ProfilePic"));
-  },
-  filename: (request, avatar, callback) => {
-    callback(
-      null,
-      `${Date.now()}${dateOfMonth}${month + 1}${year}${avatar.originalname}`
-    );
-  },
-});
-
-let storageS3 = multerS3({
-  s3: S3,
-  bucket: 'bloomproj',
-  metadata: function (req, file, cb) {
-    cb(null, {fieldName: file.fieldname});
-  },
-  key: function (req, file, cb) {
-    cb(null, `/Assets/Images/ProfilePic/${Date.now().toString()}${file.originalname}`);
-  }
-})
 
 let upload = multer({ storage: storageS3 });
 
@@ -258,7 +261,7 @@ app.post("/firstLogin", upload.single("avatar"),(request, response) => {
   let year = date.getFullYear();
   let alias = request.body.alias;
   let gender = request.body.gender;
-  let avatar = request.file.filename;
+  let avatar = request.file.key;
   let realName = request.body.realName;
   let workplace = request.body.workplace;
   let education = request.body.education;
@@ -312,14 +315,6 @@ app.post("/firstLogin", upload.single("avatar"),(request, response) => {
   );
 });
 
-app.post("/registerResult", (request, response) => {
-  registerFormHandler(request, response);
-});
-
-app.get("/user", (request, response) => {
-  profileHandler(request, response);
-});
-
 app.post("/authentication", (request, response) => {
   let data = request.body;
   let userOTP = data.OTP;
@@ -345,6 +340,14 @@ app.post("/authentication", (request, response) => {
   }
 });
 
+app.post("/registerResult", (request, response) => {
+  registerFormHandler(request, response);
+});
+
+app.get("/user", (request, response) => {
+  profileHandler(request, response);
+});
+
 app.post(
   "/user",
   upload.fields([
@@ -360,12 +363,14 @@ app.post(
     );
     if (avatar !== undefined) {
       database.query(
-        `UPDATE login_data.user_profile SET avatar = '${avatar[0].filename}'`
+        `UPDATE login_data.user_profile SET avatar = '${avatar[0].key}'`
       );
     }
     if (background !== undefined) {
+      console.log(background[0]);
+      console.log(background[0].key);
       database.query(
-        `UPDATE login_data.user_profile SET background = '${background[0].filename}'`
+        `UPDATE login_data.user_profile SET background = '${background[0].key}'`
       );
     }
     profileHandler(request, response);
