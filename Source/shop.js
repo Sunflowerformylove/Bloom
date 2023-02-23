@@ -15,6 +15,7 @@ const searchItem = document.querySelector(".searchItem");
 const searchForm = document.querySelector(".searchForm");
 const searchIcon = document.querySelector(".searchIcon");
 
+
 let wishlistTracker = 0;
 let wliTracker = false;
 let cbTracker = 0;
@@ -394,31 +395,30 @@ window.addEventListener("load", async (event) => {
       }
     });
   });
+});
 
-  search.addEventListener("input", (event) => {
-    let searchTracker = 0;
-    searchRec.innerHTML = "";
-    if(search.value.length >= 2){
-      for(let i = 0; i < data.length; i++) {
-        if(standardize(data[i].name).includes(standardize(search.value)) || standardize(data[i].collection).includes(standardize(search.value)) || 
-          standardize(data[i].type).includes(standardize(search.value) && standardize(search.value) !== "")
-        ) {
-          if(searchTracker < 5){
-            let elem = document.createElement("div");
-            elem.className = "searchItem";
-            elem.innerHTML = `<img src="${data[i].bigImg}" class="siImage">
-            <div class="siText">
-                <div class="siName">${data[i].name}</div>
-                <div class="siDescription">${data[i].description}</div>
-                <div class="availStock">${data[i].stock}</div>
-            </div>`;
-            searchRec.appendChild(elem);
-            searchTracker++;
-          }
-        }
-      }
-    }
+search.addEventListener("keydown", async (event) => {
+  let stream = await fetch("http://localhost:3000/api/products");
+  const data = await stream.json();
+  const fuse = await new Fuse(data,{
+    keys: ["name", "description", "collection", "type"]
   });
+  if(search.value !== ""){
+    let searchResult = fuse.search(search.value);
+    console.log(searchResult);
+    searchRec.innerHTML = "";
+    for(let i = 0; i < 5; i++){
+      let elem = document.createElement("div");
+      elem.className = "searchItem";
+      elem.innerHTML = `<img src="${searchResult[i].item.bigImg}" class="siImage">
+      <div class="siText">
+          <div class="siName">${searchResult[i].item.name}</div>
+          <div class="siDescription">${searchResult[i].item.description}</div>
+          <div class="availStock">${searchResult[i].item.stock}</div>
+      </div>`;
+      searchRec.appendChild(elem);
+    }
+  }
 });
 
 searchIcon.addEventListener('click', (event) => {

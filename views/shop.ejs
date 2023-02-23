@@ -45,7 +45,7 @@
         <li class="navBarItem user">
           <img
             class="avatar"
-            src="https://d1i941plp513i2.cloudfront.net/Assets/Images/ProfilePic/<%-data[0].avatar%>"
+            src="https://d1i941plp513i2.cloudfront.net/<%-data[0].avatar%>"
           />
           <div class="username"><%=data[0].alias%></div>
         </li>
@@ -221,6 +221,7 @@
       <div class="pageBar"></div>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
   <script>
     let loginState = "<%= loginState %>";
   </script>

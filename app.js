@@ -49,6 +49,7 @@ aws.config.update({
 });
 
 const S3 = new aws.S3();
+const cloudFront = new aws.CloudFront();
 
 const storeOption = {
     host: "localhost",
@@ -267,7 +268,6 @@ app.post("/firstLogin", upload.single("avatar"),(request, response) => {
   let education = request.body.education;
   let interest = request.body.interests;
   let ID = request.body.ID;
-  console.log(avatar);
   database.query(
     `INSERT INTO login_data.user_profile(ID,alias,gender,realName,workplace,education,interest,avatar) VALUES('${ID}','${alias}', '${gender}', '${realName}', '${workplace}', '${education}','${interest}','${avatar}')`,
     (err) => {
@@ -328,7 +328,6 @@ app.post("/authentication", (request, response) => {
     algorithm: "sha256",
     window: 60,
   });
-  console.log(userOTP);
   if(verify){
     database.query(`UPDATE login_data.register_info SET authenticated = 1 WHERE ID = ${ID};`, (err) => {
       if(err) throw err;
@@ -367,8 +366,6 @@ app.post(
       );
     }
     if (background !== undefined) {
-      console.log(background[0]);
-      console.log(background[0].key);
       database.query(
         `UPDATE login_data.user_profile SET background = '${background[0].key}'`
       );

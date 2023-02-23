@@ -81,8 +81,8 @@
 </body>
 <script>
     window.addEventListener("load", (e) => {
-        avatar.src = `https://d1i941plp513i2.cloudfront.net/Assets/Images/ProfilePic/<%-data[0].avatar%>`;
-        profileBackground.src = `https://d1i941plp513i2.cloudfront.net/Assets/Images/ProfilePic/<%-data[0].background%>`;
+        avatar.src = `https://d1i941plp513i2.cloudfront.net/<%-data[0].avatar%>`;
+        profileBackground.src = `https://d1i941plp513i2.cloudfront.net/<%-data[0].background%>`;
     });
     let rawInterest = `<%-data[0].interest %>`;
 </script>

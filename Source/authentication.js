@@ -48,28 +48,27 @@ slidingBtn.addEventListener('click', (event) => {
   codeCheck.submit();
 });
 
-// $(document).ready(() => {
-//   $('.codeCheck').submit((event) => {
-//     event.preventDefault();
-//     let otpCode = "";
-//     for(let i = 0; i < codeInput.length; i++){
-//       otpCode += codeInput[i].value;
-//     }
-//     OTP.value = otpCode;
-//     const data = {
-//       OTP: OTP.value,
-//       ID: ID.value,
-//     }
-//     $.ajax({
-//       type: "POST",
-//       url: '/authentication',
-//       data: JSON.stringify(data),
-//       success: (response) => {
-//         console.log("Success!");
-//       },
-//       error: (xhr, status, err) => {
-//         if(err) throw err;
-//       }
-//     })
-//   });
-// });
+$(document).ready(() => {
+  $('.codeCheck').submit((event) => {
+    event.preventDefault();
+    let otpCode = "";
+    for(let i = 0; i < codeInput.length; i++){
+      otpCode += codeInput[i].value;
+    }
+    OTP.value = otpCode;
+    const data = {
+      OTP: OTP.value,
+      ID: ID.value,
+    }
+    $.ajax({
+      type: "POST",
+      data: JSON.stringify(data),
+      success: (response) => {
+        console.log("Success!");
+      },
+      error: (xhr, status, err) => {
+        if(err) throw err;
+      }
+    })
+  });
+});
