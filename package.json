@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "serve": "nodemon app.js"
+    "serve": "nodemon app.js",
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --open --mode development"
   },
   "repository": "git+https://github.com/Sunflowerformylove/Bloom.git",
   "author": "Hai Do",
@@ -41,6 +43,7 @@
   },
   "devDependencies": {
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
   }
 }
