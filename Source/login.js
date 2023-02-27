@@ -1,5 +1,6 @@
-//Webpack modules
-const crypto = require('crypto-js');
+//Node modules
+const crypto = require('crypto');
+const bowser = require('bowser');
 //DOM
 const loginForm = document.querySelector(".loginForm");
 const submitBtn = document.querySelector(".submitBtn");
@@ -9,7 +10,7 @@ const loginPassword = document.getElementById("loginPassword");
 let checkClick = false;
 
 submitBtn.addEventListener("click", (event) => {
-  loginPassword.value = crypto.SHA256(loginPassword.value).toString();
+  loginPassword.value = SHA256(loginPassword.value).toString();
   loginForm.submit();
 });
 

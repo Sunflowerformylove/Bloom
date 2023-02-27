@@ -39,11 +39,11 @@
     "qrcode": "^1.5.1",
     "session": "^0.1.0",
     "speakeasy": "^2.0.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
   }
 }
