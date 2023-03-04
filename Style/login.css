@@ -1,7 +1,7 @@
 .loginContainer{
     width: 100vw;
     height: 100vh;
-    background-image: url('/Assets/Images/Login/night-4702174_1920.jpg');
+    background-image: url('https://d1i941plp513i2.cloudfront.net/Assets/Images/Login/night-4702174_1920.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -83,10 +83,17 @@
     font-size: 4rem;
     position: absolute;
     cursor: pointer;
-    bottom: 2%;
+    bottom: -48%;
 }
 
 .submitBtn:hover{
     filter: brightness(80%);
     color: white;
+}
+
+.wrongAuth{
+    margin-top: 1rem;
+    font-size: 3rem;
+    font-family: 'Arima',serif;
+    color: orangered;
 }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Style/payment.css">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="breadCrumb">
+        <li class = "chosen bcItem"><div class="item">Personal's Info</div></li>
+        <li class = "bcItem"><div class="item">Payment's Method</div></li>
+        <li class = "bcItem"><div class="item">Confirmation</div></li>
+    </div>
+
+    <div class="paymentBoard">
+        <div class="pbi personalInfo" style = "display: none;">
+            <label for="address" class = "label">Address
+                <input type="text" name="address" class="input address">
+            </label>
+            <label for="zipCode" class="label">Zip Code
+                <input type="text" name="zipCode" class="input zipCode">
+            </label>
+            <label for="citizenshipID" class="label">Citizenship ID
+                <input type="text" name="citizenshipID" class="input citizenshipID">
+            </label>
+            <label for="IDExpiration" class="label">ID Expiration Date
+                <input type="text" name="IDExpiration" class="input IDExpiration">
+            </label>
+            <label for="phone" class="label">Phone Number
+                <input type="text" name="phone" class="input phone">
+            </label>
+        </div>
+
+        <div class="pbi paymentMethod" style="display: flex;">
+            <div class="choosingPayment">
+                <input type="hidden" name="paymentMethod" style = "display: none;" class = "paymentMethod">
+                <div class="payment"><i class="fa-solid fa-wallet" style = "margin-right: .2rem; font-size: 1.4rem;"></i>Cash On Delivery</div>
+                <div class="payment"><i class="fa-brands fa-cc-mastercard" style = "color: #EB001B; margin-right: .2rem; font-size: 1.4rem;"></i>Visa/Mastercard</div>
+                <div class="payment"><i class="fa-brands fa-paypal" style = "color: #3b7bbf; margin-right: .2rem; font-size: 1.4rem;"></i>Paypal</div>
+                <div class="payment"><i class="fa-regular fa-credit-card" style = "margin-right: .2rem; font-size: 1.4rem;"></i>Domestic Bank</div>
+            </div>
+            <div class="paymentTab visaTab">
+                <label for="cardholder" class = "label">Cardholder's name
+                    <input type="text" name="cardholder" class="input cardholder">
+                </label>
+                <label for="cardNum" class = "label">Card Number
+                    <input type="text" name="cardNum" class="input cardNum">
+                </label>
+                <div>
+                    <div class = "dateLabel">Good through
+                        <div class="dateInput" style = "margin-left: .5rem;">
+                            <input type="text" name="expireMonth" class="inputDate visaMonth" style = "width: 10%" placeholder="MM">
+                            <input type="text" name="expireYear" class="inputDate visaYear" style = "width: 10%" placeholder="YY">
+                        </div>
+                        <div class = "dateLabel">CVC/CVV
+                            <div class="dateInput" style = "margin-left: .5rem;">
+                                <input type="text" name="CVC" class="inputDate visaCVC" style = "width: 40%; font-size: 1.2rem;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pbi confirmation"></div>
+
+        <div class="nextBtn">Next</div>
+        <div class="prevBtn">Previous</div>
+    </div>
+</body>
+<script src="/Source/payment.js"></script>
+</html>

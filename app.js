@@ -148,13 +148,14 @@ app.use(session
   }
 })
 );
+
 app.set("view engine", "ejs");
 
 let upload = multer({ storage: storageS3 });
 
 function registerFormHandler(request, response) {
   let user = request.body.registerUsername;
-  let password = request.body.registerPassword;
+  let password = crypto.enc.Base64.stringify(crypto.SHA256(request.body.registerPassword));
   let email = request.body.registerEmail;
   let phone = request.body.registerPhone;
   let DOB = request.body.registerDOB;
@@ -179,13 +180,14 @@ function registerFormHandler(request, response) {
 
 function loginFormHandler(request, response) {
   let loginUsername = request.body.loginUsername;
-  let loginPassword = request.body.loginPassword;
+  let loginPassword = crypto.enc.Base64.stringify(crypto.SHA256(request.body.loginPassword));
   database.query(
     `SELECT ID FROM login_data.register_info WHERE username = '${loginUsername}' and pass = '${loginPassword}' limit 1`,
     (err, result) => {
       if (err) throw err;
       if (Object.keys(result).length === 0) {
-        response.render("loginFailed.ejs");
+        console.log(loginPassword);
+        response.render('loginFailed.ejs');
       } else {
         let data = JSON.parse(JSON.stringify(result));
         let userID = data[0].ID;
@@ -197,7 +199,7 @@ function loginFormHandler(request, response) {
             if (checkLogin[0].firstLogin === 1) {
               if(Object.keys(request.cookies).length === 0){
                 request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
-                response.render("index.ejs", { ID: userID, loginState: true });
+                response.render('index.ejs', {ID: userID, loginState: true, timestamp: date});
               }
             } else {
               request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
@@ -232,7 +234,6 @@ app.get("/", (request, response) => {
   let signOut = request.query.signOut;
   if (signOut === undefined) {
     if(Object.keys(request.cookies).length === 0){
-      console.log("No user session");
       response.render("index.ejs", { loginState: false });
     }
     else{
@@ -251,8 +252,12 @@ app.get("/", (request, response) => {
   };
 });
 
-app.post("/", (request, response) => {
+app.post("/", upload.none(), (request, response) => {
   loginFormHandler(request, response);
+});
+
+app.post('/payment', (request, response) => {
+  response.render("payment.ejs");
 });
 
 app.post("/firstLogin", upload.single("avatar"),(request, response) => {
@@ -414,12 +419,24 @@ app.get('/api/products',(request, response) => {
   })
 });
 
+app.get('/payment', (request, response) => {
+  response.render("payment.ejs");
+})
+
+app.get('/login', (request, response) => {
+  response.sendFile(path.join(__dirname + '/Public/Login/login.html'));
+}); 
+
 // const database = mysql.createConnection({
 //   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
 //   user: "admin",
 //   password: "Haido29904",
 //   port: '3306',
 // });
+
+app.use((request,response) => {
+  response.status(404).sendFile(path.join(__dirname + '/Public/Status Handler/404.html'));
+}); // 404 handling
 
 const database = mysql.createConnection({
   host: "localhost",

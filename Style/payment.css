@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.breadCrumb {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 30vw;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Oswald', sans-serif;
+    align-self: flex-start;
+}
+
+li{
+    list-style: none;
+}
+
+.breadCrumb > li{
+    padding: 0.5rem 1rem;
+    transform: skewX(-10deg);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    cursor: pointer;
+}
+
+.breadCrumb > li > .item{
+    transform: skewX(10deg);
+}
+
+.breadCrumb > .chosen{
+    background-color: orangered;
+    color: white;
+}
+
+.paymentBoard{
+    width: 60%;
+    height: 85vh;
+    border-radius: 10px;
+    border: 4px solid #333;
+    box-shadow: 10px 10px black;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.pbi{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    display: none;
+}
+
+.personalInfo{
+    display: flex;
+}
+
+.label{
+    width: 80%;
+    cursor: text;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: font-size .6s ease-in-out;
+}
+
+.input{
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #333;
+    width: 100%;
+    height: 0rem;
+    font-size: 1.5rem;
+    font-family: 'Arima', sans-serif;
+    transition: height 0.2s ease-in-out;
+    z-index: 0;
+}
+
+.nextBtn{
+    position: fixed;
+    right: 3rem;
+    bottom: 1rem;
+    padding: 0rem 2rem;
+    border: 3px solid #333;
+    border-radius: 5px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nextBtn:hover{
+    background-color: orangered;
+    color: white;
+}
+
+.prevBtn{
+    position: fixed;
+    left: 3rem;
+    bottom: 1rem;
+    padding: 0rem 2rem;
+    border-radius: 5px;
+    border: 3px solid #333;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.choosingPayment{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.payment{
+    padding: 1rem 2rem;
+    border: 2px solid #333;
+    border-radius: 5px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.payment:hover{
+    background-color: black;
+    color: white;
+}
+.payment.chosen{
+    background-color: black;
+    color: white;
+}
+
+.paymentTab{
+    width: 85%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.visaTab{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around
+}
+
+.dateLabel{
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    align-items: column;
+}
+
+.inputDate{
+    height: 1rem;
+    border: none;
+    border-bottom: 2px solid #333;
+    margin-top: .5rem;
+    text-align: center;
+    transition: height .3s ease-in-out;
+}
+
+.inputDate:focus{
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #333;
+}
+
+*{
+    user-select: none;
+}

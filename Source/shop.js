@@ -230,6 +230,7 @@ window.addEventListener("load", async (event) => {
         unique = true;
       } else {
         const wishlistContainer = document.querySelector(".wishlistContainer");
+        const proceedBtn = document.querySelector(".proceedBtn");
         if (!unique) {
           let elem = document.createElement("div");
           elem.className = `wli`;
@@ -267,9 +268,11 @@ window.addEventListener("load", async (event) => {
             }
           });
         }
+        proceedBtn.addEventListener("click", (event) => {
+          wishlistContainer.submit();
+        });
       }
     });
-    // }
   });
 
   setInterval(() => {
