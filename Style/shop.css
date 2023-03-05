@@ -91,7 +91,7 @@ img{
   height: 20rem;
   background-color: white;
   right: 5.5%;
-  top: 65%;
+  top: 12%;
   display: none;
   z-index: 9999;
 }
@@ -398,6 +398,7 @@ label {
     height: 10rem;
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 .wliImage{
@@ -422,10 +423,6 @@ label {
 .wliName{
     font-size: 2rem;
     font-weight: 800;
-}
-
-.wli + .wli{
-    margin-top: 1.2rem;
 }
 
 input{
@@ -525,4 +522,13 @@ input:not(:focus){
 
 .searchItem:hover > .siImage{
   border-radius: 10px;
+}
+
+.destroyItem{
+  font-size: 2.5rem;
+  color: orangered;
+  position: absolute;
+  top: 35%;
+  right: 1rem;
+  cursor: pointer;
 }

@@ -15,7 +15,6 @@ const searchItem = document.querySelector(".searchItem");
 const searchForm = document.querySelector(".searchForm");
 const searchIcon = document.querySelector(".searchIcon");
 
-
 let wishlistTracker = 0;
 let wliTracker = false;
 let cbTracker = 0;
@@ -195,6 +194,8 @@ window.addEventListener("load", async (event) => {
     // } else if (loginState === "true") {
     let unique = false;
     button.addEventListener("click", (event) => {
+      const wli = document.querySelectorAll(".wli");
+      const destroyItem = document.querySelectorAll(".destroyItem");
       if (!wliTracker) {
         let wishlistContainer = document.createElement("form");
         wishlistContainer.className = "wishlistContainer";
@@ -219,7 +220,8 @@ window.addEventListener("load", async (event) => {
               data[index].ID
             }" class = "wliID">
           </div>
-        </div>`;
+          <i class="fa-regular fa-xmark destroyItem"></i>
+          </div>`;
         let proceedBtn = document.createElement("div");
         proceedBtn.className = "proceedBtn";
         proceedBtn.innerHTML = "Proceed";
@@ -228,25 +230,39 @@ window.addEventListener("load", async (event) => {
         wishlist.appendChild(proceedBtn);
         wliTracker = true;
         unique = true;
+        destroyItem.forEach((button, index) => {
+          button.addEventListener("click",(event) => {
+            wli[index].remove();
+            unique = false;
+          });
+        });
       } else {
+        destroyItem.forEach((button, index) => {
+          button.addEventListener("click",(event) => {
+            wli[index].remove();
+            unique = false;
+          });
+        });
         const wishlistContainer = document.querySelector(".wishlistContainer");
         const proceedBtn = document.querySelector(".proceedBtn");
         if (!unique) {
           let elem = document.createElement("div");
           elem.className = `wli`;
-          elem.innerHTML = `<img src = "${
-            itemImage[index].src
-          }" class="wliImage" />
-            <div class="wliText">
-              <div class="wliName">${itemName[index].innerHTML}</div>
-              <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
-                data[index].price.toString()
-              )}</span></div>
-              <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
-              <input type="hidden" name="ID" value="${
-                data[index].ID
-              }" class = "wliID">
-            </div>`;
+          elem.innerHTML = `
+          <img src = "${itemImage[index].src}" class="wliImage" />
+          <div class="wliText">
+            <div class="wliName">${itemName[index].innerHTML}</div>
+            <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
+              data[index].price.toString()
+            )}</span></div>
+            <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
+            <input type="hidden" name="ID" value="${
+              data[index].ID
+            }" class = "wliID">
+          </div>
+        </div>
+        <i class="fa-regular fa-xmark destroyItem"></i>
+            `;
           wishlistContainer.appendChild(elem);
           unique = true;
         } else {
@@ -278,7 +294,16 @@ window.addEventListener("load", async (event) => {
   setInterval(() => {
     const priceText = document.querySelectorAll(".priceText");
     const quantityText = document.querySelectorAll(".quantityText");
-    quantityText.forEach(async (text, idx) => {
+    const wli = document.querySelectorAll(".wli");
+    const destroyItem = document.querySelectorAll(".destroyItem");
+    console.log(wli[0]);
+    destroyItem.forEach((button, index) => {
+      button.addEventListener("click", (event) => {
+        wli[index].remove();
+        unique = false;
+      });
+    })
+    quantityText.forEach((text, idx) => {
       text.addEventListener("change", (event) => {
         priceText[idx].innerHTML = formatPrice(
           (
@@ -403,16 +428,17 @@ window.addEventListener("load", async (event) => {
 search.addEventListener("keydown", async (event) => {
   let stream = await fetch("http://localhost:3000/api/products");
   const data = await stream.json();
-  const fuse = await new Fuse(data,{
-    keys: ["name", "description", "collection", "type"]
+  const fuse = await new Fuse(data, {
+    keys: ["name", "description", "collection", "type"],
   });
-  if(search.value !== ""){
+  if (search.value !== "") {
     let searchResult = fuse.search(search.value);
     console.log(searchResult);
     searchRec.innerHTML = "";
-    for(let i = 0; i < 5; i++){
-      let elem = document.createElement("div");
+    for (let i = 0; i < 5; i++) {
+      let elem = document.createElement("a");
       elem.className = "searchItem";
+      elem.href = `localhost:3000/search?ID=${searchResult[i].item.ID}`;
       elem.innerHTML = `<img src="${searchResult[i].item.bigImg}" class="siImage">
       <div class="siText">
           <div class="siName">${searchResult[i].item.name}</div>
@@ -422,8 +448,11 @@ search.addEventListener("keydown", async (event) => {
       searchRec.appendChild(elem);
     }
   }
+  else{
+    searchRec.innerHTML = "";
+  }
 });
 
-searchIcon.addEventListener('click', (event) => {
+searchIcon.addEventListener("click", (event) => {
   searchForm.submit();
 });

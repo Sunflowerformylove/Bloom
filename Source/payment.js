@@ -7,9 +7,12 @@ const pbi = document.querySelectorAll('.pbi');
 const bcItem = document.querySelectorAll('.bcItem');
 const payment = document.querySelectorAll(".payment");
 const paymentMethod = document.querySelector(".paymentMethod");
+const paymentTab = document.querySelectorAll('.paymentTab');
 const inputDate = document.querySelectorAll('.inputDate');
 const visaMonth = document.querySelector('.visaMonth');
 const visaYear = document.querySelector('.visaYear');
+const switcher = document.querySelectorAll('.switcher');
+const paymentBoard = document.querySelector('.paymentBoard');
 
 let currentPage = 0;
 
@@ -40,6 +43,12 @@ nextBtn.addEventListener('click',(event)=>{
     if(currentPage < 2){
         currentPage++;
     }
+    if(currentPage === 2){
+        nextBtn.textContent = "All done!";
+    }
+    if(nextBtn.textContent === "All done!"){
+        paymentBoard.submit();
+    }
     pbi[currentPage].style.display = "flex";
     bcItem[currentPage].classList.add("chosen");
 });
@@ -54,6 +63,7 @@ prevBtn.addEventListener('click',(event)=>{
     if(currentPage > 0){
         currentPage--;
     }
+    nextBtn.textContent = "Next";
     pbi[currentPage].style.display = "flex";
     bcItem[currentPage].classList.add("chosen");
 });
@@ -86,4 +96,33 @@ visaYear.addEventListener("keydown", (event) => {
     if(visaYear.value.length === 2 && event.key !== "Backspace"){
         event.preventDefault();
     }
+});
+
+payment.forEach((payment, index) => {
+    payment.addEventListener("click", (event) => {
+        for(let item of paymentTab){
+            item.style.display = "none";
+            item.style.height = "0";
+        }
+        if(index !== 0){
+            paymentTab[index - 1].style.display = "flex";
+            setTimeout(() => {
+                paymentTab[index - 1].style.height = "80%";
+            },1);  
+        }
+    });
+});
+
+switcher.forEach((item, index) => {
+    let switchClick = 0;
+    item.addEventListener("click", (event) => {
+        if(switchClick % 2 === 0){
+            item.classList.add("chosen");
+            switchClick++;
+        }
+        else{
+            item.classList.remove("chosen");
+            switchClick++;
+        }
+    })
 });

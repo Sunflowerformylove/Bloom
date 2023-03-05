@@ -48,6 +48,7 @@ li{
     box-shadow: 10px 10px black;
     margin-top: 1rem;
     position: relative;
+    display: flex;
 }
 
 .pbi{
@@ -145,17 +146,29 @@ li{
 }
 
 .paymentTab{
-    width: 85%;
-    height: 80%;
-    display: flex;
+    width: 90%;
+    height: 0;
+    display: none;
     flex-direction: column;
-}
-
-.visaTab{
-    display: flex;
     flex-direction: column;
     align-items: start;
-    justify-content: space-around
+    justify-content: space-around;
+    overflow: hidden;
+    transition: height 300ms ease-in-out;
+}
+
+.paypalTab{
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-family: "Oswald", sans-serif;
+}
+
+.bankTab{
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-family: "Oswald", sans-serif;
 }
 
 .dateLabel{
@@ -179,6 +192,39 @@ li{
     outline: none;
     border: none;
     border-bottom: 2px solid #333;
+}
+
+.switcher{
+    width: 3rem;
+    height: 1.5rem;
+    border: 0px solid black;
+    border-radius: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: red;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+}
+
+.switcher::before{
+    content: "";
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 100%;
+    margin-left: .2rem;
+    background-color: white;
+    transform: translateX(0);
+    transition: transform .3s ease-in-out;
+}
+
+.switcher.chosen{
+    background-color: lime;
+}
+
+.switcher.chosen::before{
+    transform: translateX(1.35rem);
 }
 
 *{

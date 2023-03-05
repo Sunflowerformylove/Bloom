@@ -15,8 +15,8 @@
         <li class = "bcItem"><div class="item">Confirmation</div></li>
     </div>
 
-    <div class="paymentBoard">
-        <div class="pbi personalInfo" style = "display: none;">
+    <form action = "http://localhost:3000" method="POST" class="paymentBoard">
+        <div class="pbi personalInfo">
             <label for="address" class = "label">Address
                 <input type="text" name="address" class="input address">
             </label>
@@ -34,7 +34,7 @@
             </label>
         </div>
 
-        <div class="pbi paymentMethod" style="display: flex;">
+        <div class="pbi paymentMethod">
             <div class="choosingPayment">
                 <input type="hidden" name="paymentMethod" style = "display: none;" class = "paymentMethod">
                 <div class="payment"><i class="fa-solid fa-wallet" style = "margin-right: .2rem; font-size: 1.4rem;"></i>Cash On Delivery</div>
@@ -57,19 +57,42 @@
                         </div>
                         <div class = "dateLabel">CVC/CVV
                             <div class="dateInput" style = "margin-left: .5rem;">
-                                <input type="text" name="CVC" class="inputDate visaCVC" style = "width: 40%; font-size: 1.2rem;">
+                                <input type="text" name="CVC" class="inputDate visaCVC" style = "width: 30%; font-size: 1.2rem;">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="paymentTab paypalTab">
+                <div class="message">This feature is currently temporarily unavailable.</div>
+                <div class="message">Paypal option will be added in the next update. Stay tune!</div>
+            </div>
+
+            <div class="paymentTab bankTab">
+                <div class="message">This feature is currently temporarily unavailable.</div>
+                <div class="message">Domestic Bank option will be added in the next update. Stay tune!</div>
+            </div>
         </div>
 
-        <div class="pbi confirmation"></div>
+        <div class="pbi confirmation" style = "justify-content: space-around; height: 60%; align-self: center;">
+            <div class = "agreement" style="width: 80%; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                <div class="switcher"></div>
+                <div class="consent" style = "width: 90%">I agree to the use of my personal information. This include my Visa/Mastercard information if I consent for Visa/Mastercard payment.</div>
+            </div>
+            <div class = "agreement" style="width: 80%; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                <div class="switcher"></div>
+                <div class="consent" style = "width: 90%">I agree to the EULA term that legally binds this order.</div>
+            </div>
+            <div class = "agreement" style="width: 80%; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                <div class="switcher"></div>
+                <div class="consent" style = "width: 90%">I agree to the Term and Condition amongst the user, this company and any third-party commodities supplier(s).</div>
+            </div>
+        </div>
 
         <div class="nextBtn">Next</div>
         <div class="prevBtn">Previous</div>
-    </div>
+    </form>
 </body>
 <script src="/Source/payment.js"></script>
 </html>
