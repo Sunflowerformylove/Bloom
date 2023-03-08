@@ -12,7 +12,7 @@ body{
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    width: 30vw;
+    width: 40vw;
     font-size: 1rem;
     font-weight: 500;
     font-family: 'Oswald', sans-serif;
@@ -203,7 +203,7 @@ li{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: red;
+    background-color: grey;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
 }
@@ -225,6 +225,71 @@ li{
 
 .switcher.chosen::before{
     transform: translateX(1.35rem);
+}
+
+.productReview{
+    overflow-y: scroll;
+    height: 90%;
+    margin-top: 2%;
+}
+
+.productReview::-webkit-scrollbar{
+    display: none;
+}
+
+.pditem{
+    display: flex;
+    width: 80%;
+    height: 12rem;
+    background-color: black;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Arima', sans-serif;
+}
+
+.pditemImage{
+    width: 35%;
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+    margin-right: 1rem;
+}
+
+.pditemText{
+    width: calc(65% - 1rem);
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.price{
+    margin-right: 1rem;
+}
+
+.pditemDescription{
+    width: 100%;
+    min-height: 20%;
+    max-height: 50%;
+    -webkit-mask-image: linear-gradient(to bottom,#000 30%, transparent);
+    mask-image: linear-gradient(to bottom,#000 30%, transparent);
+}
+
+.pditemMisc{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.totalPrice{
+    position: absolute;
+    bottom: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: "Oswald", sans-serif;
+    right: 2rem;
 }
 
 *{

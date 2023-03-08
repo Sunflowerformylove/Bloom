@@ -1,3 +1,5 @@
+import {formatPrice} from '/Source/export.js'
+
 const input = document.querySelectorAll('.input');
 const label = document.querySelectorAll('.label');
 const personalInfo = document.querySelector('.personalInfo');
@@ -13,6 +15,7 @@ const visaMonth = document.querySelector('.visaMonth');
 const visaYear = document.querySelector('.visaYear');
 const switcher = document.querySelectorAll('.switcher');
 const paymentBoard = document.querySelector('.paymentBoard');
+const productReview = document.querySelector('.productReview');
 
 let currentPage = 0;
 
@@ -40,14 +43,22 @@ nextBtn.addEventListener('click',(event)=>{
     for(let bc of bcItem){
         bc.classList.remove("chosen");
     }
-    if(currentPage < 2){
+    if(currentPage < 3){
         currentPage++;
     }
-    if(currentPage === 2){
+    if(currentPage === 3){
         nextBtn.textContent = "All done!";
     }
     if(nextBtn.textContent === "All done!"){
-        paymentBoard.submit();
+        let checkConfirmation = 0;
+        for(let switches of switcher){
+            if(switches.dataset.value === "true"){
+                checkConfirmation++;
+            }
+        }
+        if(checkConfirmation === 3){
+            paymentBoard.submit();
+        }
     }
     pbi[currentPage].style.display = "flex";
     bcItem[currentPage].classList.add("chosen");
@@ -118,11 +129,37 @@ switcher.forEach((item, index) => {
     item.addEventListener("click", (event) => {
         if(switchClick % 2 === 0){
             item.classList.add("chosen");
+            item.dataset.value = "true";
             switchClick++;
         }
         else{
+            item.dataset.value = "false";
             item.classList.remove("chosen");
             switchClick++;
         }
-    })
+    });
+});
+
+window.addEventListener("load", (event) => {
+    let totalPrice = 0;
+    for(let i = 0; i < data.length; i++) {
+    const totPrice = (parseInt(quantity[i]) * parseInt(data[i].price));
+    const pditem = document.createElement("div");
+    pditem.className = "pditem";
+    pditem.innerHTML = `<img src="${data[i].bigImg}" class="pditemImage">
+    <div class="pditemText">
+      <div class="pditemName">${data[i].name}</div>
+      <div class="pditemDescription">${data[i].description}</div>
+      <div class="pditemMisc">
+        <div class="quantity">Quantity: ${quantity[i]}</div>
+        <div class="price">Retail Price: ${formatPrice(data[i].price.toString())}</div>
+      </div>
+    </div>`;
+    productReview.appendChild(pditem);
+    totalPrice += totPrice;
+    }
+    const totalPriceDOM = document.createElement("div");
+    totalPriceDOM.className = "totalPrice";
+    totalPriceDOM.innerHTML = `Total Cost: ${formatPrice(totalPrice.toString())}`;
+    productReview.appendChild(totalPriceDOM);
 });

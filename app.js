@@ -11,7 +11,7 @@ const path = require("path");
 const cors = require("cors");
 const fs = require("fs"); //file-stream
 const multer = require("multer"); //file upload to local filesystem
-const multerS3 = require('multer-s3'); //file upload to Amazon S3
+const multerS3 = require("multer-s3"); //file upload to Amazon S3
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session")(session);
@@ -24,23 +24,23 @@ const awsConfig = {
   BUCKET: "bloomproj",
   REGION: "ap-southeast-1",
   ACCESS_KEY: "AKIA2V2KZNBWFIQ4IB6I",
-  SECRET_KEY: "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"
-}
+  SECRET_KEY: "VHYyqxY00zVaOQ62iOWZvxkiSdAQwE1lJubiAFIm",
+};
 
 let emailConfig = {
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   port: 465,
   secure: true, // true for 465, false for other ports
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: "noreplybloomsite@gmail.com",
     pass: "kskutofsjuwrriqv",
   },
   tls: {
     rejectUnauthorized: false,
-    minVersion: "TLSv1.2"
-}
-}
+    minVersion: "TLSv1.2",
+  },
+};
 
 aws.config.update({
   accessKeyId: awsConfig.ACCESS_KEY,
@@ -52,26 +52,25 @@ const S3 = new aws.S3();
 const cloudFront = new aws.CloudFront();
 
 const storeOption = {
-    host: "localhost",
-    port: '3306',
-    user: "root",
-    password: "Haido29904@",
-    database: "login_data",
-    clearExpired: true,
-    checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
-    expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
-    createDatabaseTable: true,
-    schema : {
-      tableName: "session",
-      columnNames: {
-        session_id: "sessionID",
-        expires: "expires",
-        data: "data",
-      }
-    }
-  }
+  host: "localhost",
+  port: "3306",
+  user: "root",
+  password: "Haido29904@",
+  database: "login_data",
+  clearExpired: true,
+  checkExpirationInterval: 60 * 60 * 1000, //check for expired session every hour,
+  expiration: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+  createDatabaseTable: true,
+  schema: {
+    tableName: "session",
+    columnNames: {
+      session_id: "sessionID",
+      expires: "expires",
+      data: "data",
+    },
+  },
+};
 
-  
 let date = new Date();
 let dateOfMonth = date.getDate();
 let month = date.getMonth();
@@ -91,15 +90,18 @@ let year = date.getFullYear();
 
 let storageS3 = multerS3({
   s3: S3,
-  bucket: 'bloomproj',
-  acl: 'public-read',
+  bucket: "bloomproj",
+  acl: "public-read",
   metadata: function (req, file, cb) {
-    cb(null, {fieldName: file.fieldname});
+    cb(null, { fieldName: file.fieldname });
   },
   key: function (req, file, cb) {
-    cb(null, `Assets/Images/ProfilePic/${Date.now().toString()}${file.originalname}`);
+    cb(
+      null,
+      `Assets/Images/ProfilePic/${Date.now().toString()}${file.originalname}`
+    );
   },
-})
+});
 
 let secret = speakeasy.generateSecretASCII();
 
@@ -136,17 +138,17 @@ app.use(express.static(path.join(__dirname + "/Public")));
 app.use(express.static(path.join(__dirname + "/views/partials")));
 app.use(morgan("combined"));
 app.use(cors());
-app.use(session
-  ({
-  name: "userSession",
-  store: new mysqlSession(storeOption),
-  secret: "my precious",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
-  }
-})
+app.use(
+  session({
+    name: "userSession",
+    store: new mysqlSession(storeOption),
+    secret: "my precious",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000, //expire after 30 days, in milliseconds
+    },
+  })
 );
 
 app.set("view engine", "ejs");
@@ -155,7 +157,9 @@ let upload = multer({ storage: storageS3 });
 
 function registerFormHandler(request, response) {
   let user = request.body.registerUsername;
-  let password = crypto.enc.Base64.stringify(crypto.SHA256(request.body.registerPassword));
+  let password = crypto.enc.Base64.stringify(
+    crypto.SHA256(request.body.registerPassword)
+  );
   let email = request.body.registerEmail;
   let phone = request.body.registerPhone;
   let DOB = request.body.registerDOB;
@@ -180,14 +184,16 @@ function registerFormHandler(request, response) {
 
 function loginFormHandler(request, response) {
   let loginUsername = request.body.loginUsername;
-  let loginPassword = crypto.enc.Base64.stringify(crypto.SHA256(request.body.loginPassword));
+  let loginPassword = crypto.enc.Base64.stringify(
+    crypto.SHA256(request.body.loginPassword)
+  );
   database.query(
     `SELECT ID FROM login_data.register_info WHERE username = '${loginUsername}' and pass = '${loginPassword}' limit 1`,
     (err, result) => {
       if (err) throw err;
       if (Object.keys(result).length === 0) {
         console.log(loginPassword);
-        response.render('loginFailed.ejs');
+        response.render("loginFailed.ejs");
       } else {
         let data = JSON.parse(JSON.stringify(result));
         let userID = data[0].ID;
@@ -197,12 +203,26 @@ function loginFormHandler(request, response) {
             if (err) throw err;
             let checkLogin = JSON.parse(JSON.stringify(result));
             if (checkLogin[0].firstLogin === 1) {
-              if(Object.keys(request.cookies).length === 0){
-                request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
-                response.render('index.ejs', {ID: userID, loginState: true, timestamp: date});
+              if (Object.keys(request.cookies).length === 0) {
+                request.session.user = {
+                  userID: userID,
+                  username: loginUsername,
+                  loginState: true,
+                  timestamp: date,
+                };
+                response.render("index.ejs", {
+                  ID: userID,
+                  loginState: true,
+                  timestamp: date,
+                });
               }
             } else {
-              request.session.user = {userID: userID, username: loginUsername, loginState: true, timestamp: date};
+              request.session.user = {
+                userID: userID,
+                username: loginUsername,
+                loginState: true,
+                timestamp: date,
+              };
               response.render("CreateProfile.ejs", { ID: userID });
             }
           }
@@ -224,7 +244,6 @@ function profileHandler(request, response) {
   );
 }
 
-
 app.listen(port, (err) => {
   if (err) throw err;
   console.log("Connection established at port: " + port);
@@ -233,34 +252,49 @@ app.listen(port, (err) => {
 app.get("/", (request, response) => {
   let signOut = request.query.signOut;
   if (signOut === undefined) {
-    if(Object.keys(request.cookies).length === 0){
+    if (Object.keys(request.cookies).length === 0) {
       response.render("index.ejs", { loginState: false });
-    }
-    else{
+    } else {
       let session = request.sessionID;
-      database.query(`SELECT data FROM login_data.session WHERE sessionID = '${session}'`, (err, result) => {
-        if (err) throw err;
-        let data = JSON.parse(JSON.parse(JSON.stringify(result))[0].data).user;
-        response.render("index.ejs", { ID: data.userID, loginState: true});
-      });
+      database.query(
+        `SELECT data FROM login_data.session WHERE sessionID = '${session}'`,
+        (err, result) => {
+          if (err) throw err;
+          let data = JSON.parse(
+            JSON.parse(JSON.stringify(result))[0].data
+          ).user;
+          response.render("index.ejs", { ID: data.userID, loginState: true });
+        }
+      );
     }
-  }
-  else if(signOut === "true") {
+  } else if (signOut === "true") {
     request.session.destroy();
     response.clearCookie("userSession");
-    response.render("index.ejs", {loginState: false});
-  };
+    response.render("index.ejs", { loginState: false });
+  }
 });
 
 app.post("/", upload.none(), (request, response) => {
   loginFormHandler(request, response);
 });
 
-app.post('/payment', (request, response) => {
-  response.render("payment.ejs");
+app.post("/payment", (request, response) => {
+  let ID = request.body.ID;
+  let quantity = request.body.quantity;
+  database.query(`SELECT * FROM shop.products WHERE ID IN ('${ID.join("', '")}')`, (err, result) => {
+    let data = JSON.parse(JSON.stringify(result));
+    console.log(data);
+    response.render("payment.ejs", {data: data, quantity: quantity});
+  })
 });
 
-app.post("/firstLogin", upload.single("avatar"),(request, response) => {
+app.get("/products", (request, response) => {
+  let productID = request.query.ID;
+  database.query();
+  response.render("products.ejs");
+});
+
+app.post("/firstLogin", upload.single("avatar"), (request, response) => {
   let date = new Date();
   let dateOfMonth = date.getDate();
   let month = date.getMonth();
@@ -277,23 +311,27 @@ app.post("/firstLogin", upload.single("avatar"),(request, response) => {
     `INSERT INTO login_data.user_profile(ID,alias,gender,realName,workplace,education,interest,avatar) VALUES('${ID}','${alias}', '${gender}', '${realName}', '${workplace}', '${education}','${interest}','${avatar}')`,
     (err) => {
       if (err) throw err;
-       database.query(`UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = ${ID};`);
-       database.query(`SELECT email FROM login_data.register_info WHERE ID = ${ID}`,(err, result) => {
-        if (err) throw err;
-        let email = result[0].email;
-        let hotp = speakeasy.hotp({
-          secret: secret,
-          counter: Math.floor((Date.now()/ 1000) / 1800),
-          digits: 6,
-          encoding: "ascii",
-          algorithm: "sha256",
-        });
-        let otpMessage = {
-          from : 'noreplybloomsite@gmail.com',
-          to: email,
-          subject: 'Welcome to Bloom',
-          text: `Welcome to our site. This is your ONE-TIME PASSWORD: ${hotp}. Please note that this OTP will expire in the next 24 hour. Best regards, Hai Do.`,
-          html: `<p style = "font-size: 16px; font-family: 'Arima',serif;">Welcome to our site. 
+      database.query(
+        `UPDATE login_data.register_info SET firstLogin = 1 WHERE ID = ${ID};`
+      );
+      database.query(
+        `SELECT email FROM login_data.register_info WHERE ID = ${ID}`,
+        (err, result) => {
+          if (err) throw err;
+          let email = result[0].email;
+          let hotp = speakeasy.hotp({
+            secret: secret,
+            counter: Math.floor(Date.now() / 1000 / 1800),
+            digits: 6,
+            encoding: "ascii",
+            algorithm: "sha256",
+          });
+          let otpMessage = {
+            from: "noreplybloomsite@gmail.com",
+            to: email,
+            subject: "Welcome to Bloom",
+            text: `Welcome to our site. This is your ONE-TIME PASSWORD: ${hotp}. Please note that this OTP will expire in the next 24 hour. Best regards, Hai Do.`,
+            html: `<p style = "font-size: 16px; font-family: 'Arima',serif;">Welcome to our site. 
           <br>
           <br>
           This is your ONE-TIME PASSWORD: <strong>${hotp}</strong>. 
@@ -304,18 +342,19 @@ app.post("/firstLogin", upload.single("avatar"),(request, response) => {
           Best regards,
           <br> 
           Hai Do.</p>`,
-          header: {
-            'X-Priority' : '1 (Highest)',
-            'X-MSMail-Priority' : 'High',
-            'Priority' : 'High',
-          }
+            header: {
+              "X-Priority": "1 (Highest)",
+              "X-MSMail-Priority": "High",
+              Priority: "High",
+            },
+          };
+          let transporter = nodemailer.createTransport(emailConfig);
+          transporter.sendMail(otpMessage, (err, info) => {
+            if (err) throw err;
+            response.render("authentication.ejs", { email: email, ID: ID });
+          });
         }
-        let transporter = nodemailer.createTransport(emailConfig);
-        transporter.sendMail(otpMessage, (err, info) => {
-          if (err) throw err;
-          response.render("authentication.ejs", {email: email, ID: ID});
-        });
-       })
+      );
     }
   );
 });
@@ -327,20 +366,22 @@ app.post("/authentication", (request, response) => {
   let verify = speakeasy.hotp.verify({
     secret: secret,
     token: userOTP,
-    counter: Math.floor((Date.now()/ 1000) / 1800),
+    counter: Math.floor(Date.now() / 1000 / 1800),
     digits: 6,
     encoding: "ascii",
     algorithm: "sha256",
     window: 60,
   });
-  if(verify){
-    database.query(`UPDATE login_data.register_info SET authenticated = 1 WHERE ID = ${ID};`, (err) => {
-      if(err) throw err;
-      response.render('index.ejs', {ID: ID, loginState: true});
-    });
-  }
-  else{
-    response.send({verified: false});
+  if (verify) {
+    database.query(
+      `UPDATE login_data.register_info SET authenticated = 1 WHERE ID = ${ID};`,
+      (err) => {
+        if (err) throw err;
+        response.render("index.ejs", { ID: ID, loginState: true });
+      }
+    );
+  } else {
+    response.send({ verified: false });
   }
 });
 
@@ -380,19 +421,22 @@ app.post(
 );
 
 app.get("/shop", (request, response) => {
-  response.render("shop.ejs", { loginState: false});
+  response.render("shop.ejs", { loginState: false });
 });
 
-app.get("/authentication",(request, response) => {
+app.get("/authentication", (request, response) => {
   response.render("authentication.ejs");
 });
 
 app.get("/shop/search", (request, response) => {
   let searchParam = request.query.search;
-  database.query(`SELECT * FROM shop.products WHERE 'name' LIKE '%${searchParam}%' OR 'description' LIKE '%${searchParam}%' OR 'collection' LIKE '%${searchParam}%' OR 'type' LIKE '%${searchParam}%'`,(err, result) => {
-    if (err) throw err;
-    response.render('shop.ejs');
-  });
+  database.query(
+    `SELECT * FROM shop.products WHERE 'name' LIKE '%${searchParam}%' OR 'description' LIKE '%${searchParam}%' OR 'collection' LIKE '%${searchParam}%' OR 'type' LIKE '%${searchParam}%'`,
+    (err, result) => {
+      if (err) throw err;
+      response.render("shop.ejs");
+    }
+  );
 });
 
 app.post("/shop", (request, response) => {
@@ -411,21 +455,22 @@ app.post("/shop", (request, response) => {
   );
 });
 
-app.get('/api/products',(request, response) => {
-  database.query('SELECT * FROM shop.products', (err, result) => {
-    if(err) throw err;
+app.get("/api/products", (request, response) => {
+  database.query("SELECT * FROM shop.products", (err, result) => {
+    if (err) throw err;
     let data = JSON.stringify(result);
     response.json(result);
-  })
+  });
 });
 
-app.get('/payment', (request, response) => {
-  response.render("payment.ejs");
-})
+app.get("/login", (request, response) => {
+  response.sendFile(path.join(__dirname + "/Public/Login/login.html"));
+});
 
-app.get('/login', (request, response) => {
-  response.sendFile(path.join(__dirname + '/Public/Login/login.html'));
-}); 
+app.post("/paymentDetails", (request, response) => {
+  response.redirect('/');
+});
+
 
 // const database = mysql.createConnection({
 //   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",
@@ -434,17 +479,18 @@ app.get('/login', (request, response) => {
 //   port: '3306',
 // });
 
-app.use((request,response) => {
-  response.status(404).sendFile(path.join(__dirname + '/Public/Status Handler/404.html'));
+app.use((request, response) => {
+  response
+    .status(404)
+    .sendFile(path.join(__dirname + "/Public/Status Handler/404.html"));
 }); // 404 handling
 
 const database = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Haido29904@",
-  port: '3306',
+  port: "3306",
 });
-
 
 database.connect((err) => {
   if (err) throw err;

@@ -4,6 +4,7 @@
         "Haido",
         "hotp",
         "memorystore",
+        "pditem",
         "resave"
     ]
 }

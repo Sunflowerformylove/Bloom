@@ -68,10 +68,13 @@
           <i class="fa-solid fa-cart-shopping"></i>
         </li>
         <div class="wishlist">
-          <div class="placeholder">
-            <i class="fa-solid fa-empty-set"></i>
-            <div class="emptyText">No item in cart!</div>
-          </div>
+          <form action="http://localhost:3000/payment" method="POST" class="wishlistContainer">
+            <div class="placeholder">
+              <i class="fa-solid fa-empty-set"></i>
+              <div class="emptyText">No item in cart!</div>
+            </div>
+          </form>
+          <button class="proceedBtn">Proceed</button>
         </div>
       </ul>
       <div class="filter">

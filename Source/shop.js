@@ -14,6 +14,9 @@ const searchRec = document.querySelector(".searchRec");
 const searchItem = document.querySelector(".searchItem");
 const searchForm = document.querySelector(".searchForm");
 const searchIcon = document.querySelector(".searchIcon");
+const wishlistContainer = document.querySelector(".wishlistContainer");
+const proceedBtn = document.querySelector('.proceedBtn');
+const placeholder = document.querySelector('.placeholder');
 
 let wishlistTracker = 0;
 let wliTracker = false;
@@ -187,86 +190,34 @@ window.addEventListener("load", async (event) => {
   });
 
   orderBtn.forEach((button, index) => {
-    // if (loginState === "false") {
-    //   button.addEventListener("click", (event) => {
-    //     location.href = "/Public/Login/login.html";
-    //   });
-    // } else if (loginState === "true") {
     let unique = false;
     button.addEventListener("click", (event) => {
-      const wli = document.querySelectorAll(".wli");
-      const destroyItem = document.querySelectorAll(".destroyItem");
-      if (!wliTracker) {
-        let wishlistContainer = document.createElement("form");
-        wishlistContainer.className = "wishlistContainer";
-        wishlistContainer.setAttribute("method", "POST");
-        wishlistContainer.setAttribute(
-          "action",
-          "http://localhost:3000/payment"
-        );
-        wishlistContainer.setAttribute(
-          "enctype",
-          "application/x-www-form-urlencoded"
-        );
-        wishlistContainer.innerHTML = `<div class="wli">
-          <img src = "${itemImage[index].src}" class="wliImage" />
-          <div class="wliText">
-            <div class="wliName">${itemName[index].innerHTML}</div>
-            <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
-              data[index].price.toString()
-            )}</span></div>
-            <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
-            <input type="hidden" name="ID" value="${
-              data[index].ID
-            }" class = "wliID">
-          </div>
-          <i class="fa-regular fa-xmark destroyItem"></i>
-          </div>`;
-        let proceedBtn = document.createElement("div");
-        proceedBtn.className = "proceedBtn";
-        proceedBtn.innerHTML = "Proceed";
-        wishlist.innerHTML = "";
-        wishlist.appendChild(wishlistContainer);
-        wishlist.appendChild(proceedBtn);
+      if(!wliTracker){
+        placeholder.style.display = "none";
+        proceedBtn.style.display = "flex";
         wliTracker = true;
-        unique = true;
-        destroyItem.forEach((button, index) => {
-          button.addEventListener("click",(event) => {
-            wli[index].remove();
-            unique = false;
-          });
-        });
-      } else {
-        destroyItem.forEach((button, index) => {
-          button.addEventListener("click",(event) => {
-            wli[index].remove();
-            unique = false;
-          });
-        });
-        const wishlistContainer = document.querySelector(".wishlistContainer");
-        const proceedBtn = document.querySelector(".proceedBtn");
-        if (!unique) {
-          let elem = document.createElement("div");
-          elem.className = `wli`;
-          elem.innerHTML = `
-          <img src = "${itemImage[index].src}" class="wliImage" />
-          <div class="wliText">
-            <div class="wliName">${itemName[index].innerHTML}</div>
-            <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
-              data[index].price.toString()
-            )}</span></div>
-            <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
-            <input type="hidden" name="ID" value="${
-              data[index].ID
-            }" class = "wliID">
-          </div>
+      }
+      if(!unique) {
+        let elem = document.createElement("div");
+        elem.className = "wli";
+        elem.innerHTML = `
+        <img src = "${itemImage[index].src}" class="wliImage" />
+        <div class="wliText">
+          <div class="wliName">${itemName[index].innerHTML}</div>
+          <div class="wliTotalPrice">Price: <span class="priceText">${formatPrice(
+            data[index].price.toString()
+          )}</span></div>
+          <div class="wliQuantity">Quantity:<input type="number" name="quantity" class = "quantityText" style = "margin-left: 1rem;" value = 1 min = 1 max = 50></div>
+          <input type="hidden" name="ID" value="${
+            data[index].ID
+          }" class = "wliID">
         </div>
-        <i class="fa-regular fa-xmark destroyItem"></i>
-            `;
-          wishlistContainer.appendChild(elem);
-          unique = true;
-        } else {
-          const priceText = document.querySelectorAll(".priceText");
+        <i class="fa-regular fa-xmark destroyItem"></i>`;
+        wishlistContainer.appendChild(elem);
+        unique = true;
+      }
+      else{
+        const priceText = document.querySelectorAll(".priceText");
           const quantityText = document.querySelectorAll(".quantityText");
           const wliID = document.querySelectorAll(".wliID");
           wliID.forEach((ID, ind) => {
@@ -282,27 +233,28 @@ window.addEventListener("load", async (event) => {
                 );
               }
             }
-          });
-        }
-        proceedBtn.addEventListener("click", (event) => {
-          wishlistContainer.submit();
-        });
+      })
       }
+      const destroyItem = document.querySelectorAll(".destroyItem");
+      const wli = document.querySelectorAll(".wli");
+      destroyItem.forEach((button, index) => {
+        button.addEventListener("click", (event) => {
+          unique = false;
+          wli[index].remove();
+          if(document.querySelectorAll('.wli').length === 0)
+          {
+            wliTracker = false;
+            placeholder.style.display = "flex";
+            proceedBtn.style.display = "none";
+          }
+        });
+      })
     });
   });
 
   setInterval(() => {
     const priceText = document.querySelectorAll(".priceText");
     const quantityText = document.querySelectorAll(".quantityText");
-    const wli = document.querySelectorAll(".wli");
-    const destroyItem = document.querySelectorAll(".destroyItem");
-    console.log(wli[0]);
-    destroyItem.forEach((button, index) => {
-      button.addEventListener("click", (event) => {
-        wli[index].remove();
-        unique = false;
-      });
-    })
     quantityText.forEach((text, idx) => {
       text.addEventListener("change", (event) => {
         priceText[idx].innerHTML = formatPrice(
@@ -433,7 +385,6 @@ search.addEventListener("keydown", async (event) => {
   });
   if (search.value !== "") {
     let searchResult = fuse.search(search.value);
-    console.log(searchResult);
     searchRec.innerHTML = "";
     for (let i = 0; i < 5; i++) {
       let elem = document.createElement("a");
@@ -455,4 +406,17 @@ search.addEventListener("keydown", async (event) => {
 
 searchIcon.addEventListener("click", (event) => {
   searchForm.submit();
+});
+
+document.addEventListener('click', (event) => {
+    if(!search.contains(event.target)){
+      searchRec.style.display = "none";
+    }
+    else{
+      searchRec.style.display = "flex";
+    }
+});
+
+proceedBtn.addEventListener("click", (event) => {
+  wishlistContainer.submit();
 });
