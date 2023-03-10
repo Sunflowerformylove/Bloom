@@ -283,7 +283,6 @@ app.post("/payment", (request, response) => {
   let quantity = request.body.quantity;
   database.query(`SELECT * FROM shop.products WHERE ID IN ('${ID.join("', '")}')`, (err, result) => {
     let data = JSON.parse(JSON.stringify(result));
-    console.log(data);
     response.render("payment.ejs", {data: data, quantity: quantity});
   })
 });
@@ -468,7 +467,20 @@ app.get("/login", (request, response) => {
 });
 
 app.post("/paymentDetails", (request, response) => {
-  response.redirect('/');
+  let data = request.body;
+  let session = request.sessionID;
+  console.log(data);
+  database.query(`SELECT data FROM login_data.session WHERE sessionID = '${session}'`, (err, result) => {
+    if (err) throw err;
+    let userID = JSON.parse(JSON.parse(JSON.stringify(result[0])).data).user.userID;
+    let date = new Date(Date.now()).toUTCString();
+    for(let i = 0; i < data.prodID.length; i++) {
+      database.query(`INSERT INTO shop.order(prodID,quantity,retailPrice,userID,orderDate,state,paymentMethod) VALUES('${data.prodID[i]}', '${data.quantity[i]}','${data.retailPrice[i]}', '${userID}','${date}','delivering','${data.paymentMethod}')`,(err, result) => {
+        if (err) throw err;
+        response.sendStatus(200);
+      });
+    }
+  });
 });
 
 

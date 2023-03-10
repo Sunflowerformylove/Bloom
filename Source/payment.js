@@ -1,4 +1,4 @@
-import {formatPrice} from '/Source/export.js'
+import {formatPrice, standardize} from '/Source/export.js'
 
 const input = document.querySelectorAll('.input');
 const label = document.querySelectorAll('.label');
@@ -57,7 +57,41 @@ nextBtn.addEventListener('click',(event)=>{
             }
         }
         if(checkConfirmation === 3){
-            paymentBoard.submit();
+            let data = {};
+            const quantity = document.querySelectorAll('.quantity');
+            const prodID = document.querySelectorAll('.prodID');
+            const retailPrice = document.querySelectorAll('.retailPrice');
+            input.forEach((item, index) => {
+                if(item.value !== ""){
+                    data[standardize(label[index].textContent).replaceAll(' ', '')] = item.value;
+                }
+            });
+            let idArr = [];
+            let quantityArr = [];
+            let priceArr = [];
+            for(let i = 0; i < quantity.length; i++){
+                idArr.push(prodID[i].value);
+                quantityArr.push(quantity[i].innerHTML);
+                priceArr.push(retailPrice[i].textContent);
+            }
+            data['paymentMethod'] = paymentMethod.value;
+            data['quantity'] = quantityArr;
+            data['prodID'] = idArr;
+            data['retailPrice'] = priceArr;
+            let json = JSON.stringify(data);
+            console.log(json);
+            fetch('http://localhost:3000/paymentDetails', {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body: json,
+            }).then(response => {
+                if(response.status === 200){
+                    window.location.href = '/';
+                }
+            })
+            .catch((error) => {console.log(error)});
         }
     }
     pbi[currentPage].style.display = "flex";
@@ -151,8 +185,9 @@ window.addEventListener("load", (event) => {
       <div class="pditemName">${data[i].name}</div>
       <div class="pditemDescription">${data[i].description}</div>
       <div class="pditemMisc">
-        <div class="quantity">Quantity: ${quantity[i]}</div>
-        <div class="price">Retail Price: ${formatPrice(data[i].price.toString())}</div>
+        <div class="quantityText">Quantity: <div class = "quantity">${quantity[i]}</div></div>
+        <div class="price">Retail Price: <div class = "retailPrice">${formatPrice(data[i].price.toString())}</div></div>
+        <input type="hidden" name = "prodID" value="${data[i].ID}" class = "prodID">
       </div>
     </div>`;
     productReview.appendChild(pditem);

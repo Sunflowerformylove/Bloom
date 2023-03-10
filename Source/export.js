@@ -18,4 +18,14 @@ function formatPrice(price) {
     return newPrice;
   }
 
-export {formatPrice};
+function standardize(str) {
+  let newStr = str.toLowerCase().trim().split("");
+  for (let i = 0; i < newStr.length - 1; i++) {
+    if (newStr[i] === " " && newStr[i + 1] === " ") {
+      deleteCharAtPos(newStr, i);
+    }
+  }
+  return newStr.join("");
+}
+
+export {formatPrice, standardize};

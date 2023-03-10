@@ -32,7 +32,7 @@
         </label>
         <label for="zipCode" class="label"
           >Zip Code
-          <input type="text" name="zipCode" class="input zipCode" />
+          <input type="text" name="zipCode" class="input zipCode">
         </label>
         <label for="citizenshipID" class="label"
           >Citizenship ID
@@ -48,14 +48,9 @@
         </label>
       </div>
 
-      <div class="pbi paymentMethod">
+      <div class="pbi paymentOption">
+        <input type="hidden" name="paymentMethod" value = "COD" class = "paymentMethod">
         <div class="choosingPayment">
-          <input
-            type="hidden"
-            name="paymentMethod"
-            style="display: none"
-            class="paymentMethod"
-          />
           <div class="payment">
             <i
               class="fa-solid fa-wallet"
@@ -202,7 +197,6 @@
           </div>
         </div>
       </div>
-
       <div class="nextBtn">Next</div>
       <div class="prevBtn">Previous</div>
     </form>
