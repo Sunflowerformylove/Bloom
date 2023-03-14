@@ -483,6 +483,14 @@ app.post("/paymentDetails", (request, response) => {
   });
 });
 
+app.get('/api/order', (request, response) => {
+  let userID = request.query.userID;
+  let state = request.query.state;
+  database.query(`SELECT * FROM shop.order WHERE userID = '${userID}' AND state = ${state}`, (err, result) => {
+    if (err) throw err;
+    response.json(result);
+  });
+});
 
 // const database = mysql.createConnection({
 //   host: "database-1.ctbibtd7skr7.ap-southeast-1.rds.amazonaws.com",

@@ -16,6 +16,7 @@ const boardItem = document.querySelectorAll('.boardItem');
 const cancelBtn = document.querySelectorAll('.cancelBtn');
 const updateForm = document.getElementById('updateForm');
 const saveBtn = document.querySelector('.saveBtn');
+const deliver = document.querySelector('.deliver');
 
 function interestSplice(interest){
     let index = 0;
@@ -140,4 +141,20 @@ cancelBtn.forEach((button, index) => {
 
 saveBtn.addEventListener('click', () => {
     updateForm.submit();
+});
+
+window.addEventListener('load', async (event) => {
+    let stream = await fetch(`http://localhost:3000/api/order?userID=${parseInt(userID)}&state='delivering'`);
+    let data = await stream.json();
+    console.log(data);
+    for(let i = 0; i < data.length; i++){
+       let elem = document.createElement('div');
+       elem.className = 'boardItem';
+       elem.innerHTML = `<img src="" class="itemImg">
+       <div class="itemText">
+           <div class="itemName">${data[i].name}</div>
+           <div class="itemDescription">${data[i].description}</div>
+           <div class="cancelBtn">Cancel<i class="fa-solid fa-xmark"></i></div>
+       </div>`
+    }
 });

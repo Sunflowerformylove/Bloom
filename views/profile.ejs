@@ -60,20 +60,7 @@
                     <div class="feedBtn">On the way</div>
                     <div class="feedBtn">Delivered</div>
                 </div>
-                <div class="boardElement">
-                    <div class="boardItem">
-                        <img src="https://d1i941plp513i2.cloudfront.net/Assets/Images/Gallery/bird-1045954_640.jpg" class="itemImg">
-                        <!-- <div class="itemText">
-                            <div class="itemName">Lorem ipsum dolor</div>
-                            <div class="itemDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at
-                                blandit lectus. Duis sollicitudin sapien vitae blandit porta. Maecenas ultricies
-                                molestie dolor nec rhoncus. Curabitur suscipit tellus mauris, dictum molestie nisl
-                                mollis sit amet. Sed et tincidunt eros. Cras maximus eleifend accumsan. Nam a placerat
-                                lectus. Curabitur porttitor a justo ut blandit. Fusce in quam purus. Quisque et lacus
-                                sit.</div>
-                            <div class="cancelBtn">Cancel<i class="fa-solid fa-xmark"></i></div>
-                        </div> -->
-                    </div>
+                <div class="boardElement deliver">
                 </div>
                 <div class="boardElement"></div>
             </div>
@@ -85,6 +72,7 @@
         profileBackground.src = `https://d1i941plp513i2.cloudfront.net/<%-data[0].background%>`;
     });
     let rawInterest = `<%-data[0].interest %>`;
+    let userID = JSON.stringify(<%-data[0].ID%>);
 </script>
 <script src="/Source/profile.js"></script>
 
